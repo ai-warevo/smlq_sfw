@@ -1,0 +1,103 @@
+{
+  "1": {
+    "inputs": {
+      "mask": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "MaskPreview",
+    "_meta": {
+      "title": "Preview Mask"
+    }
+  },
+  "2": {
+    "inputs": {
+      "detection_hint": "horizontal-2",
+      "dilation": 0,
+      "threshold": 0.85,
+      "bbox_expansion": 0,
+      "mask_hint_threshold": 0.7,
+      "mask_hint_use_negative": "False",
+      "sam_model": [
+        "4",
+        0
+      ],
+      "segs": [
+        "3",
+        0
+      ],
+      "image": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "SAMDetectorCombined",
+    "_meta": {
+      "title": "SAMDetector (combined)"
+    }
+  },
+  "3": {
+    "inputs": {
+      "combined": false,
+      "crop_factor": 3,
+      "bbox_fill": false,
+      "drop_size": 10,
+      "contour_fill": false,
+      "mask": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "MaskToSEGS",
+    "_meta": {
+      "title": "MASK to SEGS"
+    }
+  },
+  "4": {
+    "inputs": {
+      "model_name": "sam_vit_b_01ec64.pth",
+      "device_mode": "AUTO"
+    },
+    "class_type": "SAMLoader",
+    "_meta": {
+      "title": "SAMLoader (Impact)"
+    }
+  },
+  "5": {
+    "inputs": {
+      "threshold": 0.5,
+      "dilation": 4,
+      "bbox_detector": [
+        "6",
+        0
+      ],
+      "image": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "BboxDetectorCombined_v2",
+    "_meta": {
+      "title": "BBOX Detector (combined)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "model_name": "bbox/lips_v1.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {
+      "title": "UltralyticsDetectorProvider"
+    }
+  },
+  "7": {
+    "inputs": {
+      "image": "xczc_00001_.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  }
+}

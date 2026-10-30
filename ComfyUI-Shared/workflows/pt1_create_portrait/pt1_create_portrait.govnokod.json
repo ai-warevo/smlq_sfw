@@ -1,0 +1,570 @@
+{
+  "72": {
+    "inputs": {
+      "image": "lanar.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "73": {
+    "inputs": {
+      "image": "megan-fox-iheart-radio-awards.webp"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "74": {
+    "inputs": {
+      "ckpt_name": "RealVisXL_V5.0_fp16.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "75": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus-face_sdxl_vit-h.safetensors"
+    },
+    "class_type": "IPAdapterModelLoader",
+    "_meta": {
+      "title": "IPAdapter Model Loader"
+    }
+  },
+  "76": {
+    "inputs": {
+      "weight": 0.5,
+      "weight_type": "weak input",
+      "combine_embeds": "concat",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "model": [
+        "74",
+        0
+      ],
+      "ipadapter": [
+        "75",
+        0
+      ],
+      "image": [
+        "73",
+        0
+      ],
+      "clip_vision": [
+        "77",
+        0
+      ]
+    },
+    "class_type": "IPAdapterAdvanced",
+    "_meta": {
+      "title": "IPAdapter Advanced"
+    }
+  },
+  "77": {
+    "inputs": {
+      "clip_name": "openclip-vit-h-14-laion2b-s32b-b79k.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "78": {
+    "inputs": {
+      "weight": 0.5,
+      "weight_type": "weak input",
+      "combine_embeds": "concat",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "model": [
+        "76",
+        0
+      ],
+      "ipadapter": [
+        "75",
+        0
+      ],
+      "image": [
+        "72",
+        0
+      ],
+      "clip_vision": [
+        "77",
+        0
+      ]
+    },
+    "class_type": "IPAdapterAdvanced",
+    "_meta": {
+      "title": "IPAdapter Advanced"
+    }
+  },
+  "79": {
+    "inputs": {
+      "text": "A professional studio headshot portrait of one beautiful 25-year-old brunette woman, tight close-up, face filling most of the frame, looking directly at the camera, neutral expression, closed mouth. She has a well-proportioned athletic body with natural D-cup breasts, wearing a simple basic black tight cotton tank top. Strictly shot on a 100% solid flat pure white background, high-key studio lighting, even illumination, no shadows on background, sharp focus, highly detailed eyes, realistic skin texture, subtle pores, raw photo, high definition\n",
+      "clip": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "80": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "81": {
+    "inputs": {
+      "seed": 821443432465451,
+      "steps": 35,
+      "cfg": 5,
+      "sampler_name": "euler",
+      "scheduler": "karras",
+      "denoise": 1,
+      "model": [
+        "78",
+        0
+      ],
+      "positive": [
+        "79",
+        0
+      ],
+      "negative": [
+        "82",
+        0
+      ],
+      "latent_image": [
+        "80",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "82": {
+    "inputs": {
+      "text": "white clothes, white shirt, white tank top, naked, nude, topless, bare skin, undressed, lingerie, underwear, gray background, colored background, gradient background, shadows, passport, book, document, cover, identity card, hands, fingers, arms, paper, text, font, logo, smiling, teeth, open mouth, asymmetric eyes, split screen, collage, double face, twins, extra limbs, border, frame, flat chest, saggy breasts, oversized breasts, exaggerated body proportions, bad anatomy, deformed, ugly, illustration, 3d, painting, sketch\n",
+      "clip": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "86": {
+    "inputs": {
+      "guide_size": 1024,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 1058310618183946,
+      "steps": 35,
+      "cfg": 5,
+      "sampler_name": "euler",
+      "scheduler": "karras",
+      "denoise": 0.5,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "88",
+        0
+      ],
+      "model": [
+        "78",
+        0
+      ],
+      "clip": [
+        "74",
+        1
+      ],
+      "vae": [
+        "74",
+        2
+      ],
+      "positive": [
+        "91",
+        0
+      ],
+      "negative": [
+        "92",
+        0
+      ],
+      "bbox_detector": [
+        "89",
+        0
+      ]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {
+      "title": "FaceDetailer"
+    }
+  },
+  "88": {
+    "inputs": {
+      "image": "__portrait.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "89": {
+    "inputs": {
+      "model_name": "bbox/face_yolov8m.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {
+      "title": "UltralyticsDetectorProvider"
+    }
+  },
+  "91": {
+    "inputs": {
+      "text": "An extreme close-up macro portrait of one beautiful 25-year-old brunette woman, rich solid dark black hair color, black eyebrows, beautiful symmetrical facial features, looking directly at the camera, neutral calm expression, closed mouth, highly detailed blue eyes, realistic skin texture, subtle pores, high definition photorealism, raw photo\n",
+      "clip": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "92": {
+    "inputs": {
+      "text": "smiling, laughing, teeth, open mouth, freckles, brown hair, blonde hair, ginger hair, red hair, dyed hair streaks, asymmetric eyes, hands, split screen, collage, double face, twins, bad anatomy, deformed, ugly, illustration, 3d, painting, sketch, cgi, render\n",
+      "clip": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "93": {
+    "inputs": {
+      "pixels": [
+        "86",
+        0
+      ],
+      "vae": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "94": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "95": {
+    "inputs": {
+      "seed": 54567833925912,
+      "steps": 30,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1,
+      "model": [
+        "99",
+        0
+      ],
+      "positive": [
+        "103",
+        0
+      ],
+      "negative": [
+        "106",
+        0
+      ],
+      "latent_image": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "96": {
+    "inputs": {
+      "samples": [
+        "95",
+        0
+      ],
+      "vae": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "99": {
+    "inputs": {
+      "unet_name": "flux1-dev-kontext_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "103": {
+    "inputs": {
+      "clip_l": "A studio photograph of one 25-year-old brunette woman with a uniform warm olive skin tone across her entire face and body, strictly standing straight, front-facing, looking directly at camera, with natural hyper-voluptuous G-cup breasts, wearing a black tank top, pure white background.\n",
+      "t5xxl": "A professional high-key studio portrait of one beautiful brunette woman, strictly front-facing, looking directly into the camera lens, neutral expression, closed mouth. Flawless uniform warm olive skin tone, perfectly matching skin color between face, neck, and shoulders, seamless skin transition. Rich solid dark black hair color, black eyebrows. She has a well-proportioned voluptuous body with natural large hyper-voluptuous G-cup breasts, prominent extremely deep dramatic cleavage, wearing a simple basic black tight cotton tank top. Flawless seamless skin texture, natural skin pores, highly detailed blue eyes. Strictly isolated on a 100% solid flat pure white background, high-key studio lighting, sharp focus, high definition raw photography, masterwork\n",
+      "guidance": 3.5,
+      "clip": [
+        "105",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncodeFlux",
+    "_meta": {
+      "title": "CLIPTextEncodeFlux"
+    }
+  },
+  "105": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "Load CLIP (Dual)"
+    }
+  },
+  "106": {
+    "inputs": {
+      "clip_l": "",
+      "t5xxl": "",
+      "guidance": 3.5,
+      "clip": [
+        "105",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncodeFlux",
+    "_meta": {
+      "title": "CLIPTextEncodeFlux"
+    }
+  },
+  "107": {
+    "inputs": {
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 1001317371629658,
+      "steps": 20,
+      "cfg": 8,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 0.4,
+      "feather": 50,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 40,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "96",
+        0
+      ],
+      "model": [
+        "78",
+        0
+      ],
+      "clip": [
+        "105",
+        0
+      ],
+      "vae": [
+        "74",
+        2
+      ],
+      "positive": [
+        "109",
+        0
+      ],
+      "negative": [
+        "110",
+        0
+      ],
+      "bbox_detector": [
+        "89",
+        0
+      ]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {
+      "title": "FaceDetailer"
+    }
+  },
+  "109": {
+    "inputs": {
+      "text": "An extreme close-up macro portrait of the woman face, beautiful symmetrical facial features, uniform dark suntanned skin tone, glowing sun-kissed complexion, looking directly at the camera, seductive look, neutral calm expression, tight closed lips, highly detailed eyes, realistic skin texture, photorealistic, raw photo\n",
+      "clip": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "110": {
+    "inputs": {
+      "text": "smiling, laughing, teeth, open mouth, parted lips, smirk, asymmetric eyes, cross-eyed, deformed, bad anatomy, ugly, horror, split screen, collage, double face, twins, extra limbs, border, frame, freckles, moles, illustration, 3d, 2d, painting, cartoons, sketch, cgi, render\n",
+      "clip": [
+        "74",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "113": {
+    "inputs": {
+      "seed": 752999834022623,
+      "steps": 30,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 0.35,
+      "model": [
+        "99",
+        0
+      ],
+      "positive": [
+        "103",
+        0
+      ],
+      "negative": [
+        "106",
+        0
+      ],
+      "latent_image": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "114": {
+    "inputs": {
+      "pixels": [
+        "107",
+        0
+      ],
+      "vae": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "115": {
+    "inputs": {
+      "samples": [
+        "113",
+        0
+      ],
+      "vae": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "116": {
+    "inputs": {
+      "filename_prefix": "xczc",
+      "images": [
+        "115",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}
