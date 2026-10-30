@@ -1,0 +1,70 @@
+================================================================================
+NSFW / ART-NUDE ПРОМПТЫ — ОПЦИОНАЛЬНЫЕ для датасета
+================================================================================
+
+Prepend (используй тот же что в workflow):
+A young woman with short ash brown bob haircut, light grey-brown eyes,
+soft features, small nose, full lips, light skin with pink cheeks,
+medium-large bust, slim waist, medium round hips, fit toned body.
+
+================================================================================
+БЕЛЬЁ / LINGERIE (мягкий уровень)
+================================================================================
+
+1. Full-body photo, standing in a bedroom, wearing a matching black lace bralette and high-waisted panties, one hand on hip, soft warm lamp light, neutral bedding background, intimate boudoir photography.
+
+2. Three-quarter body, sitting on the edge of a bed, wearing a simple white cotton bra and boyshort underwear, morning sunlight through sheer curtains, relaxed natural pose, lifestyle intimate.
+
+3. Full-body shot, standing in front of a full-length mirror, wearing a dark burgundy silk lingerie set, looking at reflection, soft diffused lighting, minimal bedroom interior, boudoir style.
+
+4. Three-quarter body, lying on her side on white sheets, wearing a nude-tone seamless bralette and briefs, one arm under head, soft overhead natural light, clean minimal aesthetic.
+
+5. Full-body photo, standing by a window, wearing a black bodysuit with sheer mesh panels, backlit morning light, silhouette edges, modern apartment, editorial intimate.
+
+6. Three-quarter body, sitting cross-legged on a wooden floor, wearing a grey sports bra and matching thong, post-workout look, natural daylight, home gym setting, fitness intimate.
+
+================================================================================
+ART-NUDE / ТОПЛЕСС (средний уровень)
+================================================================================
+
+7. Three-quarter body, standing in profile, topless, arms covering chest loosely, high-waisted white cotton panties, soft studio side lighting, plain grey background, fine art nude photography.
+
+8. Full-body photo, sitting on a stool, topless with back to camera, looking over shoulder, wearing only denim jeans, dramatic single light source, dark studio background, artistic portrait.
+
+9. Medium shot, lying in a bathtub filled with milky water, shoulders and collarbones visible, wet hair slicked back, steam rising, warm bathroom lighting, sensual but tasteful.
+
+10. Three-quarter body, wrapped loosely in white bed sheet from waist down, topless, one arm across chest, morning window light, white bedroom, soft intimate mood.
+
+11. Full-body shot, standing behind sheer curtain, nude silhouette visible through fabric, backlit golden hour light, floor-to-ceiling window, artistic atmospheric shot.
+
+12. Medium shot, topless, holding a large sunhat in front of chest, standing in a sunlit field, golden hour, natural outdoor setting, free-spirited artistic nude.
+
+================================================================================
+ПОЛНЫЙ НЮ (максимальный уровень)
+================================================================================
+
+13. Full-body photo, standing nude in a minimalist shower, water running down body, steam, frosted glass partially visible, clean modern bathroom, wet skin detail, fine art photography.
+
+14. Full-body shot, lying on stomach on white sheets, nude, chin resting on crossed arms, looking at camera, soft overhead light, clean bedroom, intimate relaxed pose.
+
+15. Three-quarter body, sitting nude on a wooden chair, legs crossed, one arm resting on knee, dramatic chiaroscuro lighting, dark studio, renaissance painting inspired pose.
+
+16. Full-body photo, standing nude in a lake at waist depth, water covering lower body, arms at sides, misty morning, forest in background, ethereal nature nude.
+
+17. Full-body rear view, standing nude looking out a large window, city skyline visible, morning golden light on skin, modern apartment, cinematic intimate moment.
+
+18. Three-quarter body, kneeling on a bed, nude, hair slightly messy, soft sheets around knees, warm lamp light from the side, intimate bedroom setting, natural relaxed pose.
+
+================================================================================
+СОВЕТЫ ПО ИСПОЛЬЗОВАНИЮ
+================================================================================
+
+- Держи долю NSFW не больше 10-15% от общего датасета
+- Каптиони ТОЧНО: добавляй теги типа "nude", "topless", "lingerie"
+  чтобы модель привязывала наготу к конкретным словам
+- Если модель начинает раздевать персонажа на обычных промптах,
+  значит NSFW слишком много — убери часть из датасета
+- Лучший вариант: сначала натренируй SFW LoRA, проверь качество,
+  потом добавь NSFW промпты и тренируй вторую версию
+
+================================================================================

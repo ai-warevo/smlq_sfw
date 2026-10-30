@@ -14,6 +14,7 @@
     *   `Consistent Character dataset 9b (ver 1.0.1).json` — Воркфлоу для удержания консистентности персонажа при генерации датасета.
     *   `flux_dataset_prompts.txt` — Набор промптов, оптимизированный под T5-энкодер Flux.
     *   `for_dataset_sfw.txt` — База уникальных SFW-кадров (ракурсы, одежда, локации).
+    *   `nsfw_prompts_optional.txt` — Опциональная база для NSFW-генераций.
 *   `pt3_utils/` — Дополнительный инструментарий для инпаинта, редактирования и Image-to-Image.
     *   `Flux 2 Klein Inpaint Workflow.json` — Точечный инпаинтинг на базе моделей Flux 2 Klein.
     *   `Flux2 Klein 9B Distill Editing 1.0.json` — Редактирование отдельных элементов и атрибутов персонажа через дистиллированные модели.
