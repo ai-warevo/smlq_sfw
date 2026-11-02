@@ -1,0 +1,83 @@
+Create a single photorealistic portrait of a NEW woman whose appearance is a balanced genetic fusion of the two provided reference images.
+
+
+
+The result must NOT look like either reference individually, but instead a natural and believable hybrid identity combining their facial structures, proportions, and aesthetic traits evenly.
+
+
+
+Requirements:
+
+
+
+• ultra photorealistic human face
+
+• consistent identity suitable for AI character creation and LoRA training
+
+• symmetrical facial harmony
+
+• natural skin texture with visible pores and micro-details
+
+• realistic imperfections (subtle asymmetry, skin variation)
+
+• cinematic beauty photography quality
+
+• modern attractive young woman, elegant and natural beauty
+
+• neutral relaxed expression with soft confident gaze
+
+• direct eye contact with camera
+
+• centered head position, straight posture
+
+
+
+Lighting & Camera:
+
+• soft professional studio lighting
+
+• diffused frontal light with gentle shadow depth
+
+• high dynamic range
+
+• sharp focus on eyes and facial details
+
+• 85mm portrait lens look
+
+• shallow depth of field
+
+• studio photography realism
+
+
+
+Composition:
+
+• clean neutral background (light gray or soft beige)
+
+• head and shoulders portrait
+
+• perfectly centered framing
+
+• no accessories covering face
+
+• no text, no watermark, no stylization
+
+
+
+Style Constraints (IMPORTANT):
+
+• realism over stylization
+
+• NOT anime, NOT illustration, NOT CGI
+
+• NOT over-smoothed skin
+
+• avoid beauty filter look
+
+• maintain believable human realism
+
+
+
+Output quality:
+
+ultra high resolution, 8k, professional RAW photo look, extremely detailed, dataset-quality portrait
