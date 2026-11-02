@@ -1,0 +1,271 @@
+{
+  "7": {
+    "inputs": {
+      "unet_name": "krea2_turbo_fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "8": {
+    "inputs": {
+      "clip_name": "Qwen3-VL-4B-Instruct-Uncensored-FP8.safetensors",
+      "type": "krea2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "9": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "89": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "Krea2_TextFusion_Refusal_Reduction.safetensors",
+        "strength": 1
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "7",
+        0
+      ],
+      "clip": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "128": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "89",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Negative Prompt"
+    }
+  },
+  "129": {
+    "inputs": {
+      "shift": 6,
+      "sampling": "flow",
+      "model": [
+        "89",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "Model Aura Flows"
+    }
+  },
+  "150": {
+    "inputs": {
+      "samples": [
+        "173",
+        0
+      ],
+      "vae": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "165": {
+    "inputs": {
+      "width": 896,
+      "height": 1184,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "173": {
+    "inputs": {
+      "seed": 714645252632232,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "129",
+        0
+      ],
+      "positive": [
+        "176_99",
+        0
+      ],
+      "negative": [
+        "128",
+        0
+      ],
+      "latent_image": [
+        "165",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "174": {
+    "inputs": {
+      "lora_name": "kreaVerite_realism.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "model": [
+        "7",
+        0
+      ],
+      "clip": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA (Model and CLIP)"
+    }
+  },
+  "175": {
+    "inputs": {
+      "text": "A completely nude young woman, fully naked, bare skin everywhere, no clothes at all, no underwear, no accessories except long instagram-style manicure, realistic slim petite natural athletic body, slender figure, small-to-medium natural breasts with puffy dark nipples and detailed realistic areolas with subtle texture, smooth natural intimate area with soft dark pubic hair, highly detailed natural vulva with visible labia majora and minora, delicate pink folds, clitoris hint, realistic skin texture, visible pores, subtle natural imperfections, faint goosebumps, natural skin tone variations, casual everyday nude vibe with intimate relaxed energy,\nsitting on a bed with legs spread wide open and knees bent high, feet resting on the floral-patterned bedsheets with stripes, dramatic low-angle intimate shot from below looking straight up between her legs, pussy and vulva prominently visible in the center of the frame, both hands relaxed on the bed or gently on thighs, aroused but natural expression, eyes half-closed or looking slightly up, slight blush, flushed cheeks, messy natural long straight dark brown hair falling around shoulders and face, soft natural indoor warm orange-yellow lighting from room lamps creating gentle realistic shadows on body and sheets, exact same face as reference, same facial features, unchanged hairstyle and hair color, same lighting style, identical cozy attic-style bedroom background with slanted wooden ceiling, small painting on the wall, dark furniture and floral striped bedding,\nphotorealistic, hyperrealistic, RAW amateur photo, 8k, sharp focus, highly detailed skin, subsurface scattering, natural soft cinematic lighting, candid intimate solo scene, no heavy makeup, realistic proportions, detailed long glamorous instagram manicure visible on fingers, extra long almond or squared nails, glossy high-shine trendy polish, chrome accents or french tips with subtle sparkle, pastel nude base or elegant details, realistic nail shine and reflections"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "177": {
+    "inputs": {
+      "seed": 293655043587941,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "er_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 1,
+      "model": [
+        "174",
+        0
+      ],
+      "positive": [
+        "179",
+        0
+      ],
+      "negative": [
+        "128",
+        0
+      ],
+      "latent_image": [
+        "165",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "179": {
+    "inputs": {
+      "text": [
+        "175",
+        0
+      ],
+      "clip": [
+        "174",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive Prompt"
+    }
+  },
+  "180": {
+    "inputs": {
+      "samples": [
+        "177",
+        0
+      ],
+      "vae": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "181": {
+    "inputs": {
+      "images": [
+        "180",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "182": {
+    "inputs": {
+      "images": [
+        "150",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "176_99": {
+    "inputs": {
+      "prompt": [
+        "175",
+        0
+      ],
+      "opt_clip": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "Power Prompt - Simple (rgthree)",
+    "_meta": {
+      "title": "Power Prompt - Simple (rgthree)"
+    }
+  }
+}

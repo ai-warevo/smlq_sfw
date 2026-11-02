@@ -1,0 +1,649 @@
+{
+  "id": "1dfef69e-90bd-44b1-a341-57e154852b29",
+  "revision": 0,
+  "last_node_id": 14,
+  "last_link_id": 12,
+  "nodes": [
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        223.70368109809024,
+        764.0740627712671
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "ae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "ae.safetensors"
+      }
+    },
+    {
+      "id": 4,
+      "type": "CLIPTextEncode",
+      "pos": [
+        498.6412109375,
+        130
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "A hyperrealistic 3D porn render of Lara Croft in a classic cowgirl position, close-up shot focused entirely on her massive, wet, glossy, oil-glistening athletic buttocks. She is sitting on top, grinding dynamically. Her iconic tight teal tank top is pulled down to her waist, completely exposing her bare back and the deep curves of her lower spine. Clean, flawless skin with rich glossy fluid reflections on her tanned body. Locked static camera, completely frozen clean studio dark gray background, sweat glistening, heavy gasping, masterpiece quality, unreal engine 5 lighting.\n"
+      ],
+      "widgets_values_named": {
+        "text": "A hyperrealistic 3D porn render of Lara Croft in a classic cowgirl position, close-up shot focused entirely on her massive, wet, glossy, oil-glistening athletic buttocks. She is sitting on top, grinding dynamically. Her iconic tight teal tank top is pulled down to her waist, completely exposing her bare back and the deep curves of her lower spine. Clean, flawless skin with rich glossy fluid reflections on her tanned body. Locked static camera, completely frozen clean studio dark gray background, sweat glistening, heavy gasping, masterpiece quality, unreal engine 5 lighting.\n"
+      }
+    },
+    {
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "pos": [
+        503.8264187282986,
+        425.92597113715277
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "2d, anime, cartoon, cell-shaded, comic book, illustration, drawing, vector art, flat shading, sketch, black and white, deformed hands, mutated fingers, low quality, blurry"
+      ],
+      "widgets_values_named": {
+        "text": "2d, anime, cartoon, cell-shaded, comic book, illustration, drawing, vector art, flat shading, sketch, black and white, deformed hands, mutated fingers, low quality, blurry"
+      }
+    },
+    {
+      "id": 6,
+      "type": "EmptyLatentImage",
+      "pos": [
+        944.5185004340285,
+        535.2591959635414
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            6
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        960,
+        720,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 960,
+        "height": 720,
+        "batch_size": 1
+      }
+    },
+    {
+      "id": 7,
+      "type": "KSampler",
+      "pos": [
+        1406.7759358723958,
+        108.07410346137155
+      ],
+      "size": [
+        270,
+        262
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 12
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 4
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        824750754746494,
+        "randomize",
+        30,
+        4,
+        "euler",
+        "beta",
+        1
+      ],
+      "widgets_values_named": {
+        "seed": 824750754746494,
+        "control_after_generate": "randomize",
+        "steps": 30,
+        "cfg": 4,
+        "sampler_name": "euler",
+        "scheduler": "beta",
+        "denoise": 1
+      }
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        1752.7759765624999,
+        132.96298556857639
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 7
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        1912.7759765625,
+        130
+      ],
+      "size": [
+        270,
+        270
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "ComfyUI"
+      }
+    },
+    {
+      "id": 11,
+      "type": "CLIPLoader",
+      "pos": [
+        195.5555555555556,
+        352.66653103298614
+      ],
+      "size": [
+        270,
+        106
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            1,
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "t5xxl_fp16.safetensors",
+        "stable_diffusion",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "t5xxl_fp16.safetensors",
+        "type": "stable_diffusion",
+        "device": "default"
+      }
+    },
+    {
+      "id": 12,
+      "type": "ChromaPaddingRemoval",
+      "pos": [
+        928.1968071831596,
+        130.07405598958331
+      ],
+      "size": [
+        249.2369140625,
+        26
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "title": "Chroma Padding Removal (Pos)",
+      "properties": {
+        "Node name for S&R": "ChromaPaddingRemoval"
+      }
+    },
+    {
+      "id": 13,
+      "type": "ChromaPaddingRemoval",
+      "pos": [
+        926.6412109375,
+        424
+      ],
+      "size": [
+        251.882421875,
+        26
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "title": "Chroma Padding Removal (Neg)",
+      "properties": {
+        "Node name for S&R": "ChromaPaddingRemoval"
+      }
+    },
+    {
+      "id": 14,
+      "type": "UNETLoader",
+      "pos": [
+        166.92596605088994,
+        184.07396104600667
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "chroma-unlocked-v27.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "chroma-unlocked-v27.safetensors",
+        "weight_dtype": "default"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      11,
+      0,
+      4,
+      0,
+      "CLIP"
+    ],
+    [
+      2,
+      11,
+      0,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      4,
+      12,
+      0,
+      7,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      13,
+      0,
+      7,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      6,
+      0,
+      7,
+      3,
+      "LATENT"
+    ],
+    [
+      7,
+      7,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      8,
+      3,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      4,
+      0,
+      12,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      11,
+      5,
+      0,
+      13,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      12,
+      14,
+      0,
+      7,
+      0,
+      "MODEL"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1,
+      "offset": [
+        -103.11097547743051,
+        449.74064805772616
+      ]
+    },
+    "reroutes": [
+      {
+        "id": 1,
+        "pos": [
+          1739.5554199218739,
+          769.6298556857636
+        ],
+        "linkIds": [
+          8
+        ]
+      },
+      {
+        "id": 2,
+        "parentId": 3,
+        "pos": [
+          746.2221544053821,
+          34.07426622178788
+        ],
+        "linkIds": [
+          12
+        ]
+      },
+      {
+        "id": 3,
+        "pos": [
+          495.1110772026911,
+          51.11131456163157
+        ],
+        "linkIds": [
+          12
+        ]
+      },
+      {
+        "id": 4,
+        "parentId": 2,
+        "pos": [
+          1004.7406955295138,
+          0.740966796874698
+        ],
+        "linkIds": [
+          12
+        ]
+      },
+      {
+        "id": 5,
+        "parentId": 4,
+        "pos": [
+          1195.851874457465,
+          0.7408989800344195
+        ],
+        "linkIds": [
+          12
+        ]
+      },
+      {
+        "id": 6,
+        "pos": [
+          1358.4444105360242,
+          389.2594129774301
+        ],
+        "linkIds": [
+          6
+        ]
+      },
+      {
+        "id": 7,
+        "parentId": 1,
+        "pos": [
+          1718.4444105360242,
+          457.2594129774301
+        ],
+        "linkIds": [
+          8
+        ]
+      }
+    ],
+    "linkExtensions": [
+      {
+        "id": 6,
+        "parentId": 6
+      },
+      {
+        "id": 8,
+        "parentId": 7
+      },
+      {
+        "id": 12,
+        "parentId": 5
+      }
+    ],
+    "frontendVersion": "1.57.1",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4,
+  "seed_widgets": {
+    "7": 0
+  }
+}

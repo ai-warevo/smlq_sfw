@@ -1,0 +1,375 @@
+{
+  "9": {
+    "inputs": {
+      "filename_prefix": "Flux2_dev",
+      "images": [
+        "104",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.71"
+    }
+  },
+  "100": {
+    "inputs": {
+      "guidance": 4,
+      "conditioning": [
+        "112",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.71"
+    }
+  },
+  "102": {
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.71"
+    }
+  },
+  "104": {
+    "inputs": {
+      "samples": [
+        "133",
+        0
+      ],
+      "vae": [
+        "102",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.71"
+    }
+  },
+  "105": {
+    "inputs": {
+      "width": [
+        "148",
+        0
+      ],
+      "height": [
+        "148",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyFlux2LatentImage",
+    "_meta": {
+      "title": "Empty Flux 2 Latent",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.71"
+    }
+  },
+  "107": {
+    "inputs": {
+      "text": "remove clothing and restore her natural big tits (nude, big round boobs, topless) with detailed nipples, clean matte skin, flawless texture, photorealistic, isolated on white background\n",
+      "clip": [
+        "152",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.71"
+    }
+  },
+  "112": {
+    "inputs": {
+      "conditioning": [
+        "107",
+        0
+      ],
+      "latent": [
+        "150",
+        0
+      ]
+    },
+    "class_type": "ReferenceLatent",
+    "_meta": {
+      "title": "Set Reference Latent",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "115": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "megapixels": [
+        "135",
+        0
+      ],
+      "resolution_steps": 1,
+      "image": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "ImageScaleToTotalPixels",
+    "_meta": {
+      "title": "Scale Image to Total Pixels",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "117": {
+    "inputs": {
+      "rgthree_comparer": {
+        "images": [
+          {
+            "name": "A",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_oqjbe_00031_.png&type=temp&subfolder=&rand=0.8669621157032731"
+          },
+          {
+            "name": "B",
+            "selected": true,
+            "url": "/api/view?filename=rgthree.compare._temp_oqjbe_00032_.png&type=temp&subfolder=&rand=0.12160463025965595"
+          }
+        ]
+      },
+      "image_a": [
+        "149",
+        0
+      ],
+      "image_b": [
+        "104",
+        0
+      ]
+    },
+    "class_type": "Image Comparer (rgthree)",
+    "_meta": {
+      "title": "Image Comparer (rgthree)",
+      "cnr_id": "rgthree-comfy",
+      "ver": "1.0.2512112053"
+    }
+  },
+  "125": {
+    "inputs": {
+      "pixels": [
+        "115",
+        0
+      ],
+      "vae": [
+        "102",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "126": {
+    "inputs": {
+      "unet_name": "flux-2-klein-9b-kv-fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "133": {
+    "inputs": {
+      "seed": 210290083486248,
+      "steps": 30,
+      "cfg": 3.5,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "152",
+        0
+      ],
+      "positive": [
+        "100",
+        0
+      ],
+      "negative": [
+        "136",
+        0
+      ],
+      "latent_image": [
+        "105",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "135": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Float (Set Megapixels)",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "136": {
+    "inputs": {
+      "conditioning": [
+        "107",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "Conditioning Zero Out",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "146": {
+    "inputs": {
+      "clip_name": "qwen3-vl-8b-heretic-1.3.0_fp8_e4m3fn.safetensors",
+      "type": "flux2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "147": {
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "102",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "148": {
+    "inputs": {
+      "image": [
+        "147",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Get Image Size",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "149": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "width": [
+        "148",
+        0
+      ],
+      "height": [
+        "148",
+        1
+      ],
+      "crop": "center",
+      "image": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "Upscale Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "150": {
+    "inputs": {
+      "pixels": [
+        "149",
+        0
+      ],
+      "vae": [
+        "102",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "151": {
+    "inputs": {
+      "image": "SamanthaLambarquni24.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "152": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "nsfw_flux2_krea2.safetensors",
+        "strength": 0.75
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "126",
+        0
+      ],
+      "clip": [
+        "146",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  }
+}

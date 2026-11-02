@@ -1,0 +1,444 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "krea2_turbo_fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "3": {
+    "inputs": {
+      "clip_name": "Qwen3-VL-4B-Instruct-Uncensored-FP8.safetensors",
+      "type": "krea2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "11": {
+    "inputs": {
+      "width": 1152,
+      "height": 1536,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "12": {
+    "inputs": {
+      "seed": 613058509760467
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)",
+      "cnr_id": "rgthree-comfy",
+      "ver": "1.0.2605082257"
+    }
+  },
+  "14": {
+    "inputs": {
+      "images": [
+        "123:102",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "16": {
+    "inputs": {
+      "vae_name": "wan_2.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "30": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "nsfw_flux2_krea2.safetensors",
+        "strength": 1
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "128",
+        0
+      ],
+      "clip": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)",
+      "cnr_id": "rgthree-comfy",
+      "ver": "1.0.2605082257"
+    }
+  },
+  "68": {
+    "inputs": {
+      "unet_name": "Qwen2.5-VL-7B-Instruct-abliterated.Q4_K_M.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF)",
+      "cnr_id": "comfyui-gguf",
+      "aux_id": "molbal/ComfyUI-GGUF",
+      "ver": "73439d2120c2e465fbdf7eb9e98c17ef592e5da3"
+    }
+  },
+  "119": {
+    "inputs": {
+      "value": "A completely nude young woman, fully naked, bare skin everywhere, no clothes at all, no underwear, no accessories except long instagram-style manicure, realistic slim petite natural athletic body, slender figure, small-to-medium natural breasts with puffy dark nipples and detailed realistic areolas with subtle texture, smooth natural intimate area with soft dark pubic hair, highly detailed natural vulva with visible labia majora and minora, delicate pink folds, clitoris hint, realistic skin texture, visible pores, subtle natural imperfections, faint goosebumps, natural skin tone variations, casual everyday nude vibe with intimate relaxed energy,\nsitting on a bed with legs spread wide open and knees bent high, feet resting on the floral-patterned bedsheets with stripes, dramatic low-angle intimate shot from below looking straight up between her legs, pussy and vulva prominently visible in the center of the frame, both hands relaxed on the bed or gently on thighs, aroused but natural expression, eyes half-closed or looking slightly up, slight blush, flushed cheeks, messy natural long straight dark brown hair falling around shoulders and face, soft natural indoor warm orange-yellow lighting from room lamps creating gentle realistic shadows on body and sheets, exact same face as reference, same facial features, unchanged hairstyle and hair color, same lighting style, identical cozy attic-style bedroom background with slanted wooden ceiling, small painting on the wall, dark furniture and floral striped bedding,\nphotorealistic, hyperrealistic, RAW amateur photo, 8k, sharp focus, highly detailed skin, subsurface scattering, natural soft cinematic lighting, candid intimate solo scene, no heavy makeup, realistic proportions, detailed long glamorous instagram manicure visible on fingers, extra long almond or squared nails, glossy high-shine trendy polish, chrome accents or french tips with subtle sparkle, pastel nude base or elegant details, realistic nail shine and reflections"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "User Prompt",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "121": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Enable Prompt Enhancer?",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "122": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Add LoRA trigger to enhanced prompt?",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "128": {
+    "inputs": {
+      "switch": false,
+      "on_false": [
+        "1",
+        0
+      ],
+      "on_true": [
+        "68",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "Use GGUF?",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "129": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "LoRA trigger for enhanced prompt",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "211": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Prompt enhancement seed (if used)",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "123:8": {
+    "inputs": {
+      "text": [
+        "123:115",
+        0
+      ],
+      "clip": [
+        "30",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:29": {
+    "inputs": {
+      "conditioning": [
+        "123:8",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "Conditioning Zero Out",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "123:189": {
+    "inputs": {
+      "shift": 4,
+      "sampling": "flow",
+      "model": [
+        "30",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "123:113": {
+    "inputs": {
+      "string_a": [
+        "123:114",
+        0
+      ],
+      "string_b": [
+        "119",
+        0
+      ],
+      "delimiter": ""
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate Text",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:117": {
+    "inputs": {
+      "string_a": [
+        "123:116",
+        0
+      ],
+      "string_b": [
+        "129",
+        0
+      ],
+      "delimiter": ", "
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate Text (LoRA Trigger Word)",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:118": {
+    "inputs": {
+      "switch": [
+        "122",
+        0
+      ],
+      "on_false": [
+        "123:116",
+        0
+      ],
+      "on_true": [
+        "123:117",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "If/Else Switch",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:114": {
+    "inputs": {
+      "value": "Role: Autonomous prompt expander for a vision-language model.\nTask: Convert brief input into a fluid 7-9 sentence paragraph mirroring exact training data formats.\n\nCRITICAL RULES:\n- Zero Conversation: Output ONLY the descriptive paragraph. No intros, no meta-text, no regurgitation of rules.\n- Absolute Autonomy: If input is short/vague, hallucinate ALL missing details. NEVER ask for details.\n- Strictly Optical: Describe ONLY visible pixels. ZERO invisible senses (smells, sounds, temperature) or narrative conclusions.\n- Mandatory Sequence: \n1) Subject & Action (use \"naked\"/\"nude\" if unclothed), \n2) Traits & Attire (assign age strictly as \"18-years-old\", \"25-years-old\" etc.), \n3) Setting & Background, \n4) Lighting & Dominant Colors, \n5) Camera Angle, \n6-9) Optical Micro-Details (textures, shadows).\n- Banned Vocabulary: scent, smell, fragrance, sound, hears, feels, striking, embodies, personifying, narrative, masterpiece, hyper-realistic, realistic, 4k, possesses.\n\nEXAMPLE INPUT:\nwoman on bed in a room. she is dressed\n\nEXAMPLE OUTPUT:\nA 25-years-old woman sits on the edge of a bed, leaning forward slightly with her hands resting on her knees. She wears a faded oversized band t-shirt and ripped black denim shorts, her dark hair pulled into a bun. The bedroom behind her is cluttered with clothes scattered across a wooden floor and posters peeling off the walls. The camera captures her in a medium-wide shot from a slightly high angle, emphasizing the clutter around her feet. A silver ring catches a glint of light on her right hand. The bedsheets are crumpled, showing tight folds and heavy creases where she sits.\n\nNow, process the following input. Output ONLY the final visual description paragraph.\n\nUSER'S INPUT:"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "System Prompt",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:115": {
+    "inputs": {
+      "source": [
+        "123:118",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:102": {
+    "inputs": {
+      "samples": [
+        "123:6",
+        0
+      ],
+      "vae": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "123:221": {
+    "inputs": {
+      "image": [
+        "123:102",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Get Image Size",
+      "cnr_id": "comfy-core",
+      "ver": "0.27.0"
+    }
+  },
+  "123:6": {
+    "inputs": {
+      "seed": [
+        "12",
+        0
+      ],
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "beta",
+      "denoise": 1,
+      "model": [
+        "123:189",
+        0
+      ],
+      "positive": [
+        "123:8",
+        0
+      ],
+      "negative": [
+        "123:29",
+        0
+      ],
+      "latent_image": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:112": {
+    "inputs": {
+      "prompt": [
+        "123:113",
+        0
+      ],
+      "max_length": 512,
+      "sampling_mode": "on",
+      "sampling_mode.temperature": 0.7,
+      "sampling_mode.top_k": 64,
+      "sampling_mode.top_p": 0.95,
+      "sampling_mode.min_p": 0.05,
+      "sampling_mode.repetition_penalty": 1.05,
+      "sampling_mode.seed": [
+        "211",
+        0
+      ],
+      "sampling_mode.presence_penalty": 0,
+      "thinking": false,
+      "use_default_template": true,
+      "mtp": "auto",
+      "clip": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "TextGenerate",
+    "_meta": {
+      "title": "Generate Text",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  },
+  "123:116": {
+    "inputs": {
+      "switch": [
+        "121",
+        0
+      ],
+      "on_false": [
+        "119",
+        0
+      ],
+      "on_true": [
+        "123:112",
+        0
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "If/Else Switch",
+      "cnr_id": "comfy-core",
+      "ver": "0.25.0"
+    }
+  }
+}
