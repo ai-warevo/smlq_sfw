@@ -1,0 +1,175 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "krea2_turbo_fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Krea 2 Diffusion Model"
+    }
+  },
+  "2": {
+    "inputs": {
+      "clip_name": "Qwen3-VL-4B-Instruct-Uncensored-FP8.safetensors",
+      "type": "krea2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Krea 2 Text Encoder"
+    }
+  },
+  "3": {
+    "inputs": {
+      "vae_name": "wan_2.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Krea 2 VAE"
+    }
+  },
+  "8": {
+    "inputs": {
+      "shift": 4,
+      "sampling": "flow",
+      "model": [
+        "107",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "Krea 2 Sampling Shift"
+    }
+  },
+  "9": {
+    "inputs": {
+      "text": "lenovo photo of a masterpiece.\n\n## Framing and Composition\nShot: This is a tight waist-up medium shot that is cropped closely at the upper thighs, keeping the woman perfectly centered as she faces directly into the camera lens.\nFrame Grid: The model stands with her back flush against the interior corner join where two vertical matte white walls meet. The wall to her left features a classic vertical white decorative molding frame, while the wall to her right forms a straight vertical edge leading to a smooth white door casing at the far right edge of the frame.\nPose: She stands straight, and her head is slightly tilted back and leaned toward her right shoulder, creating an intense, alluring gaze directly into the lens.\nArm Position: Her left arm is raised and bent at the elbow, with her hand resting against the wall well above her head height. With her left hand, she holds a long black satin ribbon suspended and pulled taut in the air away from her body. Her right arm is bent at the elbow, and her right hand is positioned at the top of the bodice, where her fingers gently hold the second untied black strap near her chest.\n\n## Appearance and Face\nAge & Heritage: The individual appears to be a sophisticated woman in her late twenties, approximately 27 to 29 years old, possessing refined Caucasian features that suggest European ancestry.\nFace Shape & Structure: Her face exhibits a beautifully defined oval shape with elegant, mature contours. High, sculpted cheekbones create striking shadows under the soft lighting, while a clean, structurally sound jawline tapers gracefully into a perfectly formed, feminine chin.\nForehead & Brows: She has a smooth, clear forehead that highlights her open and confident facial expression. Her eyebrows are meticulously groomed, displaying a dark brown hue and a sharp, alluring arch that accentuates the depth of her gaze.\nEyes: Her striking, almond-shaped eyes are a captivating shade of light hazel with hints of green. The upper eyelids are defined by a sharp, sultry winged eyeliner that elongates her eyes, complemented by thick, dark lashes that add immense intensity and an undeniable magnetic pull to her steady, direct look.\nNose: She possesses a delicate, perfectly straight nose with a subtle, elegant lift at the tip and neat, symmetrical nostrils, enhancing the balanced symmetry of her profile.\nLips & Mouth: Her mouth is a focal point of intense facial attraction, featuring exceptionally full, plump, and well-contoured lips. The sharp definition of her Cupid's bow is highlighted by a soft, matte nude-pink tone, and her lips are slightly parted in a naturally alluring, relaxed expression.\nSkin & Hair: Her complexion is pristine, glowing, and exceptionally smooth. Her long, luxurious hair is a rich blend of light brown and golden blonde tones, styled with face-framing layers that drape elegantly down her shoulders, completing a highly attractive and polished appearance.\n\n## Clothing and Dress Details\nType: She wears an ultra-short, form-fitting mini slip dress made of a soft, matte black elastic or knit fabric that comfortably hugs her curves.\nPrint: The black fabric is covered in a dense, evenly distributed pattern of small pink rosebuds and miniature green leaves.\nBodice Construction: The dress features soft structured cups with a tight black edging along the top that aggressively compresses and lifts her exceptionally large, heavy voluptuous natural breasts, creating an extreme, round high-volume push-up cleavage. Two small distinct moles are visible on her upper chest and collarbone area. The dress highlights a natural hourglass silhouette with a slim waist and flat stomach.\nBows and Ribbons: Three small black satin decorative bows are attached to the dress, with one placed in the center of the bodice and the other two resting at the base of the shoulder straps.\nStraps: The dress features thin black satin straps that are completely untied and slipped off both shoulders. She holds the ends of the ribbons in her hands: her right hand holds the right strap near the bodice, while her left hand holds the long left ribbon pulled taut in the air.\nSkirt: The extremely short skirt ends high on her upper thighs and features high vertical slits on the sides gathered with thin ties.\n\n## Lighting and Atmosphere\nWalls: The interior walls have a uniform matte texture, appearing white on the illuminated left side and receding into a cool, soft light-gray shade within the corner drop-off on the right.\nLighting: The scene is illuminated by soft, diffused, and directional natural daylight coming from an indoor window on the far left. This creates a smooth, gradual transition where the left side of her face and body is gently highlighted, while her right side softly recedes into natural, realistic shadow values.\nShadows: The soft directional lighting casts gentle, realistic shadows in the corner crease and directly behind her back where her body meets the wall. Because her left arm is resting flat against the wall surface, it does not cast a separate elongated shadow; instead, delicate and blended shadows appear under her bust, chin, and along the right contours of her torso, maintaining soft edges without any harsh silhouette lines.",
+      "clip": [
+        "107",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive Prompt — Write Here"
+    }
+  },
+  "10": {
+    "inputs": {
+      "conditioning": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "Neutral Negative Conditioning"
+    }
+  },
+  "11": {
+    "inputs": {
+      "image": "xzxz.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Upload Reference Image"
+    }
+  },
+  "12": {
+    "inputs": {
+      "pixels": [
+        "11",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "Encode Reference Image"
+    }
+  },
+  "14": {
+    "inputs": {
+      "seed": 887389311767037,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "beta",
+      "denoise": 0.65,
+      "model": [
+        "8",
+        0
+      ],
+      "positive": [
+        "9",
+        0
+      ],
+      "negative": [
+        "10",
+        0
+      ],
+      "latent_image": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "Transform Reference — KSampler"
+    }
+  },
+  "15": {
+    "inputs": {
+      "samples": [
+        "14",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decode Image"
+    }
+  },
+  "16": {
+    "inputs": {
+      "filename_prefix": "AI_Syndicate_Krea2_I2I",
+      "images": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Output — AI Syndicate"
+    }
+  },
+  "107": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1",
+        0
+      ],
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  }
+}

@@ -1,0 +1,1439 @@
+{
+ "id": "c62d43ff-20b7-2ed6-249d-1c3de6ec94b5",
+ "revision": 0,
+ "last_node_id": 27,
+ "last_link_id": 28,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "MarkdownNote",
+   "pos": [
+    0,
+    0
+   ],
+   "size": [
+    560,
+    620
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote"
+   },
+   "widgets_values": [
+    "# One long shot with MiniMax H3 (up to 40 s)\n\n**Free workflow by Stable Yogi.** One start picture, one prompt, one unbroken take with voice and sound.\n\n1. Put your start picture in **Load start picture** (the example: `sy-pool-start.png`).\n2. Write what happens and what is said in **Prompt**. Keep `[ENGLISH] She says: \"...\"` for speech.\n3. Set **Length** (frames, 24 per second). See the table on the right.\n4. Queue. You get a small take first (`H3-longshot/take`), then the 1080p copy (`H3-longshot/hd`).\n\nSize: **736 x 416**. In our tests this size kept the face steadiest over a long take.\nBigger sizes look sharper per frame but drift more. The upscale does the sharp part.\n\n**Models** (ComfyUI downloads them from the loader nodes, or get them from\nhttps://huggingface.co/Comfy-Org/MiniMax-H3):\n- `minimax_h3_fl2va_pruned_int8_convrot.safetensors` -> models/diffusion_models\n- `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors` -> models/text_encoders\n- `minimax_h3_video_vae_fp16.safetensors` -> models/vae\n- `minimax_h3_audio_vae_fp32.safetensors` -> models/vae\n"
+   ],
+   "title": "Start here",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 2,
+   "type": "UNETLoader",
+   "pos": [
+    620,
+    0
+   ],
+   "size": [
+    480,
+    82
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader",
+    "models": [
+     {
+      "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "directory": "diffusion_models"
+     }
+    ]
+   },
+   "widgets_values": [
+    "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+    "default"
+   ],
+   "title": "H3 model (start frame to video + audio)",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 3,
+   "type": "CLIPLoader",
+   "pos": [
+    620,
+    120
+   ],
+   "size": [
+    480,
+    106
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      2
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader",
+    "models": [
+     {
+      "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "directory": "text_encoders"
+     }
+    ]
+   },
+   "widgets_values": [
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "minimax",
+    "default"
+   ],
+   "title": "H3 text encoder",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 4,
+   "type": "VAELoader",
+   "pos": [
+    620,
+    264
+   ],
+   "size": [
+    480,
+    58
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      3,
+      17
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "minimax_h3_video_vae_fp16.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors",
+      "directory": "vae"
+     }
+    ]
+   },
+   "widgets_values": [
+    "minimax_h3_video_vae_fp16.safetensors"
+   ],
+   "title": "H3 video VAE",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 5,
+   "type": "VAELoader",
+   "pos": [
+    620,
+    360
+   ],
+   "size": [
+    480,
+    58
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      19
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader",
+    "models": [
+     {
+      "name": "minimax_h3_audio_vae_fp32.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors",
+      "directory": "vae"
+     }
+    ]
+   },
+   "widgets_values": [
+    "minimax_h3_audio_vae_fp32.safetensors"
+   ],
+   "title": "H3 audio VAE",
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 6,
+   "type": "MiniMaxH3SigmaShift",
+   "pos": [
+    620,
+    460
+   ],
+   "size": [
+    480,
+    82
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      8,
+      9
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "MiniMaxH3SigmaShift"
+   },
+   "widgets_values": [
+    12.0,
+    3.0
+   ],
+   "title": "Shift (video 12, audio 3)"
+  },
+  {
+   "id": 7,
+   "type": "LoadImage",
+   "pos": [
+    1160,
+    0
+   ],
+   "size": [
+    420,
+    360
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      4
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": [],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "sy-pool-start.png",
+    "image"
+   ],
+   "title": "Load start picture",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 8,
+   "type": "PrimitiveStringMultiline",
+   "pos": [
+    1160,
+    400
+   ],
+   "size": [
+    420,
+    300
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "STRING",
+     "type": "STRING",
+     "links": [
+      5
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveStringMultiline"
+   },
+   "widgets_values": [
+    "A static, locked-off medium close-up, like a phone propped on the pool edge. A 23-year-old woman, an adult, with long wavy light-brown hair, a natural tan and light natural make-up, wears a simple white bikini top. She stands chest-deep in the clear blue water of a sunny villa pool and rests her forearms on the tiled edge. Palm trees and a white wall behind her, bright late-morning sun, soft water reflections. She talks to the camera in a bright, friendly influencer way, smiles often and moves one hand a little while she explains. [ENGLISH] She says, in a light, warm, cheerful voice: \"Good morning from the pool! You asked about my morning routine, so here it is. I wake up at seven and drink a big glass of water. Then a short swim, ten minutes, nothing crazy. It wakes me up better than coffee. After that, sun cream, always, even on cloudy days. People think the glow is a filter. It is not. It is sleep, water and sun cream. Breakfast is simple: fruit, yoghurt and a little honey. Then I plan my day right here by the water. Tell me your routine in the comments. See you tomorrow, bye!\" After the last word, she smiles, waves once and says nothing more. Sound: soft pool water and light birdsong under the voice. One continuous shot, no cuts, the camera does not move. No subtitles, no captions, no on-screen text, no watermark."
+   ],
+   "title": "Prompt",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 9,
+   "type": "PrimitiveInt",
+   "pos": [
+    1160,
+    740
+   ],
+   "size": [
+    200,
+    82
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      6
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    736,
+    "fixed"
+   ],
+   "title": "Width"
+  },
+  {
+   "id": 10,
+   "type": "PrimitiveInt",
+   "pos": [
+    1380,
+    740
+   ],
+   "size": [
+    200,
+    82
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "INT",
+     "type": "INT",
+     "links": [
+      7
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PrimitiveInt"
+   },
+   "widgets_values": [
+    416,
+    "fixed"
+   ],
+   "title": "Height"
+  },
+  {
+   "id": 11,
+   "type": "MarkdownNote",
+   "pos": [
+    1160,
+    860
+   ],
+   "size": [
+    420,
+    380
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote"
+   },
+   "widgets_values": [
+    "# Length helper\n\n| Seconds | Length (frames) |\n|---|---|\n| 5 | 124 |\n| 10 | 243 |\n| 20 | 481 |\n| 30 | 719 |\n| 40 | 957 |\n\nH3 only takes lengths on its own grid (17 x n + 5). Other numbers snap up.\n\n**Will my lines fit?** She speaks about 2.5 words a second.\nWords needed = seconds x 2.5, so 40 s needs about 100 words.\n\n**Fill the whole length with speech.** H3 fills a quiet end with made-up\nwords. Too many words and the take cuts the last line.\n\n**Tip:** test with 124 frames (5 s) first. Same seed, same start picture, then go long.\n"
+   ],
+   "title": "Length helper",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 12,
+   "type": "MiniMaxH3ImageToVideo",
+   "pos": [
+    1640,
+    0
+   ],
+   "size": [
+    380,
+    220
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 2
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 3
+    },
+    {
+     "name": "first_frame",
+     "type": "IMAGE",
+     "link": 4
+    },
+    {
+     "name": "last_frame",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "prompt",
+     "type": "STRING",
+     "link": 5,
+     "widget": {
+      "name": "prompt"
+     }
+    },
+    {
+     "name": "width",
+     "type": "INT",
+     "link": 6,
+     "widget": {
+      "name": "width"
+     }
+    },
+    {
+     "name": "height",
+     "type": "INT",
+     "link": 7,
+     "widget": {
+      "name": "height"
+     }
+    }
+   ],
+   "outputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      10
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      15
+     ],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "MiniMaxH3ImageToVideo"
+   },
+   "widgets_values": [
+    "",
+    736,
+    416,
+    957
+   ],
+   "title": "Length = frames (24 per second)",
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 13,
+   "type": "RandomNoise",
+   "pos": [
+    1640,
+    260
+   ],
+   "size": [
+    380,
+    82
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "NOISE",
+     "type": "NOISE",
+     "links": [
+      11
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RandomNoise"
+   },
+   "widgets_values": [
+    4242,
+    "fixed"
+   ],
+   "title": "Seed"
+  },
+  {
+   "id": 14,
+   "type": "KSamplerSelect",
+   "pos": [
+    1640,
+    380
+   ],
+   "size": [
+    380,
+    58
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "SAMPLER",
+     "type": "SAMPLER",
+     "links": [
+      13
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSamplerSelect"
+   },
+   "widgets_values": [
+    "res_multistep"
+   ]
+  },
+  {
+   "id": 15,
+   "type": "BasicScheduler",
+   "pos": [
+    1640,
+    480
+   ],
+   "size": [
+    380,
+    106
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "name": "SIGMAS",
+     "type": "SIGMAS",
+     "links": [
+      14
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "BasicScheduler"
+   },
+   "widgets_values": [
+    "simple",
+    20,
+    1.0
+   ],
+   "title": "Steps (20)"
+  },
+  {
+   "id": 16,
+   "type": "BasicGuider",
+   "pos": [
+    1640,
+    620
+   ],
+   "size": [
+    380,
+    46
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 9
+    },
+    {
+     "name": "conditioning",
+     "type": "CONDITIONING",
+     "link": 10
+    }
+   ],
+   "outputs": [
+    {
+     "name": "GUIDER",
+     "type": "GUIDER",
+     "links": [
+      12
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "BasicGuider"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 17,
+   "type": "SamplerCustomAdvanced",
+   "pos": [
+    1640,
+    700
+   ],
+   "size": [
+    380,
+    106
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "noise",
+     "type": "NOISE",
+     "link": 11
+    },
+    {
+     "name": "guider",
+     "type": "GUIDER",
+     "link": 12
+    },
+    {
+     "name": "sampler",
+     "type": "SAMPLER",
+     "link": 13
+    },
+    {
+     "name": "sigmas",
+     "type": "SIGMAS",
+     "link": 14
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 15
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "LATENT",
+     "links": [
+      16,
+      18
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "denoised_output",
+     "type": "LATENT",
+     "links": [],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SamplerCustomAdvanced"
+   },
+   "widgets_values": [],
+   "title": "Make the take"
+  },
+  {
+   "id": 18,
+   "type": "VAEDecode",
+   "pos": [
+    2080,
+    0
+   ],
+   "size": [
+    300,
+    46
+   ],
+   "flags": {},
+   "order": 17,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 16
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 17
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      20,
+      23
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": [],
+   "title": "Decode picture"
+  },
+  {
+   "id": 19,
+   "type": "VAEDecodeAudio",
+   "pos": [
+    2080,
+    90
+   ],
+   "size": [
+    300,
+    46
+   ],
+   "flags": {},
+   "order": 18,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 18
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 19
+    }
+   ],
+   "outputs": [
+    {
+     "name": "AUDIO",
+     "type": "AUDIO",
+     "links": [
+      21,
+      27
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecodeAudio"
+   },
+   "widgets_values": [],
+   "title": "Decode sound"
+  },
+  {
+   "id": 20,
+   "type": "CreateVideo",
+   "pos": [
+    2080,
+    180
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 20
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "link": 21
+    }
+   ],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      22
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CreateVideo"
+   },
+   "widgets_values": [
+    24.0,
+    8
+   ]
+  },
+  {
+   "id": 21,
+   "type": "SaveVideo",
+   "pos": [
+    2080,
+    320
+   ],
+   "size": [
+    420,
+    420
+   ],
+   "flags": {},
+   "order": 20,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 22
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveVideo"
+   },
+   "widgets_values": [
+    "H3-longshot/take",
+    "auto",
+    "auto"
+   ],
+   "title": "Save the take (736 x 416)"
+  },
+  {
+   "id": 22,
+   "type": "SeedVR2LoadDiTModel",
+   "pos": [
+    2560,
+    0
+   ],
+   "size": [
+    420,
+    230
+   ],
+   "flags": {},
+   "order": 21,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "torch_compile_args",
+     "type": "TORCH_COMPILE_ARGS",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "SEEDVR2_DIT",
+     "type": "SEEDVR2_DIT",
+     "links": [
+      24
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2LoadDiTModel"
+   },
+   "widgets_values": [
+    "seedvr2_ema_7b_sharp_fp8_e4m3fn_mixed_block35_fp16.safetensors",
+    "cuda:0",
+    0,
+    false,
+    "cpu",
+    true,
+    "sdpa"
+   ],
+   "title": "Upscale model",
+   "color": "#334",
+   "bgcolor": "#445"
+  },
+  {
+   "id": 23,
+   "type": "SeedVR2LoadVAEModel",
+   "pos": [
+    2560,
+    270
+   ],
+   "size": [
+    420,
+    330
+   ],
+   "flags": {},
+   "order": 22,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "torch_compile_args",
+     "type": "TORCH_COMPILE_ARGS",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "SEEDVR2_VAE",
+     "type": "SEEDVR2_VAE",
+     "links": [
+      25
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2LoadVAEModel"
+   },
+   "widgets_values": [
+    "ema_vae_fp16.safetensors",
+    "cuda:0",
+    false,
+    1024,
+    128,
+    false,
+    1024,
+    128,
+    "false",
+    "cpu",
+    true
+   ],
+   "title": "Upscale VAE",
+   "color": "#334",
+   "bgcolor": "#445"
+  },
+  {
+   "id": 24,
+   "type": "SeedVR2VideoUpscaler",
+   "pos": [
+    3020,
+    0
+   ],
+   "size": [
+    420,
+    400
+   ],
+   "flags": {},
+   "order": 23,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 23
+    },
+    {
+     "name": "dit",
+     "type": "SEEDVR2_DIT",
+     "link": 24
+    },
+    {
+     "name": "vae",
+     "type": "SEEDVR2_VAE",
+     "link": 25
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      26
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SeedVR2VideoUpscaler"
+   },
+   "widgets_values": [
+    42,
+    "fixed",
+    1080,
+    0,
+    41,
+    false,
+    "lab",
+    4,
+    0,
+    0.0,
+    0.0,
+    "cpu",
+    false
+   ],
+   "title": "Upscale to 1080p",
+   "color": "#334",
+   "bgcolor": "#445"
+  },
+  {
+   "id": 25,
+   "type": "CreateVideo",
+   "pos": [
+    3020,
+    440
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {},
+   "order": 24,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 26
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "link": 27
+    }
+   ],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      28
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CreateVideo"
+   },
+   "widgets_values": [
+    24.0,
+    8
+   ],
+   "color": "#334",
+   "bgcolor": "#445"
+  },
+  {
+   "id": 26,
+   "type": "SaveVideo",
+   "pos": [
+    3480,
+    0
+   ],
+   "size": [
+    520,
+    420
+   ],
+   "flags": {},
+   "order": 25,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 28
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveVideo"
+   },
+   "widgets_values": [
+    "H3-longshot/hd",
+    "auto",
+    "auto"
+   ],
+   "title": "Save the 1080p take"
+  },
+  {
+   "id": 27,
+   "type": "MarkdownNote",
+   "pos": [
+    2560,
+    640
+   ],
+   "size": [
+    420,
+    420
+   ],
+   "flags": {},
+   "order": 26,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote"
+   },
+   "widgets_values": [
+    "# Upscale to 1080p (SeedVR2)\n\nNeeds the custom node pack **ComfyUI-SeedVR2_VideoUpscaler** by numz\n(ComfyUI Manager, or https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler).\nThe model files download by themselves on first use.\n\nWe use the **7B sharp** model: it keeps the same face. A second H3 pass at a\nbigger size draws a new face, so we do not use that.\n\nLess VRAM? Pick a `3b` model or a `Q4_K_M` gguf in **Upscale model**, and raise\n`blocks_to_swap`. Less system RAM? Set `resolution` to 720.\n\nNo upscale wanted: select the four blue nodes and press **Ctrl+B** (bypass)\nor delete them. The small take is already saved.\n"
+   ],
+   "title": "Upscale notes",
+   "color": "#432",
+   "bgcolor": "#653"
+  }
+ ],
+ "links": [
+  [
+   1,
+   2,
+   0,
+   6,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   3,
+   0,
+   12,
+   0,
+   "CLIP"
+  ],
+  [
+   3,
+   4,
+   0,
+   12,
+   1,
+   "VAE"
+  ],
+  [
+   4,
+   7,
+   0,
+   12,
+   2,
+   "IMAGE"
+  ],
+  [
+   5,
+   8,
+   0,
+   12,
+   4,
+   "STRING"
+  ],
+  [
+   6,
+   9,
+   0,
+   12,
+   5,
+   "INT"
+  ],
+  [
+   7,
+   10,
+   0,
+   12,
+   6,
+   "INT"
+  ],
+  [
+   8,
+   6,
+   0,
+   15,
+   0,
+   "MODEL"
+  ],
+  [
+   9,
+   6,
+   0,
+   16,
+   0,
+   "MODEL"
+  ],
+  [
+   10,
+   12,
+   0,
+   16,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   11,
+   13,
+   0,
+   17,
+   0,
+   "NOISE"
+  ],
+  [
+   12,
+   16,
+   0,
+   17,
+   1,
+   "GUIDER"
+  ],
+  [
+   13,
+   14,
+   0,
+   17,
+   2,
+   "SAMPLER"
+  ],
+  [
+   14,
+   15,
+   0,
+   17,
+   3,
+   "SIGMAS"
+  ],
+  [
+   15,
+   12,
+   1,
+   17,
+   4,
+   "LATENT"
+  ],
+  [
+   16,
+   17,
+   0,
+   18,
+   0,
+   "LATENT"
+  ],
+  [
+   17,
+   4,
+   0,
+   18,
+   1,
+   "VAE"
+  ],
+  [
+   18,
+   17,
+   0,
+   19,
+   0,
+   "LATENT"
+  ],
+  [
+   19,
+   5,
+   0,
+   19,
+   1,
+   "VAE"
+  ],
+  [
+   20,
+   18,
+   0,
+   20,
+   0,
+   "IMAGE"
+  ],
+  [
+   21,
+   19,
+   0,
+   20,
+   1,
+   "AUDIO"
+  ],
+  [
+   22,
+   20,
+   0,
+   21,
+   0,
+   "VIDEO"
+  ],
+  [
+   23,
+   18,
+   0,
+   24,
+   0,
+   "IMAGE"
+  ],
+  [
+   24,
+   22,
+   0,
+   24,
+   1,
+   "SEEDVR2_DIT"
+  ],
+  [
+   25,
+   23,
+   0,
+   24,
+   2,
+   "SEEDVR2_VAE"
+  ],
+  [
+   26,
+   24,
+   0,
+   25,
+   0,
+   "IMAGE"
+  ],
+  [
+   27,
+   19,
+   0,
+   25,
+   1,
+   "AUDIO"
+  ],
+  [
+   28,
+   25,
+   0,
+   26,
+   0,
+   "VIDEO"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "1. Models",
+   "bounding": [
+    600,
+    -60,
+    520,
+    640
+   ],
+   "color": "#3f789e",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "2. Your picture, prompt and size",
+   "bounding": [
+    1140,
+    -60,
+    460,
+    1320
+   ],
+   "color": "#b58b2a",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "3. Make the take",
+   "bounding": [
+    1620,
+    -60,
+    420,
+    900
+   ],
+   "color": "#88a",
+   "font_size": 24,
+   "flags": {}
+  },
+  {
+   "id": 4,
+   "title": "4. Upscale (optional)",
+   "bounding": [
+    2540,
+    -60,
+    1420,
+    1140
+   ],
+   "color": "#335",
+   "font_size": 24,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.55,
+   "offset": [
+    40,
+    40
+   ]
+  }
+ },
+ "version": 0.4
+}
