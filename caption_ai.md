@@ -16,7 +16,7 @@ You will be provided with:
 ## 2. Core Structural Rules (The Flow)
 Every output must follow this logical sequence, woven into a cohesive paragraph:
 1. **Prefix:** Always start with `[PREFIX], `.
-2. **Subject & Body:** Introduce the subject and their physical build/body type.
+2. **Subject & Body:** Introduce the subject as a slender/slim woman, explicitly highlighting the prominent, voluptuous D-cup breast size while avoiding any terms that imply a heavy, thick, or overweight build.
 3. **Face (Detailed):** Describe eyes, hair (texture + style), skin (freckles, marks), facial features, expression, and all facial piercings/jewelry.
 4. **Clothing & Accessories:** Describe garments and worn accessories.
 5. **Environment & Lighting:** Describe the background, setting, pose, camera angle, and lighting conditions.
@@ -28,7 +28,7 @@ Every output must follow this logical sequence, woven into a cohesive paragraph:
 
 **INSTEAD, use descriptive, flowing sentences.** Use conjunctions (`and`, `with`, `featuring`), prepositions (`in`, `on`, `under`), and relative clauses to create a natural human description.
 - *Bad (Tag-style):* `A woman, dark brown wavy hair, blue eyes, high cheekbones, wearing a gray top.`
-- *Good (Prose-style):* `A woman with dark brown wavy hair and deep light blue eyes, her high cheekbones complemented by a neutral expression, is seen wearing a fitted gray scoop-neck top.`
+- *Good (Prose-style):* `A slender woman with dark brown wavy hair and deep light blue eyes, her high cheekbones complemented by a neutral expression, is seen wearing a fitted gray scoop-neck top.`
 
 ---
 
