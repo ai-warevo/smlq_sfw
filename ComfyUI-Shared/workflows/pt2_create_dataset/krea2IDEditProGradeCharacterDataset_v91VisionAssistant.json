@@ -1,0 +1,1233 @@
+{
+  "1": {
+    "inputs": {
+      "image": "smlq_sfw_00005.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load FACE IMAGE ONLY 🙂🖼️",
+      "cnr_id": "comfy-core",
+      "ver": "0.20.1"
+    }
+  },
+  "23": {
+    "inputs": {
+      "steps_total": 8,
+      "refiner_step": 8,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple"
+    },
+    "class_type": "KSampler Config (rgthree)",
+    "_meta": {
+      "title": "KSampler settings",
+      "cnr_id": "rgthree-comfy",
+      "ver": "1.0.2604070017"
+    }
+  },
+  "35": {
+    "inputs": {
+      "samples": [
+        "2891",
+        0
+      ],
+      "vae": [
+        "2888",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode",
+      "cnr_id": "comfy-core",
+      "ver": "0.20.1"
+    }
+  },
+  "52": {
+    "inputs": {
+      "pixels": [
+        "2872",
+        0
+      ],
+      "vae": [
+        "2888",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode",
+      "cnr_id": "comfy-core",
+      "ver": "0.20.1"
+    }
+  },
+  "168": {
+    "inputs": {
+      "prompt": [
+        "2876",
+        0
+      ],
+      "grounding_px": 768,
+      "system_prompt": "",
+      "clip": [
+        "2889",
+        1
+      ],
+      "image": [
+        "2872",
+        0
+      ],
+      "image_b": [
+        "2866",
+        0
+      ]
+    },
+    "class_type": "Krea2EditGroundedEncode",
+    "_meta": {
+      "title": "Krea2 Edit (encode)",
+      "cnr_id": "comfyui-krea2edit",
+      "ver": "7e68e90983b25e64dd02ac5d0c10593ea72a4cde"
+    }
+  },
+  "169": {
+    "inputs": {
+      "ref_boost": [
+        "2783",
+        0
+      ],
+      "ref_boost_a": [
+        "2771",
+        0
+      ],
+      "fit_mode": "fit",
+      "model": [
+        "171",
+        0
+      ],
+      "source_latent": [
+        "52",
+        0
+      ],
+      "source_latent_b": [
+        "2777",
+        0
+      ],
+      "ref_boost_mask": [
+        "1",
+        1
+      ],
+      "vae": [
+        "2888",
+        2
+      ],
+      "source_image": [
+        "2872",
+        0
+      ],
+      "source_image_b": [
+        "2866",
+        0
+      ],
+      "target_latent": [
+        "2797",
+        4
+      ]
+    },
+    "class_type": "Krea2EditModelPatch",
+    "_meta": {
+      "title": "Krea2Edit",
+      "cnr_id": "comfyui-krea2edit",
+      "ver": "7e68e90983b25e64dd02ac5d0c10593ea72a4cde"
+    }
+  },
+  "171": {
+    "inputs": {
+      "lora_name": "krea2_identity_edit_v1_2.safetensors",
+      "strength_model": 1,
+      "model": [
+        "2888",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Identity Edit LoRA",
+      "cnr_id": "comfy-core",
+      "ver": "0.26.0"
+    }
+  },
+  "175": {
+    "inputs": {
+      "conditioning": [
+        "168",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "Conditioning Zero Out",
+      "cnr_id": "comfy-core",
+      "ver": "0.28.0"
+    }
+  },
+  "197": {
+    "inputs": {
+      "images": [
+        "2834",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.28.0"
+    }
+  },
+  "199": {
+    "inputs": {
+      "value": "smlq_sfw"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "👋Name your Character !!",
+      "cnr_id": "comfy-core",
+      "ver": "0.28.0"
+    }
+  },
+  "235": {
+    "inputs": {
+      "value": "Dataset"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "Dataset name add",
+      "cnr_id": "comfy-core",
+      "ver": "0.28.0"
+    }
+  },
+  "240": {
+    "inputs": {
+      "delimiter": " ",
+      "string1": [
+        "199",
+        0
+      ],
+      "string2": [
+        "2876",
+        0
+      ]
+    },
+    "class_type": "JoinStrings",
+    "_meta": {
+      "title": "Text file string join",
+      "cnr_id": "comfyui-kjnodes",
+      "ver": "e27a505b3ba6ce42687fe00500deda103d9d6071"
+    }
+  },
+  "241": {
+    "inputs": {
+      "delimiter": "\\",
+      "string1": [
+        "261",
+        0
+      ],
+      "string2": [
+        "199",
+        0
+      ]
+    },
+    "class_type": "JoinStrings",
+    "_meta": {
+      "title": "Join Strings",
+      "cnr_id": "comfyui-kjnodes",
+      "ver": "e27a505b3ba6ce42687fe00500deda103d9d6071"
+    }
+  },
+  "257": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "Subject Front view.\nSubject right side, profile view.\nSubject rear view.\nSubject left side, profile view.\nSubject eye-level front view.\nSubject right side, profile view.\nSubject rear view, looking back over shoulder.\nSubject left side, profile view.\nExtreme close-up on eyes and lips, macro beauty shot.\nStreetwear style, full body shot, oversized hoodie and leggings, minimalist studio background.\nFull body shot, satin navy blue evening gown, grand ballroom, dramatic spotlighting, elegant posture.\nDynamic pose, jumping in a field of sunflowers, yellow sundress, bright afternoon sun, carefree expression, flowing hair.\nWearing a heavy wool coat and scarf, walking through a misty autumn forest, fallen orange leaves on the ground, soft diffused morning light filtering through trees, cinematic atmosphere, shallow depth of field with focus on her eyes, high-detail skin texture, natural lighting, 50mm lens, f/2.8, professional photography.\nSitting in a cozy cafe corner wearing a beige turtleneck sweater and jeans, holding a steaming cup of coffee, soft window light, warm and peaceful atmosphere.\nFull length mirror selfie, wearing a stylish leather jacket and skinny jeans, urban loft background, natural daylight, confident pose.\nSitting on a plush rug, oversized knit sweater, bare legs, looking up at the camera, cozy indoor lighting, soft focus.\nWorking in an art studio, messy apron over casual clothes, paint splatters, sunlight streaming through large windows, creative and focused expression.\nWalking through a neon-lit alleyway, silver sequin cocktail dress, high heels, cinematic night lighting, reflections on wet pavement, moody atmosphere.\n3/4 body shot, denim overalls and a white tank top, sun-drenched garden setting, soft bokeh, captured on 35mm film style.\nLeaning against an old stone wall in a Mediterranean village, summer linen dress, bright sunlight, blue sea in the background, relaxed pose.\nTennis outfit, white pleated skirt and polo shirt, athletic build, sunny tennis court, midday light, energetic vibe.\nBohemian style, crochet top and long flowing skirt, desert landscape at sunset, warm orange tones, looking towards the horizon, wide shot.\nLying on white linen sheets in a sunlit bedroom, silk camisole, soft morning glow, ethereal and dreamy atmosphere, high-key lighting.\nSci-fi pilot suit, sleek futuristic jumpsuit, cockpit of a spaceship, glowing control panels, dramatic cinematic lighting, intense expression.\nUpper torso close up of face. beauty shot.\nCasual outfit, full body shot, form fitting, neutral background.\nFull body shot, white lace bra and panties, luxury penthouse apartment, soft lighting, front view.\nAction pose, on beach, black micro bikini, golden hour lighting, seductive look, wet hair.\nWearing a fur-trimmed hood, side profile looking out a rain-speckled window, crisp raindrops on the glass and soft diffused overcast side light illuminating the face, with a subtle rim light on the hair, Shallow depth of field with the focal plane on the near eye, creamy bokeh in the background, High-detail skin texture and natural pores, defined eyelashes, slightly sharpened eyes and lips, hand near face showing glittery nails and textured winter clothing, Warm highlights balanced with slight teal-tinted shadows for a moody yet natural editorial color grade, gentle contrast, soft film grain and a subtle vignette for focus, Lens feel: 85mm, f/1.8, shallow DOF, High-resolution, editorial-quality output.\nStanding in a kitchen doorway wearing a cropped red off the shoulder cutoff t-shirt, her hair is styled in loose waves and falls over her shoulder. her eyes are a bright green color, and she has a slight smile on her lips, the lighting is soft and natural, creating a warm and inviting atmosphere.\nTaking a selfie in a black dress and black high heel shoes in front of an ornate full length mirror, adorned with sparkling jewelry, with a confident and alluring expression, her makeup is subtle and natural, with a hint of blush on her cheeks, she is wearing a short, black dress that accentuates her curves, along with a statement necklace and matching bracelets, full body shot, natural lighting, soft bokeh, shallow DOF.\nOn knees looking, up, white lace bra and panties, exposed breasts, ass view, looking seductively at viewer, pov top angle view.\nSitting at an office desk, dutch angle view, black miniskirt, black high heel shoes, white blouse unbuttoned at the front, cleavage, hair in a neat bun, perfect makeup, mascara, legs crossed, looking at viewer.\nLate night, city street, red dress with a long slit up the side that exposes her thigh and accentuates her curves, high heels, perfect makeup, red lipstick, dark lighting, shadows, shallow depth of field, blurred background, contrappopsto, hand on hip, hipbone.\nPlayful 3/4 body shot,tight white button-up shirt tied at the waist with cutoff shorts,  hoop earrings,cleavage, minimal makeup, flat lighting,soft focus, captured on sony a7, professionally shot, dark background\nLeaning against a balcony railing in a luxury penthouse, city view, golden hour, wearing red lace bra and panties, looking back at viewer with a seductive glance, eye contact rear angle shot, ass focus, \nBlack yoga pants, grey sports bra, sweaty, headphones, hair in messy ponytail, wet hair, gym setting, admiring her curves, body focus, eye level view.\nPink crop top sweater, underboob, midriff, navel, breasts, white slacks, makeup, outdoors, hair in ponytail, blue sky with clouds, looking at viewer, eye contact, view from below.\nA angle from above standing confidently in front of a mirror in a sheer nightgown under soft bedroom lighting, standing in the middle of the frame with her arms crossed, looking directly at the camera with a seductive expression, her hair is styled in loose waves and falls down her back, framing her face, She is wearing minimal makeup, the background is blurred, but the focus is on the woman's face and upper body, which contrasts nicely with the neutral tones of the setting, the lighting is soft and natural, highlighting her features and creating a subtle glow in the otherwise monochromatic image, the overall mood of the image is sophisticated and alluring, making it a captivating piece of photography.\nDynamic shot, cleavage, sideboob, tank top, cyberpunk scene, hair in high ponytail, posing for the camera. ",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1048
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt list 1 (base)",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "258": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "Front view, full body, neutral expression, standing naturally, soft charcoal-gray blouse and matching tailored trousers, soft studio lighting, plain background.\nSubject right side, profile view, three-quarter body, calm expression, soft ivory knit sweater and dark navy skirt, natural daylight, clean background.\nSubject rear view, full body standing, relaxed posture, warm camel coat over cream trousers, soft even lighting, neutral backdrop.\nSubject left side, profile view, upper body, thoughtful expression, muted sage-green blouse, gentle side lighting, shallow depth of field.\nUpper torso close-up of face, beauty portrait, soft natural light, subtle smile, high detail skin texture, shallow DOF.\nCasual outfit, full body shot, comfortable medium-wash blue jeans and soft heather-gray sweater, neutral background, soft daylight, natural pose.\nFull body shot, elegant casual dress in dusty rose, modern apartment interior, soft window lighting, front view, relaxed stance.\nAction pose on a sunny beach, light pale-yellow summer dress, golden hour lighting, wind-blown hair, cheerful expression, wet sand underfoot.\nWearing a deep charcoal fur-trimmed hooded coat, side profile looking out a rain-speckled window, crisp raindrops on the glass, soft diffused overcast side light, subtle rim light on hair, shallow depth of field focused on near eye, creamy bokeh, high-detail skin texture, natural pores, defined eyelashes, hand near face showing textured winter clothing, warm highlights with slight teal-tinted shadows, gentle contrast, soft film grain, subtle vignette, 85mm lens feel, f/1.8, editorial quality.\nStanding in a kitchen doorway wearing a cropped red off-the-shoulder t-shirt and medium-wash blue jeans, loose waves falling over one shoulder, bright green eyes, slight smile, soft natural lighting, warm inviting atmosphere.\nTaking a selfie in a stylish black midi dress and black high heels in front of an ornate full-length mirror, subtle sparkling jewelry, confident expression, natural makeup with soft blush, full body shot, soft natural lighting, gentle bokeh, shallow DOF.\nKneeling pose looking slightly upward, casual soft white top and light-wash blue jeans, friendly expression, soft indoor lighting, eye-level view.\nSitting at an office desk, slight dutch angle, black pencil skirt and crisp white blouse, neat bun hairstyle, polished but natural makeup, legs crossed, looking toward camera, professional office background.\nLate night city street, deep red dress with modest side slit, black high heels, elegant makeup with red lipstick, dramatic shadows and soft street lighting, shallow depth of field, blurred background, hand on hip, confident posture.\nPlayful three-quarter body shot, white button-up shirt tied at the waist with light-wash cutoff denim shorts, hoop earrings, minimal makeup, soft even lighting, gentle focus, dark background, professional photography look.\nLeaning against a balcony railing in a luxury penthouse, city skyline view at golden hour, elegant deep-red blouse and matching tailored pants, looking back over shoulder with a calm smile, soft warm light, three-quarter rear angle.\nBlack yoga pants and heather-gray sports top, light sweat, headphones, messy ponytail, gym interior, natural posture, eye-level view, soft overhead lighting.\nSoft pink crop sweater and white trousers, outdoors under blue sky with soft clouds, hair in ponytail, looking at camera with friendly eye contact, slight low angle, natural daylight.\nHigh angle from above, standing confidently in front of a bedroom mirror in a long soft ivory nightgown, arms crossed loosely, looking toward camera with gentle expression, loose waves framing face, minimal makeup, soft bedroom lighting, focus on face and upper body, blurred neutral background, sophisticated calm mood.\nDynamic pose, casual black tank top, cyberpunk-inspired neon city background, high ponytail, energetic stance facing camera, colorful lighting accents, shallow depth of field.\nFront view, full body, neutral expression, standing naturally, forest green silk blouse and black high-waisted tailored trousers, soft studio lighting, minimalist background.\nSubject right side, profile view, three-quarter body, calm expression, cream cashmere sweater and tan skirt, natural morning light, clean backdrop.\nSubject rear view, full body standing, relaxed posture, long beige trench coat over white jeans, soft even lighting, neutral studio setting.\nSubject left side, profile view, upper body, serene expression, lavender linen shirt, gentle side lighting, shallow depth of field.\nExtreme close-up on face, beauty portrait, soft diffused light, high detail skin texture, natural pores, shallow DOF.\nCasual outfit, full body shot, olive cargo pants and a white ribbed tank top, neutral background, bright daylight, relaxed pose.\nFull body shot, elegant summer dress in sky blue, garden terrace, soft afternoon sun, front view, graceful stance.\nAction pose on a rocky coastline, flowing teal maxi dress, sunset lighting, wind-swept hair, energetic expression, waves crashing in background.\nWearing a heavy dark velvet cloak with an oversized collar, side profile looking through a frosted window, condensation on the glass, soft dim twilight light, subtle rim light on hair, shallow depth of field focused on eyelashes, high-detail skin texture, natural pores, cinematic atmosphere, warm highlights with cool shadows, 85mm lens feel, f/1.4, editorial quality.\nStanding in a sunlit library wearing a navy blue cardigan and a pleated skirt, hair cascading over shoulders, soft natural light through bookshelves, warm academic atmosphere.\nTaking a selfie in a shimmering silver cocktail dress and strappy heels in front of a modern marble vanity, elegant jewelry, confident expression, full body shot, soft ring lighting, gentle bokeh.\nSitting on a wooden bench, casual oversized sweater and leggings, looking thoughtfully away, park setting, dappled sunlight through leaves, eye-level view.\nSitting in a high-end lounge, slight dutch angle, emerald green silk slip dress, gold accessories, hair in an elegant updo, legs crossed, sophisticated atmosphere.\nRainy night in a metropolitan district, sleek leather jacket and black skinny jeans, neon reflections on wet streets, dramatic lighting with deep shadows, shallow depth of field, cinematic noir vibe.\nPlayful three-quarter body shot, denim jacket over a floral sundress, sun hat, minimal makeup, soft golden light, outdoor meadow background, professional photography style.\nLeaning against a rustic wooden fence in a vineyard, sunset lighting, white linen blouse and khaki shorts, looking back with a gentle smile, warm backlight, three-quarter view.\nNavy blue leggings and a teal racerback sports top, light perspiration, hair in a high braid, yoga studio setting, natural posture, soft overhead lighting.\nMustard yellow knit top and denim skirt, outdoors under a bright midday sun, looking at the camera with a bright smile, slight low angle, clear summer sky.\nHigh angle from above, standing in front of a vanity mirror in a silk champagne-colored robe, soft warm lamp lighting, relaxed expression, hair styled in loose waves, focus on face and shoulders, intimate bedroom setting.\nDynamic action shot, metallic silver bodysuit, futuristic urban rooftop background with holographic lights, high ponytail, intense gaze, vibrant neon accents, shallow depth of field.",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1048
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt list 2 PG-13",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "259": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "\nStanding front view, full body, calm neutral expression, tailored wool coat over turtleneck and trousers, soft overcast daylight, quiet cobblestone alley in an old European quarter.  \nThree-quarter view, slight turn to the left, gentle closed-mouth smile, cream cable-knit sweater and high-waisted trousers, warm golden-hour side light, stone terrace overlooking a vineyard.  \nProfile view facing right, upper body, pensive faraway look, soft linen shirt with rolled sleeves, cool diffused morning light, wooden pier beside a still mountain lake.  \nRear three-quarter view looking over shoulder, full body, soft curious expression, flowing midi skirt and light blouse, gentle backlight with lens flare, path through a bamboo forest.  \nClose-up beauty portrait, eyes looking directly at camera with quiet confidence, delicate silk scarf and simple blouse, soft Rembrandt lighting, dimly lit antique bookstore aisle.  \nSitting cross-legged on a low stone bench, relaxed content expression, oversized knit cardigan and wide-leg pants, soft dappled sunlight filtering through leaves, shaded courtyard of an old monastery.  \nLeaning against a weathered wooden railing, arms loosely folded, slight amused smile, denim jacket over white tee and cargo pants, cool blue-hour light, elevated walkway above a foggy harbor.  \nWalking toward camera along a gravel path, soft open smile, light trench coat and ankle boots, warm late-afternoon sunlight, tree-lined lane leading to a countryside manor.  \nStanding in a sunlit conservatory, one hand resting on a metal railing, serene expression, soft floral dress and cardigan, bright natural greenhouse light, surrounded by tropical plants and glass panels.  \nSitting at a small round table outdoors, thoughtful gaze downward, tailored blazer and turtleneck, soft overcast daylight, quiet plaza with a central fountain.  \nKneeling beside a low stone wall, looking up with a gentle smile, rustic linen shirt and trousers, warm golden side light, hillside olive grove at sunset.  \nStanding on a narrow stone bridge, hands resting on the parapet, calm contemplative expression, long wool coat and scarf, cool misty morning light, arched bridge over a quiet canal.  \nSitting on the edge of a wide windowsill, soft wistful expression, oversized sweater and leggings, cool blue window light mixed with warm interior lamps, high attic room with sloping ceiling.  \nLeaning slightly forward over a wooden counter, focused interested expression, casual button-up shirt and apron, soft warm overhead pendant lights, cozy corner of a pottery studio.  \nStanding in an open arched doorway, light breeze in hair, peaceful relaxed expression, simple summer dress, bright midday sunlight, entrance to a whitewashed coastal chapel.  \nSitting on a low stone step, legs loosely crossed, quiet amused smile, corduroy jacket and jeans, soft afternoon light, shaded colonnade of an old university courtyard.  \nThree-quarter body shot, one hand lightly touching a railing, confident neutral expression, structured blazer and slim trousers, soft directional window light, modern glass-walled sky lounge.  \nStanding beside a tall arched window, looking outward with soft melancholy, cashmere sweater and tailored pants, cool rainy-day ambient light, grand library reading room with high shelves.  \nWalking slowly along a wooden boardwalk, gentle smile, light linen shirt and rolled trousers, warm late-day sunlight, elevated walkway through a coastal wetland.  \nSitting on the floor of a sunlit loft, knees drawn up, peaceful introspective expression, soft hoodie and joggers, bright natural skylight, minimalist artist’s studio with large canvases.  \nStanding beneath hanging paper lanterns at dusk, soft warm smile, elegant wrap dress, warm glowing lantern light mixed with blue twilight, quiet night market street.  \nLeaning back against a wooden post, arms resting loosely, easy relaxed smile, flannel shirt and jeans, soft golden-hour light, rustic porch of a mountain cabin.  \nClose-up three-quarter profile looking slightly downward, quiet thoughtful expression, soft turtleneck, gentle side lighting with soft shadows, dimly lit jazz bar corner.  \nFull body standing with hands lightly clasped in front, composed neutral expression, tailored overcoat and scarf, soft diffused winter light, snow-dusted path through a silent evergreen forest.  \nSitting on a low stone ledge, elbows resting on knees, open friendly expression, light denim shirt and chinos, soft afternoon sunlight, wide steps leading up to a hillside temple.\nFront view, full body, composed expression, structured charcoal blazer and silk trousers, soft diffused studio light, minimalist architectural background.\nThree-quarter view, slight turn to the right, gentle smile, mustard yellow knit dress, warm afternoon sun, blooming wildflower meadow.\nProfile view facing left, upper body, serene gaze, white linen blouse, cool morning mist, edge of a tranquil bamboo grove.\nRear three-quarter view looking over shoulder, full body, soft curious expression, flowing emerald silk skirt and cream top, golden hour backlight with soft lens flare, overlooking a Mediterranean coastline.\nClose-up beauty portrait, eyes focused on camera, delicate silver necklace, soft butterfly lighting, dimly lit luxury hotel lounge.\nSitting on weathered stone steps, relaxed posture, oversized cashmere sweater and leggings, dappled sunlight through oak trees, shaded garden path.\nLeaning against a vintage dark-toned car, arms crossed, slight smirk, leather jacket and slim jeans, warm sunset light, desert highway setting.\nWalking toward camera, bright open smile, summer sundress with floral print, soft midday sun, bustling outdoor flower market.\nStanding on a rooftop garden at dusk, one hand touching a planter, calm expression, elegant evening jumpsuit, twilight blue hour light mixed with warm city lights, urban skyline background.\nSitting at a marble cafe table, thoughtful gaze, tailored trench coat and scarf, soft overcast daylight, quiet Parisian street corner.\nKneeling in a field of lavender, looking up with a peaceful expression, flowing lilac sundress, warm golden hour light, endless purple rows stretching to the horizon.\nStanding on a lighthouse balcony, hair windswept, determined gaze, heavy nautical sweater and boots, dramatic stormy sea background, cool moody lighting.\nSitting in a velvet armchair by a fireplace, wistful expression, cozy lounge wear, warm amber glow from the flames, dimly lit study with bookshelves.\nLeaning over a wrought-iron balcony, looking down at the street, chic silk blouse and skirt, soft twilight light, romantic European city view.\nWalking through an autumn park, gentle smile, long wool coat and scarf, soft afternoon sun filtering through orange leaves, leaf-strewn path.\nSitting on a subway seat, looking out the window, casual urban outfit, cool artificial light mixed with passing tunnel lights, motion blur effect.\nThree-quarter body shot, standing in an art gallery, confident expression, sleek black cocktail dress, dramatic spotlighting, minimalist white walls.\nStanding in a cherry blossom orchard, soft dreamy expression, light pastel dress, soft spring morning light, falling petals in the air.\nWalking along a desert dune, flowing silk wrap dress, harsh midday sun with sharp shadows, vast sand landscape, cinematic wide shot.\nSitting at a candlelit dinner table, elegant and poised, satin evening gown, warm flickering candlelight, high-end restaurant interior.\nStanding beneath a canopy of willow trees, peaceful expression, bohemian linen outfit, soft dappled light, edge of a quiet pond.\nLeaning against a red brick wall, relaxed pose, denim shirt and chinos, warm late-afternoon sun, urban alleyway with street art.\nClose-up three-quarter profile, serene expression, silk robe, soft diffused steam and warm ambient light, luxury spa setting.\nFull body standing on a wooden porch, composed expression, heavy knit sweater and wool trousers, crisp morning frost, snowy mountain landscape.\nSitting on a sand dune at twilight, looking toward the ocean, lightweight linen clothing, soft blue hour light, calm sea in the background.\na cinematic medium shot from a low angle, standing inside a moody vintage glass greenhouse at night during a heavy tropical rainstorm. She is leaning slightly against a damp iron structural beam with a calm and confident expression, looking down towards the camera. She wears a dark charcoal grey low-cut silk camisole underneath an open, wet transparent vinyl hooded raincoat, highlighting her slender frame, defined collarbones, and voluptuous bust. Her long, voluminous espresso-brown wavy hair is damp, with a clean center part and loose face-framing strands clinging to her cheeks. Her fair matte skin features a dense cluster of light brown freckles across her nose bridge. On the viewer's left, her cheek features a distinct tiny dark beauty mark near the corner of her plush lips, and a small silver hoop piercing glints on her nostril wing. On the viewer's right, a minimalist double silver hoop piercing tightly hugs the outer arch of her eyebrow. Symmetrical large thin silver hoop earrings are visible. Dramatic moody lighting with cool blue neon reflections from city lights outside filtering through the rain-streaked glass panels, mixing with a warm amber glow from a single vintage Edison bulb hanging inside, casting sharp highlights on her wet raincoat, skin, and the surrounding oversized tropical monstera leaves.",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1048
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt List 3 lighting and camera 🔦📷",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "260": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "Front view, standing in sheer black lingerie, soft studio lighting, hands resting lightly on hips, neutral background.\nRight side profile, wearing a silk robe slipped off one shoulder, soft window light, looking slightly downward.\nRear view, standing in lace panties only, looking back over shoulder, warm low-key lighting, plain backdrop.\nLeft side profile, upper body in a barely-there bralette, hand running through hair, shallow depth of field.\nClose-up beauty shot of face and bare shoulders, soft parted lips, dramatic side lighting, high detail skin texture.\nFull body, kneeling on a bed in white lace bra and panties, hands on thighs, soft bedroom lighting.\nSitting on the edge of a luxury bathtub, wrapped loosely in a towel that slips at the chest, steam in the air, soft ambient light.\nStanding in a doorway wearing an unbuttoned men’s shirt and nothing else, one hand holding the frame, warm interior light.\nLeaning against a large window at night, city lights behind, wearing a sheer nightgown, hands pressed to the glass.\nLying on her side on a rumpled bed, propped on one elbow, wearing only black panties, soft lamplight, looking toward camera.\nKneeling on the floor, back arched slightly, wearing a strappy bodysuit, soft overhead lighting, looking up.\nSitting in an armchair with legs draped over the arm, silk slip dress riding up, soft evening light, relaxed sensual expression.\nStanding in a hotel room, back to camera, looking over shoulder, wearing only a garter belt and stockings, soft window light.\nSitting on a kitchen counter, wearing an oversized sweater that slips off one shoulder and nothing underneath, soft morning light.\nLeaning forward over a desk, blouse unbuttoned low, black skirt hiked slightly, office setting, dramatic side lighting.\nStanding in a rain-speckled glass shower stall, water running down bare skin, steam, soft diffused light, hands in hair.\nLying on her back on silk sheets, one arm above her head, wearing a thin camisole and panties, soft moonlight through curtains.\nSitting cross-legged on the floor in front of a mirror, wearing only a lace bralette and shorts, soft vanity lighting.\nStanding on a balcony at night in a sheer robe open at the front, city skyline behind, cool blue ambient light.\nKneeling on a couch, facing camera, wearing a low-cut tank top pulled down at one shoulder and short shorts, warm indoor light.\nLying on her stomach on a bed, propped on elbows, wearing a thin tank top and panties, soft natural window light.\nSitting on the edge of a pool at night, wet skin, wearing a micro bikini, underwater lights glowing, looking toward camera.\nStanding in a dimly lit hallway, back against the wall, wearing a short silk robe loosely tied, soft rim lighting.\nSitting on the floor with legs extended, leaning back on her hands, wearing only a long open cardigan, soft lamplight.\nStanding in front of a full-length mirror, adjusting a sheer bodysuit, soft bedroom lighting, three-quarter view.\nFront view, standing in a deep emerald silk slip dress, soft studio lighting, neutral background.\nRight side profile, wearing a sheer white lace robe, soft morning window light, looking out at a garden.\nRear view, standing in black satin panties, looking back over shoulder, warm candlelight, dark bedroom setting.\nLeft side profile, upper body in a delicate lace bralette, hand resting on collarbone, soft rim lighting, shallow depth of field.\nClose-up beauty shot, bare shoulders and neck, soft parted lips, dramatic low-key lighting, high detail skin texture.\nFull body, kneeling on a plush rug, wearing a burgundy velvet bodysuit, soft warm lamp light, cozy living room interior.\nSitting on a marble vanity, wrapped loosely in a silk towel, soft diffused bathroom light, steam in the air.\nStanding in a sunlit hallway, wearing an oversized white button-down shirt, unbuttoned at the top, bright natural light.\nLeaning against a velvet headboard, wearing a sheer navy nightgown, moonlight filtering through blinds, soft shadows.\nLying on her side on silk sheets, propped on one elbow, wearing a lace camisole, soft warm glow, intimate setting.\nKneeling on a chaise longue, wearing a champagne satin robe, soft evening light, elegant interior background.\nSitting in a dimly lit library, wearing a black lace corset and silk skirt, soft candlelight, moody atmosphere.\nStanding by a fireplace, back to camera, looking over shoulder, wearing a long sheer robe, warm amber glow.\nSitting on a window seat, wearing an oversized knit sweater and nothing else, soft overcast daylight, cozy mood.\nLeaning against a doorway, wearing a silk slip dress with thin straps, soft side lighting, dramatic shadows.\nStanding in a sun-drenched room, wearing a white lace bodysuit, bright natural light, airy atmosphere.\nLying on her back, arms raised, wearing sheer black stockings and a lace bralette, soft moonlight, dreamy mood.\nSitting on a velvet sofa, legs crossed, wearing a satin robe, soft warm indoor lighting, luxury apartment setting.\nThree-quarter view, standing in front of a mirror, wearing a delicate silk chemise, soft vanity light, elegant dressing room.\nKneeling on a bed, facing camera, wearing a sheer mesh top and lace panties, soft rim lighting, intimate bedroom.\nSitting on a balcony chair at dawn, wrapped in a light silk shawl, soft blue hour light, city view background.\nLeaning against a dark wood wall, wearing a black satin bodysuit, dramatic low-key lighting, moody atmosphere.\nClose-up profile, looking down, bare neck and shoulders, soft diffused light, high detail skin texture.\nFull body, standing in a sheer lavender nightgown, soft window light, ethereal and dreamy mood.\nSitting on the floor, leaning against a bed, wearing an oversized silk shirt, soft warm lamp light, relaxed posture.",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1048
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt List 7 R-Rated🚫",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "261": {
+    "inputs": {
+      "inputcount": 3,
+      "delimiter": " ",
+      "string_1": [
+        "199",
+        0
+      ],
+      "string_2": [
+        "235",
+        0
+      ],
+      "string_3": [
+        "264",
+        0
+      ]
+    },
+    "class_type": "LCJoinStrings",
+    "_meta": {
+      "title": "LC Join Strings 🔗",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "ba9567ec35f8ddd8576020e6102116340dcbd446"
+    }
+  },
+  "263": {
+    "inputs": {
+      "value": 22
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Run 🏃‍♀️‍➡️ #",
+      "cnr_id": "comfy-core",
+      "ver": "0.28.0"
+    }
+  },
+  "264": {
+    "inputs": {
+      "text": "21",
+      "any": [
+        "263",
+        0
+      ]
+    },
+    "class_type": "LCShowAny",
+    "_meta": {
+      "title": "LC Show Any 🔤",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "aux_id": "lonecatone23/ComfyUI_LC123_nodes",
+      "ver": "ba9567ec35f8ddd8576020e6102116340dcbd446"
+    }
+  },
+  "2770": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "Standing front view, full body, relaxed arms at sides, face showing a soft neutral expression, soft oatmeal-beige knit top and stone-gray trousers, soft studio lighting, plain neutral background.\nThree-quarter view, slight turn to the right, face wearing a casual open smile, warm terracotta sweater and cream trousers, natural window light, indoor living room setting.\nProfile view facing left, upper body, face locked in a thoughtful distant expression, muted dusty-blue blouse, soft side lighting, shallow depth of field.\nRear three-quarter view looking over shoulder, full body, face turning with a gentle curious smile, soft sage-green cardigan over light khaki pants, gentle breeze, outdoor park path.\nClose-up beauty portrait, eyes looking slightly off-camera, face holding a soft serene expression, soft diffused light, high detail skin texture.\nSitting cross-legged on a wooden floor, casual soft moss-green sweater and medium-wash blue jeans, face lit with a warm contented smile, warm indoor lighting, cozy home interior.\nLeaning against a brick wall, arms crossed loosely, face set in a calm slightly amused expression, faded olive jacket over cream t-shirt, urban street background, soft overcast daylight.\nWalking toward camera on a quiet sidewalk, light sand-colored jacket and dark indigo jeans, face showing a relaxed open smile, golden hour lighting, city skyline soft in background.\nStanding in a modern kitchen, hand resting on counter, face carrying a soft neutral smile, simple soft lavender blouse and charcoal trousers, soft natural light from windows.\nSitting at a café table outdoors, holding a coffee cup, face wearing a gentle relaxed smile, light butter-yellow dress, sunny afternoon, blurred street behind.\nKneeling on one knee in a garden, looking up, face bright with a calm smile, soft floral-print blouse in pale peach and green, floral background, soft dappled sunlight.\nStanding on a balcony overlooking the city, hands on railing, face held in a quiet contemplative expression, elegant deep teal blouse, evening blue hour lighting.\nSitting on the edge of a bed, soft morning light through curtains, loose soft heather-lavender sweater, face soft with a peaceful sleepy expression, relaxed posture.\nLeaning forward slightly over a desk, professional soft taupe blouse, office setting, face fixed in a focused concentrated expression, soft overhead light.\nStanding in an open doorway, light breeze catching hair, face glowing with a soft happy expression, casual soft coral summer top and white shorts, bright outdoor daylight.\nSitting on a park bench, legs crossed, reading a book, face absorbed in a quiet focused expression, soft rust-orange cardigan over cream top, soft autumn light, trees in background.\nThree-quarter body shot, one hand in pocket, medium-wash denim jacket and matching jeans, face displaying an easy confident smile, industrial loft interior, soft window light.\nStanding near a large window, looking outside, face set in a soft pensive expression, soft oatmeal sweater, rainy day ambient light, reflections on glass.\nWalking along a beach shoreline, light natural-linen outfit in warm sand tones, face carrying a peaceful contented smile, late afternoon sun, gentle waves in background.\nSitting on the floor against a wall, knees drawn up, casual soft slate-blue hoodie, face quiet with an introspective expression, soft indoor lamp light, minimalist room.\nStanding under string lights at dusk, light soft blush-pink dress, face lit by a warm soft smile, warm glowing background, relaxed open posture.\nLeaning back in a comfortable chair, arms resting on armrests, face relaxed into a contented expression, smart casual soft olive blazer over cream shirt and dark charcoal pants, modern living room.\nClose-up profile looking downward, face soft with a reflective expression, soft natural light, outdoor garden setting, shallow depth of field.\nFull body standing with hands clasped behind back, formal-casual soft navy blazer and matching pants, face held in a calm composed expression, clean studio backdrop.\nSitting on steps outside a building, elbows on knees, medium-wash denim shirt and jeans with white sneakers, face showing a casual easygoing smile, soft afternoon light, urban architecture behind.\nFront view, full body, neutral expression, slate-blue silk blouse and charcoal tailored trousers, soft studio lighting, plain minimalist background.\nThree-quarter view, slight turn to the right, casual open smile, mustard yellow knit top and white skirt, warm natural window light, sunlit breakfast nook.\nProfile view facing left, upper body, thoughtful distant expression, emerald green satin shirt, soft side lighting, shallow depth of field, library setting.\nRear three-quarter view looking over shoulder, full body, gentle curious smile, burnt orange cardigan over light denim, gentle backlight, forest trail path.\nClose-up beauty portrait, eyes looking slightly off-camera, serene expression, soft diffused lighting, high detail skin texture and natural pores.\nSitting cross-legged on a rug, relaxed contented smile, oversized cream sweater and tan leggings, warm indoor lighting, cozy reading nook.\nLeaning against a concrete wall, calm slightly amused expression, black leather jacket over a white tee, urban industrial background, soft overcast daylight.\nWalking toward camera, relaxed open smile, camel-colored trench coat and dark indigo jeans, golden hour lighting, city street with soft bokeh.\nStanding in a bright breakfast nook, hand resting on a marble counter, soft neutral smile, white linen blouse and navy trousers, natural morning light.\nSitting at an outdoor bistro table, gentle relaxed smile, mint green sundress, sunny afternoon, blurred cafe terrace background.\nKneeling in a flower bed, looking up with a calm smile, lavender floral print blouse, soft dappled sunlight through garden trees.\nStanding on a high-rise balcony, hands on railing, quiet contemplative expression, sapphire blue evening dress, twilight blue hour lighting.\nSitting on the edge of a sofa, peaceful sleepy expression, soft heather-grey lounge set, morning light filtering through sheer curtains.\nLeaning forward over a laptop, focused concentrated expression, navy blue blazer and white blouse, modern office setting, soft overhead light.\nStanding in an open garden gate, happy expression, lemon yellow crop top and white linen shorts, bright outdoor daylight.\nSitting on a stone wall, absorbed in a book, quiet focused expression, burgundy knit cardigan over cream top, soft autumn afternoon light.\nThree-quarter body shot, confident easy smile, denim shirt and black midi skirt, industrial loft interior, soft window light.\nStanding near a large glass pane, pensive expression, charcoal grey turtleneck sweater, rainy day ambient light with reflections.\nWalking along a coastal path, peaceful contented smile, white linen outfit in sand tones, late afternoon sun, ocean waves in background.\nSitting on the floor against a wooden panel, introspective expression, oversized navy blue hoodie, soft warm lamp light, minimalist studio room.\nStanding under fairy lights at dusk, soft warm smile, champagne silk slip dress, warm glowing background, relaxed posture.\nLeaning back in a lounge chair, contented expression, olive green smart-casual blazer over beige shirt and dark trousers, modern sunroom.\nClose-up profile looking downward, reflective expression, soft natural light, botanical garden setting, shallow depth of field.\nFull body standing with hands at sides, composed neutral expression, black tailored jumpsuit, clean studio backdrop, professional lighting.\nSitting on urban steps, easygoing smile, denim shirt and khaki chinos, soft afternoon light, city architecture in background.",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1048
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt List  4 Facial expression 😉",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "2771": {
+    "inputs": {
+      "Xi": 1,
+      "Xf": 1.25,
+      "isfloatX": 1
+    },
+    "class_type": "mxSlider",
+    "_meta": {
+      "title": "Reference Boost  1(Typical 1.0)",
+      "cnr_id": "comfyui-mxtoolkit",
+      "ver": "0.9.92"
+    }
+  },
+  "2772": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "Standing near a large window, looking outside, face set in a soft pensive expression, soft cream-colored sweater, rainy day ambient light, reflections on glass.\nWalking along a beach shoreline, light beige linen outfit, face carrying a peaceful contented smile, late afternoon sun, gentle waves in background.\nSitting on the floor against a wall, knees drawn up, casual heather-gray hoodie, face quiet with an introspective expression, soft indoor lamp light, minimalist room.\nStanding under string lights at dusk, pale soft-pink dress, face lit by a warm soft smile, warm glowing background, relaxed open posture.\nLeaning back in a comfortable chair, arms resting on armrests, face relaxed into a contented expression, smart casual navy-blue blazer over a white shirt and dark charcoal trousers, modern living room.\nSitting on the edge of a luxury bathtub, wrapped loosely in a towel that slips at the chest, steam in the air, soft ambient light.\nSide view of a person mid-stride hiking uphill on a rocky trail, poles planted, steady focused expression, wearing a forest-green moisture-wicking long-sleeve shirt, charcoal gray hiking pants, thick gray wool socks, and brown hiking boots, soft overcast daylight, mountain landscape.\nStanding in a quiet library corner, looking at an open book, pensive expression, emerald green velvet blazer and dark trousers, warm afternoon sun with visible dust motes, soft bokeh background.\nWalking through a vast wildflower meadow, joyful expression, flowing lavender sundress, bright midday sun, colorful flowers stretching to the horizon.\nSitting on a wide window ledge, thoughtful gaze, oversized charcoal knit sweater and leggings, cool morning light, blurred urban cityscape in the distance.\nStanding on a rooftop terrace at twilight, relaxed smile, shimmering silver slip dress, warm city lights and lanterns in the background, soft blue hour glow.\nWalking through a modern art gallery, confident neutral expression, structured black jumpsuit, soft directional spotlighting, minimalist white walls.\nLying on a sun lounger by a turquoise pool, relaxed contented expression, sheer white beach cover-up over a swimsuit, bright tropical sunlight, palm leaf shadows.\nSide view of a person cycling along a forest trail, focused calm expression, technical navy blue cycling jersey and black shorts, dappled sunlight filtering through trees, lush greenery.",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1048
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt List 8 Custom & test 🧪",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "2777": {
+    "inputs": {
+      "pixels": [
+        "2866",
+        0
+      ],
+      "vae": [
+        "2888",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode",
+      "cnr_id": "comfy-core",
+      "ver": "0.28.0"
+    }
+  },
+  "2782": {
+    "inputs": {
+      "image": "smlq_sfw_00012.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Character Image 2",
+      "cnr_id": "comfy-core",
+      "ver": "0.20.1"
+    }
+  },
+  "2783": {
+    "inputs": {
+      "Xi": 0,
+      "Xf": 0.5,
+      "isfloatX": 1
+    },
+    "class_type": "mxSlider",
+    "_meta": {
+      "title": "Reference Boost 2 (Typical 1.0)",
+      "cnr_id": "comfyui-mxtoolkit",
+      "ver": "0.9.92"
+    }
+  },
+  "2797": {
+    "inputs": {
+      "max_resolution": 1352,
+      "resolution_source": true,
+      "aspect_ratio": "Instagram Portrait - 1080x1350",
+      "custom_width": 1024,
+      "custom_height": 1024,
+      "swap_dimensions": "Off",
+      "upscale_method": "lanczos",
+      "proportion": "crop",
+      "crop_location": "center",
+      "pad_color": "0, 0, 0",
+      "divisible_by": 8,
+      "batch_size": 1,
+      "image": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "AspectRatioSimplifier",
+    "_meta": {
+      "title": "📐 LC Aspect Ratio Simplifier",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "e94dcb2eed828bfda759d17e41b87ea54c566c5f"
+    }
+  },
+  "2821": {
+    "inputs": {
+      "filename_prefix": [
+        "241",
+        0
+      ],
+      "format": "txt",
+      "text": [
+        "2847",
+        0
+      ]
+    },
+    "class_type": "LC123SaveText",
+    "_meta": {
+      "title": "📝 Save Tags",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "336b86f6af9bea7c51e66394b8894e9810783d62"
+    }
+  },
+  "2825": {
+    "inputs": {
+      "inputcount": 3,
+      "delimiter": " ",
+      "return_list": false,
+      "Update inputs": null,
+      "string_1": [
+        "2836",
+        0
+      ],
+      "string_2": [
+        "2837",
+        0
+      ],
+      "string_3": [
+        "2826",
+        0
+      ]
+    },
+    "class_type": "JoinStringMulti",
+    "_meta": {
+      "title": "Join String Multi",
+      "cnr_id": "comfyui-kjnodes",
+      "ver": "60cd6bc1870db94c6eeb05fbe455147a8e91c4e9"
+    }
+  },
+  "2826": {
+    "inputs": {
+      "value": " .  "
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "Delineator Text",
+      "cnr_id": "comfy-core",
+      "ver": "0.31.0"
+    }
+  },
+  "2827": {
+    "inputs": {
+      "image_a": [
+        "2834",
+        0
+      ],
+      "image_b": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "LCBatchImageComparer",
+    "_meta": {
+      "title": "LC Image Compare 🔎",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "90736a6882b4b077b76b5bac0b01ea5efc77c598"
+    }
+  },
+  "2834": {
+    "inputs": {
+      "hue": 0,
+      "saturation": 0,
+      "brightness": 0,
+      "contrast": 0,
+      "sharpness": 0,
+      "image": [
+        "2853",
+        0
+      ]
+    },
+    "class_type": "LCImageAdjust",
+    "_meta": {
+      "title": "LC Image Adjust",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "4ac98869e5f9ef0a5382ec86d105271257c09267"
+    }
+  },
+  "2836": {
+    "inputs": {
+      "positive": "ignore original clothing completely, photorealistic, high-detail natural skin texture with pores, soft natural lighting, sharp focus,"
+    },
+    "class_type": "LCPositive",
+    "_meta": {
+      "title": "Generation anchor⚓ (do not change)",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "4ac98869e5f9ef0a5382ec86d105271257c09267"
+    }
+  },
+  "2837": {
+    "inputs": {
+      "positive": "a hyper-realistic 25-year-old woman with an oval face and prominent high cheekbones, large almond-shaped deep light blue eyes with a striking teal tint and a piercing gaze, framed by thick natural dark eyelashes and full well-defined naturally arched dark brown eyebrows. She has a straight slender nose bridge with a small neatly defined tip, and full plush symmetrical lips with a defined Cupid's bow in a soft pinkish-mauve color. Her hair is long, voluminous, and wavy in deep espresso-brown with warm chocolate undertones, cascading past her shoulders with organic curls and a clean center part. Her skin is fair to light olive with warm undertones and a realistic matte texture, featuring dense clusters of light brown freckles across the nose bridge and extending onto her upper cheeks under both eyes; she has a single distinct tiny dark beauty mark on her left cheek near the corner of her mouth (appearing on the viewer's right) and a secondary fainter mark on her right lower jaw. She has a minimalist double silver hoop piercing on her anatomical right eyebrow (viewer's left), a small neat silver hoop on her anatomical left nostril wing (viewer's right), and large thin silver hoop earrings worn symmetrically. Her build is slender and lean with defined collarbones and an athletic yet soft posture, featuring a voluptuous D-cup bust contrasted against a slim waist."
+    },
+    "class_type": "LCPositive",
+    "_meta": {
+      "title": "Character anchor ⚓",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "4ac98869e5f9ef0a5382ec86d105271257c09267"
+    }
+  },
+  "2842": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "Close-up front view, face showing a soft neutral expression, soft oatmeal-beige knit top, soft studio lighting, plain neutral background.\nThree-quarter headshot, slight turn to the right, face wearing a casual open smile, warm terracotta sweater, natural window light, soft indoor background.\nProfile headshot facing left, face locked in a thoughtful distant expression, muted dusty-blue blouse, soft side lighting, shallow depth of field.\nOver-the-shoulder headshot looking back, face turning with a gentle curious smile, soft sage-green cardigan, gentle outdoor light, soft blurred park background.\nClose-up beauty portrait, eyes looking slightly off-camera, face holding a soft serene expression, soft diffused light, high detail skin texture.\nTight headshot, face lit with a warm contented smile, casual soft moss-green sweater, warm indoor lighting, soft cozy background.\nThree-quarter headshot, arms out of frame, face set in a calm slightly amused expression, faded olive jacket over cream t-shirt, soft overcast daylight, urban blur behind.\nFront headshot, face showing a relaxed open smile, light sand-colored jacket, golden hour lighting, soft city skyline bokeh.\nClose-up, face carrying a soft neutral smile, simple soft lavender blouse, soft natural window light, clean neutral background.\nTight portrait, face wearing a gentle relaxed smile, light butter-yellow top, sunny afternoon light, soft blurred outdoor background.\nLooking slightly upward headshot, face bright with a calm smile, soft floral-print blouse in pale peach and green, soft dappled sunlight, floral bokeh.\nThree-quarter headshot, face held in a quiet contemplative expression, elegant deep teal blouse, evening blue hour lighting, soft city glow behind.\nSoft morning headshot, face soft with a peaceful sleepy expression, loose soft heather-lavender sweater, gentle curtain-filtered light.\nClose-up, face fixed in a focused concentrated expression, professional soft taupe blouse, soft overhead office light, clean background.\nFront headshot, face glowing with a soft happy expression, casual soft coral summer top, bright outdoor daylight, soft natural background.\nTight portrait, face absorbed in a quiet focused expression, soft rust-orange cardigan over cream top, soft autumn light, trees softly blurred.\nThree-quarter headshot, face displaying an easy confident smile, medium-wash denim jacket, industrial loft soft window light.\nLooking slightly away headshot, face set in a soft pensive expression, soft oatmeal sweater, rainy day ambient light, soft reflections.\nClose-up, face carrying a peaceful contented smile, light natural-linen top in warm sand tones, late afternoon sun, gentle soft background.\nTight headshot, face quiet with an introspective expression, casual soft slate-blue hoodie, soft indoor lamp light, minimalist background.\nFront portrait, face lit by a warm soft smile, light soft blush-pink top, warm glowing string-light background at dusk.\nThree-quarter headshot, face relaxed into a contented expression, smart casual soft olive blazer over cream shirt, modern soft interior light.\nClose-up profile looking downward, face soft with a reflective expression, soft natural light, outdoor garden setting, shallow depth of field.\nFront headshot, face held in a calm composed expression, formal-casual soft navy blazer, clean studio backdrop, soft even lighting.\nTight portrait, face showing a casual easygoing smile, medium-wash denim shirt, soft afternoon light, soft urban architecture bokeh.\nClose-up front view, neutral expression, emerald green silk blouse, soft studio lighting, plain grey background.\nThree-quarter headshot, playful smile, mustard yellow turtleneck, warm afternoon sun through a window, cozy cafe interior bokeh.\nProfile headshot facing right, pensive gaze, navy blue velvet top, cool moonlight/night lighting, blurred cityscape at night.\nOver-the-shoulder headshot, soft smirk, burgundy leather jacket, golden hour backlight, autumn forest bokeh.\nClose-up beauty portrait, serene expression, soft diffused light, high detail skin texture and natural pores.\nTight headshot, joyful laugh, white linen shirt, bright midday sun, tropical garden background blur.\nThree-quarter headshot, calm gaze, charcoal grey cashmere sweater, soft overcast daylight, misty mountain backdrop.\nFront headshot, confident smile, silver sequin top, dramatic spotlighting, dark elegant lounge background.\nClose-up, gentle smile, peach satin blouse, warm sunset light, blurred beach setting.\nTight portrait, thoughtful expression, forest green knit sweater, soft window light, library bookshelf bokeh.\nLooking slightly upward headshot, dreamy expression, lavender silk scarf, dappled sunlight through leaves, garden background.\nThree-quarter headshot, intense gaze, black turtleneck, dramatic rim lighting, dark studio setting.\nSoft morning headshot, peaceful expression, cream lace top, soft diffused sunrise light, airy bedroom background.\nClose-up, focused expression, professional white blouse, cool fluorescent office light, clean modern background.\nFront headshot, bright smile, sky blue summer top, bright natural daylight, seaside background.\nTight portrait, contemplative expression, deep plum cardigan, soft evening twilight, blurred streetlights.\nThree-quarter headshot, easygoing smile, denim shirt, warm indoor lamp light, rustic cabin interior.\nLooking slightly away headshot, melancholy expression, grey wool coat, cool rainy day light, window reflections.\nClose-up, contented smile, terracotta linen top, warm late afternoon sun, vineyard background.\nTight headshot, serious expression, black leather top, moody low-key lighting, urban night background.\nFront portrait, soft smile, rose gold satin top, warm glowing candlelight, intimate restaurant setting.\nThree-quarter headshot, relaxed expression, beige cashmere sweater, soft afternoon light, sunlit patio.\nClose-up profile looking upward, serene gaze, teal silk blouse, soft side lighting, blue sky background.\nFront headshot, composed expression, structured navy blazer, even studio lighting, neutral backdrop.\nTight portrait, amused smile, mustard yellow polo, bright daylight, park greenery bokeh.",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1000
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt List 5 Headshots 🙂",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "2843": {
+    "inputs": {
+      "prepend_text": [
+        "2825",
+        0
+      ],
+      "multiline_text": "Low-angle front view of a person mid-serve on a tennis court, racket arm fully extended upward, focused determined expression, wearing a bright white moisture-wicking polo shirt, navy blue athletic shorts, white ankle socks, and white tennis shoes, bright midday sunlight, green court surface.\nSide-tracking shot of a runner sprinting along a track, arms pumping, legs in full stride, intense concentrated expression, wearing a neon yellow sleeveless running tank, black compression shorts, white crew socks, and bright orange running shoes, golden hour side light, blurred stadium background.\nOver-the-shoulder view from the passenger seat of a person driving a convertible, both hands on the steering wheel, relaxed open smile, wearing a soft sky-blue short-sleeve button-up shirt, khaki chino shorts, and tan canvas sneakers, sunny coastal highway, wind-blown hair.\nThree-quarter front view of a cyclist leaning into a turn on a paved trail, focused calm expression, wearing a matte black cycling jersey, bright red padded cycling shorts, white ankle socks, and black cycling shoes, soft morning light, green tree-lined path.\nLow-angle shot of a basketball player jumping for a layup, right arm extended toward the hoop, determined expression, wearing a royal blue sleeveless jersey, matching royal blue basketball shorts, white crew socks, and black high-top sneakers, indoor gym lighting, polished wooden court.\nSide view of a person mid-stride hiking uphill on a rocky trail, poles planted, steady focused expression, wearing a forest-green moisture-wicking long-sleeve shirt, charcoal gray hiking pants, thick gray wool socks, and brown hiking boots, soft overcast daylight, mountain landscape.\nFront three-quarter view of a soccer player striking a ball with the right foot, body leaned forward, intense concentrated expression, wearing a bright red soccer jersey, white athletic shorts, red soccer socks, and black cleats, sunny afternoon, green grass field.\nHigh-angle tracking shot of a skateboarder carving down a smooth ramp, balanced posture, joyful open smile, wearing a light gray graphic T-shirt, dark olive cargo shorts, white crew socks, and black skate shoes, bright outdoor skatepark light.\nSide view of a person mid-swing in golf, club following through, calm focused expression, wearing a soft white polo shirt, navy blue tailored golf shorts, white ankle socks, and white golf shoes, golden late-afternoon light, manicured green fairway.\nLow-angle front view of a volleyball player leaping to spike the ball, arm cocked back, determined expression, wearing a bright teal sleeveless athletic top, matching teal volleyball shorts, white ankle socks, and white court shoes, indoor gym fluorescent lighting.\nThree-quarter rear view of a kayaker paddling hard through calm water, torso twisted with the stroke, focused expression, wearing a bright orange life vest over a navy blue short-sleeve rash guard, black board shorts, and bare feet, soft morning lake light.\nSide-tracking shot of a person jogging along a beach shoreline, arms swinging naturally, relaxed contented smile, wearing a soft coral tank top, light gray running shorts, white ankle socks, and turquoise running shoes, warm late-afternoon sunlight, gentle waves.\nFront low-angle view of a boxer throwing a right cross in a gym, gloves extended, intense focused expression, wearing a black sleeveless training shirt, red boxing shorts, white hand wraps visible, and black boxing shoes, soft overhead gym lighting.\nThree-quarter view of a rock climber reaching upward on an indoor wall, body stretched, concentrated expression, wearing a light purple climbing tank top, dark gray climbing pants, white ankle socks, and bright yellow climbing shoes, even indoor climbing-gym light.\nSide view of a person jumping rope mid-air, knees slightly bent, energetic smile, wearing a bright lime-green athletic T-shirt, black athletic shorts, white crew socks, and gray cross-training shoes, outdoor park soft daylight.\nOver-the-shoulder view of a surfer paddling out on a board, arms alternating strokes, calm focused expression, wearing a deep navy short-sleeve rash guard and matching navy board shorts, soft morning ocean light, gentle swell.\nLow-angle front view of a person mid-dunk on a basketball court, ball held high, powerful determined expression, wearing a black sleeveless jersey with white side panels, matching black shorts with white trim, white crew socks, and red high-top sneakers, indoor arena lighting.\nSide view of a horseback rider cantering along a dirt trail, upright balanced posture, peaceful smile, wearing a soft beige long-sleeve riding shirt, dark brown riding breeches, tall black riding boots, and a matching beige helmet, soft golden-hour countryside light.\nThree-quarter tracking shot of a person rollerblading along a waterfront path, arms slightly out for balance, joyful open smile, wearing a bright turquoise athletic tank top, black knee-length athletic shorts, white ankle socks, and black inline skates, sunny afternoon light.\nFront view of a tennis player lunging for a low forehand, racket extended, focused intense expression, wearing a soft white sleeveless tennis top, light pink athletic skirt, white ankle socks, and white tennis shoes, bright court sunlight, clean blue hard-court surface.\nLow-angle shot of a swimmer mid-stroke in a pool, arms slicing through the water, intense focused expression, wearing a sleek black one-piece competitive swimsuit and professional swim cap, bright indoor pool lighting, turquoise water with rising bubbles.\nSide view of a person in a tree pose on a mountain peak, perfectly balanced posture, serene calm expression, wearing sage green high-waisted yoga leggings and a matching sports bra, soft morning sunlight, misty valley background.\nLow-angle shot of a ballerina mid-leap (grand jeté), arms gracefully extended, focused elegant expression, wearing a white tulle tutu and satin pointe shoes, dramatic stage spotlighting, dark theater background with subtle dust motes.\nFront view of a person performing a high kick in a dojo, one leg extended upward, sharp determined expression, wearing a crisp white karate gi with a black belt, soft even indoor lighting, polished wooden floor.\nSide-tracking shot of an ice skater gliding across a frozen lake, arms out for balance, joyful open smile, wearing a thick navy blue winter coat and thermal leggings, white ice skates, golden hour sunlight, sparkling ice surface.\nLow-angle front view of a weightlifter overhead, barbell held high, muscles tensed, intense concentrated expression, wearing a charcoal grey compression tank top and black athletic shorts, bright gym lighting, heavy iron plates visible.\nThree-quarter view of an archer drawing a bow, eyes focused on the target, calm steady expression, wearing a tan archery tunic and leather arm guard, soft dappled forest light, lush green woodland background.\nSide view of a mountain biker descending a steep dirt trail, body leaning back, intense focused expression, wearing a bright orange mountain biking jersey and black padded shorts, full-face helmet and goggles, dusty trail, afternoon sunlight.\nHigh-angle shot of a skier carving through fresh powder, snow spraying upwards, exhilarated expression, wearing a vibrant purple ski suit and goggles, bright alpine sunlight, snowy mountain slope.\nFront view of a badminton player jumping for a smash, racket arm high, determined expression, wearing a white athletic polo and navy shorts, indoor badminton court lighting, shuttlecock in mid-air.\nSide-tracking shot of a person running through a forest trail, arms pumping, focused breathing expression, wearing a teal moisture-wicking tank and black compression tights, soft morning light, dappled shadows on the ground.\nLow-angle shot of a parkour athlete jumping between two urban rooftops, body mid-air, intense concentrated expression, wearing a grey techwear hoodie and black joggers, bright midday sun, city skyline in background.\nThree-quarter view from the deck of a sailboat, hands gripping the ropes, calm focused expression, wearing a yellow waterproof sailing jacket and navy shorts, bright ocean sunlight, splashing waves.\nFront view of a gymnast performing on a balance beam, arms extended for stability, intense concentrated expression, wearing a shimmering burgundy leotard, bright gymnasium lighting, professional competition setting.\nSide view of a baseball batter swinging at a pitch, body rotating, determined expression, wearing a white baseball jersey and navy trousers, batting gloves and helmet, sunny afternoon stadium light, dirt infield.\nProfile view of a fencer lunging forward, foil extended, sharp focused expression, wearing a white fencing suit and protective mask, bright indoor arena lighting, polished floor.\nLow-angle shot from the water level of a person standing on a paddleboard, arms paddling, peaceful smile, wearing a floral print rash guard and board shorts, soft golden hour light, calm tropical ocean.\nDynamic low-angle shot of a street dancer mid-freeze, one hand on the ground, energetic expression, wearing an oversized graphic T-shirt and baggy cargo pants, urban street setting, bright afternoon sun.\nSide view of a rugby player running with the ball tucked under arm, powerful stride, intense determined expression, wearing a dark green rugby jersey and matching shorts, muddy field, overcast daylight.\nThree-quarter view of a person on a Pilates reformer machine, controlled movement, calm focused expression, wearing lavender seamless yoga wear, soft studio lighting, minimalist bright interior.",
+      "append_text": "",
+      "start_index": 0,
+      "max_rows": 1000
+    },
+    "class_type": "CR Prompt List",
+    "_meta": {
+      "title": "Prompt List 6 Action Poses 🏃‍♀️‍➡️",
+      "cnr_id": "ComfyUI_Comfyroll_CustomNodes",
+      "ver": "d78b780ae43fcf8c6b7c6505e6ffb4584281ceca"
+    }
+  },
+  "2847": {
+    "inputs": {
+      "entrycount": 1,
+      "use_regex": false,
+      "count": 0,
+      "find_1": [
+        "2836",
+        0
+      ],
+      "find_2": "",
+      "find_3": "",
+      "find_4": "",
+      "find_5": "",
+      "find_6": "",
+      "find_7": "",
+      "find_8": "",
+      "find_9": "",
+      "find_10": "",
+      "find_11": "",
+      "find_12": "",
+      "find_13": "",
+      "find_14": "",
+      "find_15": "",
+      "find_16": "",
+      "find_17": "",
+      "find_18": "",
+      "find_19": "",
+      "find_20": "",
+      "text": [
+        "240",
+        0
+      ]
+    },
+    "class_type": "LCTextRemove",
+    "_meta": {
+      "title": "LC Text Remove 🔪",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "fd939683c1dce88ddd276eaca1576495bc7da942"
+    }
+  },
+  "2850": {
+    "inputs": {
+      "any": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "LCVRAMCacheClear",
+    "_meta": {
+      "title": "LC VRAM Cache Clear",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "fd939683c1dce88ddd276eaca1576495bc7da942"
+    }
+  },
+  "2851": {
+    "inputs": {
+      "mode": "always",
+      "volume": 1,
+      "file": "elevator-chime.mp3",
+      "▶ preview": null,
+      "any": [
+        "197",
+        0
+      ]
+    },
+    "class_type": "LCNotify",
+    "_meta": {
+      "title": "LC Notify 🔊",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "fd939683c1dce88ddd276eaca1576495bc7da942"
+    }
+  },
+  "2853": {
+    "inputs": {
+      "preset": "Custom",
+      "clarity": 0.38,
+      "sharpen": 0.06,
+      "strength": 0.45,
+      "halo": 0.65,
+      "skin_protect": 0.85,
+      "radius": 0.36,
+      "blend_mode": "Soft Light",
+      "shadow_protect": 0.42,
+      "highlight_protect": 0.4,
+      "texture": 0.25,
+      "image": [
+        "35",
+        0
+      ]
+    },
+    "class_type": "LCClarity",
+    "_meta": {
+      "title": "LC Sharpen Pro",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "fd45171f9af29d6bb018d9bbf35524262c62b66c"
+    }
+  },
+  "2854": {
+    "inputs": {
+      "positive": "",
+      "negative": "",
+      "seed_value": -1,
+      "steps": 0,
+      "cfg": 0,
+      "sampler": "",
+      "scheduler": "",
+      "models": "",
+      "civitai_air": "urn:air:krea2:unknown:civitai:2805529@3388904",
+      "width": 0,
+      "height": 0,
+      "denoise": 0,
+      "extra_params": "",
+      "pipe": [
+        "2860",
+        0
+      ]
+    },
+    "class_type": "LCSaveImageMetadata",
+    "_meta": {
+      "title": "LC Save Metadata 🏷️",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2859": {
+    "inputs": {
+      "filename": [
+        "2862",
+        0
+      ],
+      "path": [
+        "2862",
+        1
+      ],
+      "format": "png",
+      "quality": 95,
+      "embed_workflow": true,
+      "embed_civitai": true,
+      "hash_resources": true,
+      "filename_prefix": "",
+      "images": [
+        "2834",
+        0
+      ],
+      "metadata": [
+        "2854",
+        0
+      ]
+    },
+    "class_type": "LCSaveImage",
+    "_meta": {
+      "title": "LC Save Image 💾",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2860": {
+    "inputs": {
+      "model_1": [
+        "2889",
+        0
+      ],
+      "clip_1": [
+        "2889",
+        1
+      ],
+      "vae_1": [
+        "2888",
+        2
+      ],
+      "positive_prompt": [
+        "2876",
+        0
+      ],
+      "seed": [
+        "2890",
+        0
+      ],
+      "total_steps": [
+        "23",
+        0
+      ],
+      "cfg_1": [
+        "23",
+        2
+      ],
+      "sampler_name": [
+        "23",
+        3
+      ],
+      "scheduler": [
+        "23",
+        4
+      ]
+    },
+    "class_type": "LCPipeEdit",
+    "_meta": {
+      "title": "LC Pipe (in/edit)",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2862": {
+    "inputs": {
+      "folder": [
+        "261",
+        0
+      ],
+      "prefix": [
+        "199",
+        0
+      ],
+      "suffix": "",
+      "timestamp": "none",
+      "path_separator": "auto",
+      "include_prefix_in_path": false
+    },
+    "class_type": "LCAdvancedFolder",
+    "_meta": {
+      "title": "LC Advanced Folder 📂",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2866": {
+    "inputs": {
+      "inputcount": 2,
+      "any_01": [
+        "2892",
+        2
+      ],
+      "any_02": [
+        "2782",
+        0
+      ]
+    },
+    "class_type": "LCAnySwitch",
+    "_meta": {
+      "title": "rmbg switch 2",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2872": {
+    "inputs": {
+      "inputcount": 2,
+      "any_01": [
+        "2893",
+        2
+      ],
+      "any_02": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "LCAnySwitch",
+    "_meta": {
+      "title": "rmbg switch 1",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2873": {
+    "inputs": {
+      "images": [
+        "2866",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.34.0"
+    }
+  },
+  "2874": {
+    "inputs": {
+      "images": [
+        "2872",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image",
+      "cnr_id": "comfy-core",
+      "ver": "0.34.0"
+    }
+  },
+  "2876": {
+    "inputs": {
+      "index": [
+        "2877",
+        1
+      ],
+      "inputcount": 8,
+      "any_01": [
+        "257",
+        0
+      ],
+      "any_02": [
+        "258",
+        0
+      ],
+      "any_03": [
+        "259",
+        0
+      ],
+      "any_04": [
+        "2770",
+        0
+      ],
+      "any_05": [
+        "2842",
+        0
+      ],
+      "any_06": [
+        "2843",
+        0
+      ],
+      "any_07": [
+        "260",
+        0
+      ],
+      "any_08": [
+        "2772",
+        0
+      ]
+    },
+    "class_type": "LCIndexSwitch",
+    "_meta": {
+      "title": "LC Any Index Switch",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2877": {
+    "inputs": {
+      "inputcount": 8,
+      "choice": "PG-13",
+      "option_01": "base",
+      "option_02": "PG-13",
+      "option_03": "LIghting & Camera 🔦📷",
+      "option_04": "Facial expression 😉",
+      "option_05": "Headshots 🙂",
+      "option_06": "Action Poses 🏃‍♀️‍➡️",
+      "option_07": "R-Rated🚫",
+      "option_08": "Custom & test 🧪",
+      "option_09": "",
+      "option_10": "",
+      "option_11": "",
+      "option_12": "",
+      "option_13": "",
+      "option_14": "",
+      "option_15": "",
+      "option_16": "",
+      "option_17": "",
+      "option_18": "",
+      "option_19": "",
+      "option_20": ""
+    },
+    "class_type": "LCCustomCombo",
+    "_meta": {
+      "title": "LC Custom Combo",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2878": {
+    "inputs": {
+      "choice": "PG-13",
+      "hub": [
+        "2877",
+        2
+      ]
+    },
+    "class_type": "LCCustomComboPanel",
+    "_meta": {
+      "title": "Prompt list Selector 📝✅",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "36213c1a71df9075928d3469afa6bbe13c6ceaf1"
+    }
+  },
+  "2882": {
+    "inputs": {
+      "_image_path": "{\"filename\":\"Logo no background_00001_.png\",\"subfolder\":\"\"}"
+    },
+    "class_type": "LCImageLabel",
+    "_meta": {
+      "title": "LC Image Label"
+    }
+  },
+  "2883": {
+    "inputs": {},
+    "class_type": "LCLabel",
+    "_meta": {
+      "title": "LC Label 🏷️",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "24728b75a7291ed7d3ac57d6e23d906823392387"
+    }
+  },
+  "2884": {
+    "inputs": {},
+    "class_type": "LCLabel",
+    "_meta": {
+      "title": "LC Label 🏷️",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "24728b75a7291ed7d3ac57d6e23d906823392387"
+    }
+  },
+  "2885": {
+    "inputs": {},
+    "class_type": "LCLabel",
+    "_meta": {
+      "title": "LC Label 🏷️",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "24728b75a7291ed7d3ac57d6e23d906823392387"
+    }
+  },
+  "2886": {
+    "inputs": {},
+    "class_type": "LCLabel",
+    "_meta": {
+      "title": "LC Label 🏷️",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "24728b75a7291ed7d3ac57d6e23d906823392387"
+    }
+  },
+  "2887": {
+    "inputs": {},
+    "class_type": "LCLabel",
+    "_meta": {
+      "title": "LC Label 🏷️",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "5e17279ba425b994aa8e657426e45f1a752f1e6a"
+    }
+  },
+  "2888": {
+    "inputs": {
+      "base_model": "Krea 2 (Turbo)",
+      "goal": "Optimal",
+      "model_file": "krealism_v31TurboFP8.safetensors",
+      "text_encoder": "Qwen3-VL-4B-Instruct-Uncensored-FP8.safetensors",
+      "vae": "qwen_image_vae.safetensors",
+      "speed_ups": "Auto",
+      "attention": "auto",
+      "fp16_accumulation": "auto",
+      "step_cache": "auto",
+      "torch_compile": "off",
+      "qwen21_cache": "auto",
+      "clip_type": "auto",
+      "spectrum": ""
+    },
+    "class_type": "LCOptimizer",
+    "_meta": {
+      "title": "LC Model Optimizer ⚡",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "ba9567ec35f8ddd8576020e6102116340dcbd446"
+    }
+  },
+  "2889": {
+    "inputs": {
+      "lora_rows": "[]",
+      "model": [
+        "169",
+        0
+      ],
+      "clip": [
+        "2888",
+        1
+      ]
+    },
+    "class_type": "LCLoraLoader",
+    "_meta": {
+      "title": "LC LoRA Loader 🎚️",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "ba9567ec35f8ddd8576020e6102116340dcbd446"
+    }
+  },
+  "2890": {
+    "inputs": {
+      "base_seed": 0
+    },
+    "class_type": "LCSeed",
+    "_meta": {
+      "title": "🌱LC Seed",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "ba9567ec35f8ddd8576020e6102116340dcbd446"
+    }
+  },
+  "2891": {
+    "inputs": {
+      "speed_boost": true,
+      "grow_at_step": 4,
+      "_gap1": "",
+      "seed": [
+        "2890",
+        0
+      ],
+      "steps": [
+        "23",
+        0
+      ],
+      "cfg": [
+        "23",
+        2
+      ],
+      "sampler_name": [
+        "23",
+        3
+      ],
+      "scheduler": [
+        "23",
+        4
+      ],
+      "denoise": 1,
+      "_gap2": "",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": false,
+      "model": [
+        "2889",
+        0
+      ],
+      "positive": [
+        "168",
+        0
+      ],
+      "negative": [
+        "175",
+        0
+      ],
+      "latent_image": [
+        "2797",
+        4
+      ]
+    },
+    "class_type": "LCSpeedBoostKSampler",
+    "_meta": {
+      "title": "Speed Boost 🚀 Sampler",
+      "cnr_id": "ComfyUI_LC123_nodes",
+      "ver": "ba9567ec35f8ddd8576020e6102116340dcbd446"
+    }
+  },
+  "2892": {
+    "inputs": {
+      "model": "BiRefNet general (MIT)",
+      "refine": "none",
+      "vitmatte_model": "models/vitmatte (local)",
+      "grow": 0,
+      "edge_erode": 10,
+      "edge_dilate": 10,
+      "black_point": 0,
+      "white_point": 1,
+      "feather": 0,
+      "max_megapixels": 2,
+      "background": "black",
+      "image": [
+        "2782",
+        0
+      ]
+    },
+    "class_type": "LCRemBG",
+    "_meta": {
+      "title": "LC Remove Background ✂️",
+      "cnr_id": "ComfyUI_LC_MaskMaker_nodes",
+      "ver": "7641e153d15b5da332888db1d460fbf5466a7626"
+    }
+  },
+  "2893": {
+    "inputs": {
+      "model": "BiRefNet general (MIT)",
+      "refine": "none",
+      "vitmatte_model": "models/vitmatte (local)",
+      "grow": 0,
+      "edge_erode": 10,
+      "edge_dilate": 10,
+      "black_point": 0,
+      "white_point": 1,
+      "feather": 0,
+      "max_megapixels": 2,
+      "background": "black",
+      "image": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "LCRemBG",
+    "_meta": {
+      "title": "LC Remove Background ✂️",
+      "cnr_id": "ComfyUI_LC_MaskMaker_nodes",
+      "ver": "7641e153d15b5da332888db1d460fbf5466a7626"
+    }
+  }
+}
