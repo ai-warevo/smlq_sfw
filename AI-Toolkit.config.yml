@@ -81,7 +81,11 @@ config:
         qtype_te: "qfloat8"
         arch: "krea2"
         low_vram: true
-        model_kwargs: {}
+# SFW
+#        model_kwargs: {}
+# NSFW
+        model_kwargs:
+          text_encoder_path: "Felldude/Qwen3-VL-4B-Instruct-Uncensored"
         compile: false
         layer_offloading: false
         layer_offloading_text_encoder_percent: 1
