@@ -10,7 +10,7 @@
 * **Apparent Age:** 25 years old
 * **Body Type:** Slender, lean frame with defined collarbones and an athletic yet soft posture
 * **Height:** Tall, balanced proportions
-* **Anatomical Proportions:** Voluptuous D-cup breast size, creating a distinct contrast with her slim waist and upper torso
+* **Anatomical Proportions:** Voluptuous D-cup natural breast size, creating a distinct contrast with her slim waist and upper torso
 
 ## 3. Facial Architecture
 * **Face Shape:** Oval face structure with prominent, high, and well-defined cheekbones
