@@ -64,6 +64,6 @@ To seamlessly feed automated dataset filtering scripts, you must output your com
 * **AI Artifacts & Glitches:** [List of any structural deformities, melting elements, floating items, or blending errors]
 
 ### 2. Final Verdict
-**STATUS:** [PASSED or FAILED]
-**REASON:** [Provide a highly detailed, one-sentence explanation pinpointing the exact cause of passing or the specific critical failure that triggered the rejection]
+* **STATUS:** [PASSED or FAILED]
+* **REASON:** [Provide a highly detailed, one-sentence explanation pinpointing the exact cause of passing or the specific critical failure that triggered the rejection]
 ```
