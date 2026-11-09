@@ -1,0 +1,56 @@
+x-llama-common: &llama-common
+  restart: unless-stopped
+  ports:
+    - "6969:6969"
+  volumes:
+    - ./data/models:/models
+
+services:
+  smlq_llamacpp:
+    <<: *llama-common
+    profiles:
+      - cpu
+    image: ghcr.io/ggml-org/llama.cpp:server
+    container_name: smlq_llamacpp
+    command: >
+      --server
+      --host 0.0.0.0
+      --port 6969
+      --image-min-tokens 1024
+      --mmproj /models/mmproj-F16.gguf
+      --perf
+      -t 8
+      -tb 8
+      -m /models/Huihui-Qwen3-VL-8B-Instruct-abliterated-Q4_K_M.gguf
+      -b 256
+      -ub 128
+      --ctx-size 8192
+
+  smlq_fast:
+    <<: *llama-common
+    profiles:
+      - gpu
+    image: ghcr.io/ggml-org/llama.cpp:full-cuda
+    container_name: smlq_fast
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: >
+      --server
+      --host 0.0.0.0
+      --port 6969
+      --image-min-tokens 1024
+      --mmproj /models/mmproj-F16.gguf
+      --perf
+      -t 8
+      -tb 8
+      -b 2048
+      -ub 512
+      --gpu-layers 99
+      --ctx-size 32768
+      -m /models/Huihui-Qwen3-VL-8B-Instruct-abliterated-Q8_0.gguf
+#      -m /models/Huihui-Qwen3-VL-8B-Instruct-abliterated-Q4_K_M.gguf

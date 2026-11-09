@@ -1,0 +1,113 @@
+================================================================================
+FLUX DATASET PROMPTS — Файнтюнинг персонажа
+================================================================================
+
+БАЗОВОЕ ОПИСАНИЕ ПЕРСОНАЖА (trigger word: [YOUR_TOKEN])
+─────────────────────────────────────────────────────────
+young woman, short ash brown bob haircut, light brown-grey eyes,
+soft facial features, small nose, full red lips, light skin with
+subtle pink cheeks, small mole on right cheek
+
+================================================================================
+КАТЕГОРИЯ 1: КРУПНЫЕ ПОРТРЕТЫ (разные ракурсы)
+================================================================================
+
+close-up portrait, front facing, neutral expression, soft studio lighting, grey sweater, plain beige background, sharp focus, 85mm lens, f/1.8
+close-up portrait, slight smile, looking directly at camera, warm golden hour lighting, white t-shirt, clean white background, professional headshot
+close-up portrait, three-quarter view facing left, serious expression, dramatic side lighting, black turtleneck, dark grey background, high contrast
+close-up portrait, three-quarter view facing right, gentle smile, soft diffused lighting, cream blouse, light grey background, natural look
+close-up portrait, slight head tilt to the right, contemplative expression, rembrandt lighting, navy blue top, neutral background, moody atmosphere
+close-up portrait, looking slightly up, hopeful expression, butterfly lighting, off-white sweater, bright clean background, beauty photography
+close-up portrait, looking down slightly, pensive mood, low key lighting, dark green sweater, black background, cinematic portrait
+close-up portrait, profile view left side, elegant pose, rim lighting from behind, bare shoulders, gradient grey background, editorial style
+
+================================================================================
+КАТЕГОРИЯ 2: ПОЯСНЫЕ ПОРТРЕТЫ (разная одежда)
+================================================================================
+
+half-body portrait, wearing a white button-up shirt, arms crossed, confident pose, natural window lighting, office interior background, professional photography
+half-body portrait, wearing a black leather jacket over white tee, casual pose, leaning against wall, urban brick background, street photography style
+half-body portrait, wearing a light blue denim jacket, hands in pockets, relaxed expression, outdoor daylight, blurred park background, lifestyle photography
+half-body portrait, wearing a beige knit cardigan, holding a coffee cup, cozy mood, warm cafe lighting, blurred bokeh background, candid style
+half-body portrait, wearing a red turtleneck sweater, one hand touching hair, soft studio lighting, white seamless background, fashion photography
+half-body portrait, wearing a grey oversized hoodie, sitting casually, relaxed mood, natural daylight from window, minimal interior background, lifestyle shot
+half-body portrait, wearing a formal black blazer and white shirt, professional pose, corporate headshot, even studio lighting, light grey background
+half-body portrait, wearing a striped mariniere shirt, playful expression, bright natural light, coastal background blurred, summer vibes
+
+================================================================================
+КАТЕГОРИЯ 3: ПОЛНЫЙ РОСТ (разные сцены)
+================================================================================
+
+full-body, wearing jeans and white sneakers, casual t-shirt, standing pose, hands at sides, urban street background, daylight, street style photography
+full-body, wearing a long beige trench coat, walking pose mid-stride, autumn park setting, golden leaves on ground, warm afternoon light
+full-body, wearing a black midi dress, elegant standing pose, modern architecture background, evening golden hour, editorial fashion photography
+full-body, wearing athletic wear, yoga pants and sports top, standing pose, gym interior background, bright even lighting, fitness photography
+full-body, wearing a summer floral dress, sitting on a bench, park setting, dappled sunlight through trees, relaxed natural pose
+full-body, wearing business casual outfit, walking in modern office corridor, carrying a notebook, clean professional environment, natural lighting
+
+================================================================================
+КАТЕГОРИЯ 4: РАЗНОЕ ОСВЕЩЕНИЕ
+================================================================================
+
+portrait, dramatic chiaroscuro lighting, strong shadows on face, dark moody background, renaissance painting style lighting, grey top, artistic photography
+portrait, neon light reflections on face, blue and pink neon glow, night city background, cyberpunk atmosphere, leather jacket, cinematic color grading
+portrait, golden hour backlight, sun flare behind head, warm orange tones, outdoor field setting, white linen shirt, dreamy ethereal mood
+portrait, overcast flat lighting, rainy day mood, holding umbrella, grey coat, wet city street background, desaturated tones, melancholic atmosphere
+portrait, harsh direct sunlight, strong shadows, squinting slightly, summer midday, tank top, outdoor terrace, high contrast photography
+portrait, soft window light from the left, sitting by large window, reading a book, cozy interior, warm muted tones, natural lifestyle photography
+portrait, ring light catch light in eyes, beauty shot, flawless lighting, plain white background, minimal makeup, clean beauty photography
+portrait, candlelight only, warm orange glow, intimate dinner setting, soft focus background, elegant black top, romantic atmosphere
+
+================================================================================
+КАТЕГОРИЯ 5: РАЗНЫЕ ВЫРАЖЕНИЯ ЛИЦА
+================================================================================
+
+close-up portrait, genuine laughing expression, eyes slightly closed, natural joy, bright daylight, casual white tee, candid photography
+close-up portrait, surprised expression, wide eyes, slightly open mouth, bright studio lighting, plain background, expressive portrait
+close-up portrait, focused concentrated expression, reading or working, looking down at something, natural indoor lighting, glasses on, studious mood
+close-up portrait, serene peaceful expression, eyes closed, meditation pose, soft ethereal lighting, minimal white background, zen atmosphere
+close-up portrait, confident smirk, one eyebrow slightly raised, power pose energy, dramatic lighting, dark blazer, strong personality portrait
+
+================================================================================
+КАТЕГОРИЯ 6: РАЗНЫЕ СТИЛИ ВОЛОС
+================================================================================
+
+portrait, hair tucked behind ears, showing earrings, clean look, studio lighting, white blouse, professional headshot style
+portrait, hair slightly messy and windblown, outdoor windy day, natural expression, grey scarf, autumn setting, candid photography
+portrait, hair with small hair clips on one side, cute casual style, soft pastel lighting, pink sweater, clean background, korean style photography
+portrait, hair slicked back with gel, edgy sophisticated look, high fashion lighting, black outfit, minimalist background, editorial fashion portrait
+portrait, hair with a headband, sporty casual look, bright outdoor lighting, activewear, park background, healthy lifestyle photography
+
+================================================================================
+СОВЕТЫ ДЛЯ ГЕНЕРАЦИИ ДАТАСЕТА В FLUX
+================================================================================
+
+РАЗМЕР ДАТАСЕТА: Для LoRA файнтюнинга оптимально 20-50 изображений.
+   Для DreamBooth достаточно 10-25 качественных изображений.
+
+TRIGGER WORD: Замени [YOUR_TOKEN] на уникальное слово-триггер
+   (например: "ohwx woman", "sks woman" или любое редкое слово).
+
+РАЗРЕШЕНИЕ: Генерируй все в одном разрешении (1024x1024 или 768x1024).
+
+ОТБОР: Из каждого промпта выбирай лучший результат из 3-4 генераций.
+   Удаляй изображения с артефактами, деформациями рук/лица.
+
+БАЛАНС ДАТАСЕТА:
+   — ~40% крупные портреты (лицо, выражения)
+   — ~30% поясные портреты (одежда, позы)
+   — ~20% полный рост (фигура, окружение)
+   — ~10% необычное освещение/стили
+
+НЕГАТИВНЫЕ ПРОМПТЫ (если поддерживается):
+   blurry, low quality, deformed, extra fingers, bad anatomy,
+   watermark, text, logo, duplicate, ugly, disfigured
+
+КАПТИОНИНГ: После генерации подпиши каждое изображение
+   его промптом (без [YOUR_TOKEN] — замени на описание).
+   Используй BLIP-2 или Florence-2 для автокаптионинга.
+
+РЕГУЛЯРИЗАЦИЯ: Добавь 100-200 регуляризационных изображений
+   похожих людей (без trigger word) для предотвращения оверфиттинга.
+
+================================================================================
