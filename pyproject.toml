@@ -11,10 +11,11 @@ dependencies = [
     "mutagen>=1.48.1",
     "piexif>=1.1.3",
     "pillow>=13.0.0",
+    "pyrogram>=2.0.0",
 ]
 
 [project.scripts]
-smlq = "smlq:main"
+smlq = "smlq.main:main"
 fakefy = "utils.fakefy_metadata:main"
 
 [build-system]
