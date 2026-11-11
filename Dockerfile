@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /td_build
 
 # 2. Копируем исходники и собираем через CMake
-
+#TODO: FIX^
+        RUN apt-get update && apt-get install -y qrencode && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY CMakeLists.txt main.cpp ./

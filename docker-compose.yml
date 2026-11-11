@@ -13,8 +13,11 @@ services:
     image: smlq_sfw_tgbog
     container_name: smlq_sfw_tgbog
     restart: unless-stopped
+    environment:
+      - TG_API_ID=${TG_API_ID}
+      - TG_API_HASH=${TG_API_HASH}
     volumes:
-      - ./data/tdlib_db:/app/tdlib_db
+      - tdlib_session:/app/tdlib_db
       - ./data/user:/app/user
 
   smlq_llamacpp:
@@ -65,3 +68,6 @@ services:
       --ctx-size 32768
       -m /models/Huihui-Qwen3-VL-8B-Instruct-abliterated-Q8_0.gguf
 #      -m /models/Huihui-Qwen3-VL-8B-Instruct-abliterated-Q4_K_M.gguf
+
+volumes:
+  tdlib_session:
