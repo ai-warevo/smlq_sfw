@@ -6,6 +6,17 @@ x-llama-common: &llama-common
     - ./data/models:/models
 
 services:
+  smlq_sfw_tgbog:
+    profiles:
+      - tg
+    build: .
+    image: smlq_sfw_tgbog
+    container_name: smlq_sfw_tgbog
+    restart: unless-stopped
+    volumes:
+      - ./data/tdlib_db:/app/tdlib_db
+      - ./data/user:/app/user
+
   smlq_llamacpp:
     <<: *llama-common
     profiles:
