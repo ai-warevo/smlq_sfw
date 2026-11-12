@@ -6,6 +6,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Td REQUIRED)
 
-add_executable(lox_bot main.cpp)
-
-target_link_libraries(lox_bot PRIVATE Td::TdStatic)
+add_subdirectory(src)
