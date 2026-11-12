@@ -53,9 +53,10 @@ class TdExample {
 
   void loop() {
     std::cout << "[INFO] Entering main event loop..." << std::endl;
-    while (true) {
+    while (is_running_) {
       process_response(client_manager_->receive(10));
     }
+    std::cout << "[INFO] Main loop exited." << std::endl;
   }
 
  private:
@@ -63,8 +64,8 @@ class TdExample {
   std::unique_ptr<td::ClientManager> client_manager_;
   std::int32_t client_id_{0};
 
-  td_api::object_ptr<td_api::AuthorizationState> authorization_state_;
   bool are_authorized_{false};
+  bool is_running_{true};
   std::uint64_t current_query_id_{0};
   std::uint64_t authentication_query_id_{0};
 
@@ -193,6 +194,16 @@ class TdExample {
             std::cout << "Requesting QR code for login..." << std::endl;
             send_query(td_api::make_object<td_api::requestQrCodeAuthentication>(),
                        create_authentication_query_handler());
+        },
+        [this](td_api::authorizationStateLoggingOut &) {
+            std::cout << "[INFO] Logging out..." << std::endl;
+            are_authorized_ = false;
+            is_running_ = false;
+        },
+        [this](td_api::authorizationStateClosed &) {
+            std::cout << "[INFO] Client closed." << std::endl;
+            are_authorized_ = false;
+            is_running_ = false;
         },
         [](auto &state) { 
             std::cout << "[INFO] Received unhandled state: " << to_string(state) << std::endl; 
