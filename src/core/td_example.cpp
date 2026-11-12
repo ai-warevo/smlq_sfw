@@ -1,5 +1,5 @@
 #include "td_example.hpp"
-#include "engine/EchoListener.hpp"
+#include "engine/BufferingEchoListener.hpp"
 
 TdExample::TdExample() {
   initialize();
@@ -13,10 +13,10 @@ void TdExample::initialize() {
   dispatcher_ = std::make_shared<engine::UpdateDispatcher>(*client_manager_);
   logger_ = std::make_shared<LoggerListener>();
   presence_simulator_ = std::make_unique<engine::PresenceSimulator>(*this);
-  auto echo_listener = std::make_shared<engine::EchoListener>(*this, presence_simulator_.get());
+  auto buffering_echo_listener = std::make_shared<engine::BufferingEchoListener>(*this, presence_simulator_.get());
   
   dispatcher_->registerListener(logger_);
-  dispatcher_->registerListener(echo_listener);
+  dispatcher_->registerListener(buffering_echo_listener);
   
   dispatcher_->setQueryResponseHandler([this](auto resp) { this->process_response(std::move(resp)); });
 
