@@ -10,6 +10,8 @@
 #include <string>
 #include <chrono>
 #include <mutex>
+#include <atomic>
+#include <csignal>
 
 namespace detail {
 template <class... Fs>
@@ -19,6 +21,7 @@ template <class F>
 struct overload<F> : public F {
   explicit overload(F f) : F(f) {}
 };
+
 template <class F, class... Fs>
 struct overload<F, Fs...>
     : public overload<F>
@@ -27,7 +30,7 @@ struct overload<F, Fs...>
   using overload<F>::operator();
   using overload<Fs...>::operator();
 };
-}  // namespace detail
+} // namespace detail
 
 template <class... F>
 auto overloaded(F... f) {
@@ -37,7 +40,7 @@ auto overloaded(F... f) {
 namespace td_api = td::td_api;
 
 class TdExample {
- public:
+public:
   TdExample() {
     std::cout << "[INFO] Initializing TDLib Client..." << std::endl;
     start_time_ = std::chrono::system_clock::now();
@@ -47,8 +50,12 @@ class TdExample {
     client_id_ = client_manager_->create_client_id();
     std::cout << "[INFO] Client ID: " << client_id_ << std::endl;
     send_query(td_api::make_object<td_api::getOption>("version"), [](Object object) {
-        std::cout << "[INFO] TDLib version query successful." << std::endl;
+      std::cout << "[INFO] TDLib version query successful." << std::endl;
     });
+  }
+
+  void stop() {
+    is_running_ = false;
   }
 
   void loop() {
@@ -59,13 +66,14 @@ class TdExample {
     std::cout << "[INFO] Main loop exited." << std::endl;
   }
 
- private:
+private:
   using Object = td_api::object_ptr<td_api::Object>;
   std::unique_ptr<td::ClientManager> client_manager_;
   std::int32_t client_id_{0};
 
   bool are_authorized_{false};
-  bool is_running_{true};
+  td::td_api::object_ptr<td::td_api::AuthorizationState> authorization_state_;
+  std::atomic<bool> is_running_{true};
   std::uint64_t current_query_id_{0};
   std::uint64_t authentication_query_id_{0};
 
@@ -85,7 +93,7 @@ class TdExample {
 
   void process_response(td::ClientManager::Response response) {
     if (!response.object) {
-        return;
+      return;
     }
 
     if (response.request_id == 0) {
@@ -124,19 +132,19 @@ class TdExample {
     auto& message = *u.message_;
 
     if (message.is_outgoing_) {
-        return;
+      return;
     }
 
     int64_t start_time_unix = std::chrono::duration_cast<std::chrono::seconds>(
         start_time_.time_since_epoch()).count();
     if (message.date_ < start_time_unix - 10) {
-        return;
+      return;
     }
 
     {
       std::lock_guard<std::mutex> lock(chat_types_mutex_);
       auto it = chat_types_.find(message.chat_id_);
-      
+
       if (it == chat_types_.end() || it->second->get_id() != td::td_api::chatTypePrivate::ID) {
         return;
       }
@@ -190,23 +198,23 @@ class TdExample {
         [this](td_api::authorizationStateReady &) { handleReady(); },
         [this](td_api::authorizationStateWaitTdlibParameters &) { handleWaitParams(); },
         [this](td_api::authorizationStateWaitOtherDeviceConfirmation &s) { handleWaitQr(s); },
-        [this](td_api::authorizationStateWaitPhoneNumber &) { 
-            std::cout << "Requesting QR code for login..." << std::endl;
-            send_query(td_api::make_object<td_api::requestQrCodeAuthentication>(),
-                       create_authentication_query_handler());
+        [this](td_api::authorizationStateWaitPhoneNumber &) {
+          std::cout << "Requesting QR code for login..." << std::endl;
+          send_query(td_api::make_object<td_api::requestQrCodeAuthentication>(),
+                     create_authentication_query_handler());
         },
         [this](td_api::authorizationStateLoggingOut &) {
-            std::cout << "[INFO] Logging out..." << std::endl;
-            are_authorized_ = false;
-            is_running_ = false;
+          std::cout << "[INFO] Logging out..." << std::endl;
+          are_authorized_ = false;
+          is_running_ = false;
         },
         [this](td_api::authorizationStateClosed &) {
-            std::cout << "[INFO] Client closed." << std::endl;
-            are_authorized_ = false;
-            is_running_ = false;
+          std::cout << "[INFO] Client closed." << std::endl;
+          are_authorized_ = false;
+          is_running_ = false;
         },
-        [](auto &state) { 
-            std::cout << "[INFO] Received unhandled state: " << to_string(state) << std::endl; 
+        [](auto &state) {
+          std::cout << "[INFO] Received unhandled state: " << to_string(state) << std::endl;
         }
     ));
   }
@@ -221,7 +229,7 @@ class TdExample {
     }
 
     auto request = td_api::make_object<td_api::setTdlibParameters>();
-    request->database_directory_ = "tdlib_db";
+    request->database_directory_ = "/app/tdlib_db";
     request->use_message_database_ = true;
     request->use_secret_chats_ = true;
     request->api_id_ = std::stoi(env_id);
@@ -243,9 +251,26 @@ class TdExample {
   }
 };
 
+TdExample* g_example = nullptr;
+
+void signal_handler(int signal) {
+  if (g_example) {
+    std::cout << "\n[SYSTEM] Signal " << signal << " received. Stopping bot..." << std::endl;
+    g_example->stop();
+  }
+}
+
 int main() {
   std::cout << "[SYSTEM] Starting Bot Process..." << std::endl;
   TdExample example;
+  g_example = &example;
+
+  // Register signal handlers
+  std::signal(SIGINT, signal_handler);
+  std::signal(SIGTERM, signal_handler);
+
   example.loop();
+
+  std::cout << "[SYSTEM] Bot process finished." << std::endl;
   return 0;
 }
