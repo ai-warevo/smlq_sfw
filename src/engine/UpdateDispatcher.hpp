@@ -34,7 +34,7 @@ public:
 
 private:
     void runLoop();
-    void handleUpdate(td_api::object_ptr<td_api::Object> update);
+    void handleUpdate(td::td_api::object_ptr<td::td_api::Object> update);
 
     td::ClientManager& client_manager_;
     std::vector<std::shared_ptr<UpdateListener>> listeners_;
@@ -44,7 +44,7 @@ private:
     std::atomic<bool> running_{false};
     std::chrono::system_clock::time_point start_time_;
 
-    std::map<int64_t, td_api::object_ptr<td_api::ChatType>> chat_types_;
+    std::map<int64_t, td::td_api::object_ptr<td::td_api::ChatType>> chat_types_;
     std::mutex chat_types_mutex_;
 
     QueryResponseHandler query_response_handler_;

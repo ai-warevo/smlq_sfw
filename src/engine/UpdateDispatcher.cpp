@@ -75,15 +75,16 @@ void UpdateDispatcher::runLoop() {
   }
 }
 
-void UpdateDispatcher::handleUpdate(td_api::object_ptr<td_api::Object> update) {
-  td_api::downcast_call(*update, overloaded(
-      [this](td_api::updateNewChat& update_new_chat) {
-        if (auto chat = update_new_chat.chat_->get_as<td_api::Chat>()) {
+void UpdateDispatcher::handleUpdate(td::td_api::object_ptr<td::td_api::Object> update) {
+  td::td_api::downcast_call(*update, overloaded(
+      [this](td::td_api::updateNewChat& update_new_chat) {
+        auto chat = td::move_tl_object_as<td::td_api::chat>(std::move(update_new_chat.chat_));
+        if (chat) {
           std::lock_guard<std::mutex> lock(chat_types_mutex_);
           chat_types_[chat->id_] = std::move(chat->type_);
         }
       },
-      [this](td_api::updateNewMessage& update_new_message) {
+      [this](td::td_api::updateNewMessage& update_new_message) {
         auto& message = *update_new_message.message_;
 
         // 1. Ignore Outgoing
@@ -100,7 +101,7 @@ void UpdateDispatcher::handleUpdate(td_api::object_ptr<td_api::Object> update) {
           std::lock_guard<std::mutex> lock(chat_types_mutex_);
           auto it = chat_types_.find(message.chat_id_);
           if (it != chat_types_.end()) {
-            if (it->second->get_id() == td_api::chatTypePrivate::ID) {
+            if (it->second->get_id() == td::td_api::chatTypePrivate::ID) {
               is_private = true;
             }
           } else {
@@ -117,32 +118,37 @@ void UpdateDispatcher::handleUpdate(td_api::object_ptr<td_api::Object> update) {
         msg_update.message_id = message.id_;
 
         // Sender ID extraction
-        td_api::downcast_call(*message.sender_id_, overloaded(
-            [this, &msg_update](td_api::messageSenderUser& user) {
+        td::td_api::downcast_call(*message.sender_id_, overloaded(
+            [this, &msg_update](td::td_api::messageSenderUser& user) {
               msg_update.sender_id = user.user_id_;
             },
-            [this, &msg_update](td_api::messageSenderChat& chat) {
+            [this, &msg_update](td::td_api::messageSenderChat& chat) {
               msg_update.sender_id = chat.chat_id_;
             },
             [](auto&) {}
         ));
 
         // Content extraction
-        if (auto text_content = message.content_->get_as<td_api::messageText>()) {
+        if (message.content_->get_id() == td::td_api::messageText::ID) {
+          auto text_content = td::move_tl_object_as<td::td_api::messageText>(std::move(message.content_));
           msg_update.text = text_content->text_->text_;
-        } else if (auto voice_content = message.content_->get_as<td_api::messageVoiceNote>()) {
-          if (auto vn = voice_content->voice_note_->get_as<td_api::VoiceNote>()) {
+        } else if (message.content_->get_id() == td::td_api::messageVoiceNote::ID) {
+          auto voice_content = td::move_tl_object_as<td::td_api::messageVoiceNote>(std::move(message.content_));
+          if (auto vn = td::move_tl_object_as<td::td_api::voiceNote>(std::move(voice_content->voice_note_))) {
             msg_update.voice = VoiceMetadata{
                 static_cast<int32_t>(vn->duration_),
-                MediaMetadata{vn->mime_type_, vn->file_size_}
+                MediaMetadata{vn->mime_type_, 0} // Using 0 for file_size_ since it's not found in voiceNote
             };
           }
-        } else if (auto video_content = message.content_->get_as<td_api::messageVideo>()) {
-           msg_update.media = MediaMetadata{
-               video_content->mime_type_,
-               video_content->file_size_
-           };
-        } else if (auto photo_content = message.content_->get_as<td_api::messagePhoto>()) {
+        } else if (message.content_->get_id() == td::td_api::messageVideo::ID) {
+           auto video_content = td::move_tl_object_as<td::td_api::messageVideo>(std::move(message.content_));
+           if (auto video = td::move_tl_object_as<td::td_api::video>(std::move(video_content->video_))) {
+             msg_update.media = MediaMetadata{
+                 video->mime_type_,
+                 0
+             };
+           }
+        } else if (message.content_->get_id() == td::td_api::messagePhoto::ID) {
            // Photo doesn't have mime_type directly in messageContent, 
            // but we can assume image/jpeg or similar.
            msg_update.media = MediaMetadata{"image/jpeg", 0}; 
