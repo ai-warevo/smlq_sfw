@@ -6,6 +6,8 @@ x-llama-common: &llama-common
     - ./data/models:/models
 
 services:
+# docker compose build smlq_sfw_tgbog
+# docker compose --profile tg run --rm smlq_sfw_tgbog
   smlq_sfw_tgbog:
     profiles:
       - tg
