@@ -190,7 +190,7 @@ class TdExample {
         [this](td_api::authorizationStateWaitTdlibParameters &) { handleWaitParams(); },
         [this](td_api::authorizationStateWaitOtherDeviceConfirmation &s) { handleWaitQr(s); },
         [this](td_api::authorizationStateWaitPhoneNumber &) { 
-            std::cout << "Запрашиваем QR-код для входа..." << std::endl;
+            std::cout << "Requesting QR code for login..." << std::endl;
             send_query(td_api::make_object<td_api::requestQrCodeAuthentication>(),
                        create_authentication_query_handler());
         },
@@ -222,7 +222,7 @@ class TdExample {
   }
 
   void handleWaitQr(td_api::authorizationStateWaitOtherDeviceConfirmation &s) {
-    std::cout << "\nОтсканируй этот QR-код в Telegram (Настройки -> Устройства -> Подключить устройство):\n" << std::endl;
+    std::cout << "\nScan this QR code in Telegram (Settings -> Devices -> Link Device):\n" << std::endl;
     std::string cmd = "qrencode -t ANSIUTF8 \"" + s.link_ + "\"";
     std::system(cmd.c_str());
   }
