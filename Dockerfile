@@ -17,9 +17,13 @@ WORKDIR /app
 COPY . .
 
 RUN mkdir build && cd build \
-    && CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-18 CXX=/usr/bin/clang++-18 cmake -DCMAKE_BUILD_TYPE=Release .. \
+    && cmake -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_C_COMPILER=/usr/bin/clang-18 \
+        -DCMAKE_CXX_COMPILER=/usr/bin/clang++-18 \
+        -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. \
     && cmake --build . -j$(nproc)
 
 VOLUME /app/tdlib_db
+VOLUME /app/user
 
 CMD ["./build/src/smlq_sfw_tgbog"]

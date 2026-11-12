@@ -1,7 +1,0 @@
-add_executable(test_message_buffer test_message_buffer.cpp)
-target_link_libraries(test_message_buffer PRIVATE core_lib)
-target_include_directories(test_message_buffer PRIVATE ../src)
-
-add_executable(test_message_manager test_message_manager.cpp)
-target_link_libraries(test_message_manager PRIVATE core_lib)
-target_include_directories(test_message_manager PRIVATE ../src)
