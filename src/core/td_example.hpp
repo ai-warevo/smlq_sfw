@@ -14,6 +14,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <atomic>
+#include <condition_variable>
+#include <mutex>
 
 #include "engine/UpdateDispatcher.hpp"
 #include "engine/UpdateListener.hpp"
@@ -45,6 +48,8 @@ auto overloaded(F... f) {
 
 namespace td_api = td::td_api;
 
+extern std::atomic<bool> is_running;
+
 class TdExample {
  public:
    TdExample();
@@ -53,6 +58,7 @@ class TdExample {
    TdExample& operator=(TdExample&&) noexcept = default;
 
    void loop();
+   void shutdown();
 
  private:
    using Object = td_api::object_ptr<td_api::Object>;
@@ -96,6 +102,11 @@ class TdExample {
    void on_authorization_state_update();
    void check_authentication_error(Object object);
    std::uint64_t next_query_id();
+
+   // Shutdown synchronization
+   std::condition_variable shutdown_cv_;
+   std::mutex shutdown_mtx_;
+   bool is_closed_{false};
 };
 
 #endif // TD_EXAMPLE_HPP

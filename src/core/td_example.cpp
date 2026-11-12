@@ -14,7 +14,7 @@ TdExample::TdExample() {
 }
 
 void TdExample::loop() {
-  while (true) {
+  while (is_running) {
     if (need_restart_) {
       restart();
     } else if (!are_authorized_) {
@@ -188,6 +188,11 @@ void TdExample::on_authorization_state_update() {
                               are_authorized_ = false;
                               need_restart_ = true;
                               std::cout << "Terminated" << std::endl;
+                               {
+                                 std::lock_guard<std::mutex> lock(shutdown_mtx_);
+                                 is_closed_ = true;
+                               }
+                               shutdown_cv_.notify_all();
                             },
                             [this](td_api::authorizationStateWaitPhoneNumber &) {
       std::cout << "Запрашиваем QR-код для входа..." << std::endl;
@@ -288,3 +293,14 @@ void TdExample::check_authentication_error(Object object) {
 std::uint64_t TdExample::next_query_id() {
   return ++current_query_id_;
 }
+
+void TdExample::shutdown() {
+  std::cout << "Shutting down..." << std::endl;
+  send_query(td_api::make_object<td_api::close>(), {});
+
+  std::unique_lock<std::mutex> lock(shutdown_mtx_);
+  shutdown_cv_.wait(lock, [this] { return is_closed_; });
+  std::cout << "Shutdown complete." << std::endl;
+}
+
+
