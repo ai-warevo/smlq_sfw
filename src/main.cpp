@@ -210,7 +210,7 @@ class TdExample {
     }
 
     auto request = td_api::make_object<td_api::setTdlibParameters>();
-    request->database_directory_ = "tdlib";
+    request->database_directory_ = "tdlib_db";
     request->use_message_database_ = true;
     request->use_secret_chats_ = true;
     request->api_id_ = std::stoi(env_id);
