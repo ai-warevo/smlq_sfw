@@ -4,6 +4,12 @@ TdExample::TdExample() {
   td::ClientManager::execute(td_api::make_object<td_api::setLogVerbosityLevel>(1));
   client_manager_ = std::make_unique<td::ClientManager>();
   client_id_ = client_manager_->create_client_id();
+
+  dispatcher_ = std::make_shared<engine::UpdateDispatcher>(*client_manager_);
+  logger_ = std::make_shared<LoggerListener>();
+  dispatcher_->registerListener(logger_);
+  dispatcher_->setQueryResponseHandler([this](auto resp) { this->process_response(std::move(resp)); });
+
   send_query(td_api::make_object<td_api::getOption>("version"), {});
 }
 
@@ -14,9 +20,9 @@ void TdExample::loop() {
     } else if (!are_authorized_) {
       process_response(client_manager_->receive(10));
     } else {
-      std::cout << "Enter action [q] quit [u] check for updates and request results [c] show chats [m <chat_id> "
+      std::cout << "Enter action [q] quit [c] show chats [m <chat_id> "
                    "<text>] send message [me] show self [l] logout: "
-                << std::endl;
+                 << std::endl;
       std::string line;
       std::getline(std::cin, line);
       std::istringstream ss(line);
@@ -27,17 +33,7 @@ void TdExample::loop() {
       if (action == "q") {
         return;
       }
-      if (action == "u") {
-        std::cout << "Checking for updates..." << std::endl;
-        while (true) {
-          auto response = client_manager_->receive(0);
-          if (response.object) {
-            process_response(std::move(response));
-          } else {
-            break;
-          }
-        }
-      } else if (action == "close") {
+      if (action == "close") {
         std::cout << "Closing..." << std::endl;
         send_query(td_api::make_object<td_api::close>(), {});
       } else if (action == "me") {
@@ -59,7 +55,7 @@ void TdExample::loop() {
         auto voice_note = td_api::make_object<td_api::inputVoiceNote>();
         voice_note->voice_note_ = td_api::make_object<td_api::inputFileLocal>("/app/user/hi.ogg");
         voice_note->duration_ = 4; // Длительность в секундах
-        voice_note->waveform_ = ""; // Волна (можно оставить пустой)
+        voice_note->waveform_ = ""; // Волну (можно оставить пустой)
 
         // 2. Передаём его внутрь контента сообщения (inputMessageVoiceNote)
         auto voice_content = td_api::make_object<td_api::inputMessageVoiceNote>();
@@ -181,6 +177,7 @@ void TdExample::on_authorization_state_update() {
                             [this](td_api::authorizationStateReady &) {
                               are_authorized_ = true;
                               std::cout << "Authorization is completed" << std::endl;
+                              dispatcher_->start();
                             },
                             [this](td_api::authorizationStateLoggingOut &) {
                               are_authorized_ = false;
@@ -196,12 +193,12 @@ void TdExample::on_authorization_state_update() {
       std::cout << "Запрашиваем QR-код для входа..." << std::endl;
       send_query(td_api::make_object<td_api::requestQrCodeAuthentication>(),
                  create_authentication_query_handler());
-                                // std::cout << "Enter phone number: " << std::flush;
-                                // std::string phone_number;
-                                // std::cin >> phone_number;
-                                // send_query(
-                                //     td_api::make_object<td_api::setAuthenticationPhoneNumber>(phone_number, nullptr),
-                                //     create_authentication_query_handler());
+                                 // std::cout << "Enter phone number: " << std::flush;
+                                 // std::string phone_number;
+                                 // std::cin >> phone_number;
+                                 // send_query(
+                                 //     td_api::make_object<td_api::setAuthenticationPhoneNumber>(phone_number, nullptr),
+                                 //     create_authentication_query_handler());
                             },
                             [this](td_api::authorizationStateWaitPremiumPurchase &) {
                               std::cout << "Telegram Premium subscription is required" << std::endl;
@@ -260,24 +257,24 @@ void TdExample::on_authorization_state_update() {
                             //     std::cout << "Confirm this login link on another device: " << state.link_ << std::endl;
                             //   },
                             [this](td_api::authorizationStateWaitTdlibParameters &) {
-  const char* env_id = std::getenv("TG_API_ID");
-  const char* env_hash = std::getenv("TG_API_HASH");
+   const char* env_id = std::getenv("TG_API_ID");
+   const char* env_hash = std::getenv("TG_API_HASH");
 
-  if (!env_id || !env_hash) {
-    std::cerr << "[ОШИБКА] Не заданы TG_API_ID или TG_API_HASH в окружении!" << std::endl;
-    std::exit(1);
-  }
-                                  auto request = td_api::make_object<td_api::setTdlibParameters>();
-                                  request->database_directory_ = "/app/tdlib_db";
-                                  request->use_message_database_ = true;
-                                  request->use_secret_chats_ = true;
-                                  request->api_id_ = std::stoi(env_id);
-                                  request->api_hash_ = env_hash;
-                                  request->system_language_code_ = "en";
-                                  request->device_model_ = "Desktop";
-                                  request->application_version_ = "1.0";
-                                  send_query(std::move(request), create_authentication_query_handler());
-                            }));
+   if (!env_id || !env_hash) {
+     std::cerr << "[ОШИБКА] Не заданы TG_API_ID или TG_API_HASH в окружении!" << std::endl;
+     std::exit(1);
+   }
+                                   auto request = td_api::make_object<td_api::setTdlibParameters>();
+                                   request->database_directory_ = "/app/tdlib_db";
+                                   request->use_message_database_ = true;
+                                   request->use_secret_chats_ = true;
+                                   request->api_id_ = std::stoi(env_id);
+                                   request->api_hash_ = env_hash;
+                                   request->system_language_code_ = "en";
+                                   request->device_model_ = "Desktop";
+                                   request->application_version_ = "1.0";
+                                   send_query(std::move(request), create_authentication_query_handler());
+                             }));
 }
 
 void TdExample::check_authentication_error(Object object) {
