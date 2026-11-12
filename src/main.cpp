@@ -1,10 +1,3 @@
-//
-// Copyright Aliaksei Levin (levlam@telegram.org), Arseny Smirnov (arseny30@gmail.com) 2014-2026
-//
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
-
 #include <td/telegram/Client.h>
 #include <td/telegram/td_api.h>
 #include <td/telegram/td_api.hpp>
@@ -15,6 +8,8 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <chrono>
+#include <mutex>
 
 namespace detail {
 template <class... Fs>
@@ -45,6 +40,7 @@ class TdExample {
  public:
   TdExample() {
     std::cout << "[INFO] Initializing TDLib Client..." << std::endl;
+    start_time_ = std::chrono::system_clock::now();
     td::ClientManager::execute(td_api::make_object<td_api::setLogVerbosityLevel>(1));
     client_manager_ = std::make_unique<td::ClientManager>();
     std::cout << "[INFO] ClientManager created." << std::endl;
@@ -71,6 +67,10 @@ class TdExample {
   bool are_authorized_{false};
   std::uint64_t current_query_id_{0};
   std::uint64_t authentication_query_id_{0};
+
+  std::chrono::system_clock::time_point start_time_;
+  std::map<int64_t, td_api::object_ptr<td_api::ChatType>> chat_types_;
+  std::mutex chat_types_mutex_;
 
   std::map<std::uint64_t, std::function<void(Object)>> handlers_;
 
@@ -103,30 +103,57 @@ class TdExample {
     td_api::downcast_call(*update, overloaded(
         [this](td_api::updateAuthorizationState &u) { handleAuthUpdate(u); },
         [this](td_api::updateNewMessage &u) { handleNewMessage(u); },
+        [this](td::td_api::updateNewChat &u) { handleUpdateNewChat(u); },
         [](auto &) {}
     ));
   }
 
-  void handleAuthUpdate(td_api::updateAuthorizationState &u) {
+  void handleUpdateNewChat(td::td_api::updateNewChat &u) {
+    std::lock_guard<std::mutex> lock(chat_types_mutex_);
+    chat_types_[u.chat_->id_] = std::move(u.chat_->type_);
+  }
+
+  void handleAuthUpdate(td::td_api::updateAuthorizationState &u) {
     std::cout << "[INFO] Authorization state update received." << std::endl;
     authorization_state_ = std::move(u.authorization_state_);
     on_authorization_state_update();
   }
 
-  void handleNewMessage(td_api::updateNewMessage &u) {
-    auto chat_id = u.message_->chat_id_;
+  void handleNewMessage(td::td_api::updateNewMessage &u) {
+    auto& message = *u.message_;
+
+    if (message.is_outgoing_) {
+        return;
+    }
+
+    int64_t start_time_unix = std::chrono::duration_cast<std::chrono::seconds>(
+        start_time_.time_since_epoch()).count();
+    if (message.date_ < start_time_unix - 10) {
+        return;
+    }
+
+    {
+      std::lock_guard<std::mutex> lock(chat_types_mutex_);
+      auto it = chat_types_.find(message.chat_id_);
+      
+      if (it == chat_types_.end() || it->second->get_id() != td::td_api::chatTypePrivate::ID) {
+        return;
+      }
+    }
+
+    auto chat_id = message.chat_id_;
     std::string text;
 
-    if (u.message_->content_->get_id() == td_api::messageText::ID) {
-      text = static_cast<td_api::messageText &>(*u.message_->content_).text_->text_;
+    if (message.content_->get_id() == td::td_api::messageText::ID) {
+      text = static_cast<td::td_api::messageText &>(*message.content_).text_->text_;
     }
 
     if (!text.empty()) {
       std::cout << "[BOT] Received message: '" << text << "' in chat " << chat_id << ". Echoing..." << std::endl;
-      auto send_msg = td_api::make_object<td_api::sendMessage>();
+      auto send_msg = td::td_api::make_object<td::td_api::sendMessage>();
       send_msg->chat_id_ = chat_id;
-      auto content = td_api::make_object<td_api::inputMessageText>();
-      content->text_ = td_api::make_object<td_api::formattedText>();
+      auto content = td::td_api::make_object<td::td_api::inputMessageText>();
+      content->text_ = td::td_api::make_object<td::td_api::formattedText>();
       content->text_->text_ = text;
       send_msg->input_message_content_ = std::move(content);
       send_query(std::move(send_msg), {});
@@ -156,7 +183,6 @@ class TdExample {
 
   void on_authorization_state_update() {
     authentication_query_id_++;
-    // Log the state name for debugging
     std::cout << "[DEBUG] Current State: " << to_string(*authorization_state_) << std::endl;
 
     td_api::downcast_call(*authorization_state_, overloaded(
