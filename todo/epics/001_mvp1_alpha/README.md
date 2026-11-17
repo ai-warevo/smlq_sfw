@@ -21,6 +21,7 @@
 ## Интерфейсы
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 // Channel interface
 class Channel {
 public:

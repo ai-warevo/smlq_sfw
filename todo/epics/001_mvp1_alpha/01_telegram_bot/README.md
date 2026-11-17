@@ -31,6 +31,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class TelegramChannel : public Channel {
 public:
     void start() override;

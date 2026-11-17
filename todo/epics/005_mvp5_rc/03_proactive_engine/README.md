@@ -25,6 +25,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class ProactiveEngine {
 public:
     void scheduleCheck();

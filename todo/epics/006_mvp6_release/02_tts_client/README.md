@@ -22,6 +22,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 struct TTSSettings {
     std::string voice;
     float speed;

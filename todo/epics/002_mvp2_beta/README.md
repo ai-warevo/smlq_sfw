@@ -20,6 +20,7 @@
 ## Интерфейсы
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class LLMClient {
 public:
     std::string generate(const std::string& prompt, int maxTokens = 512);

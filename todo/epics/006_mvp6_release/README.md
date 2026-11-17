@@ -21,6 +21,7 @@
 ## Интерфейсы
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class ComfyUIClient {
 public:
     std::string generatePhoto(const std::string& prompt);

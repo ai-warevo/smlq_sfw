@@ -23,6 +23,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 struct NewsItem {
     std::string title;
     std::string content;

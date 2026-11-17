@@ -40,6 +40,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class PromptBuilder {
 public:
     std::string buildFullPrompt(const Context& ctx);

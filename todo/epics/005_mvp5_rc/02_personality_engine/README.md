@@ -18,6 +18,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class PersonalityEngine {
 public:
     std::string getPersonalityProfile();

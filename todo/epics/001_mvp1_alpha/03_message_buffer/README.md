@@ -20,6 +20,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class MessageBuffer {
 public:
     void addMessage(UserId userId, const std::string& text);

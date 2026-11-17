@@ -12,7 +12,7 @@
 - Фильтры: игнорировать медиа-заглушки, системные сообщения, пересланные
 
 ### 2. Embedding Pipeline
-- Для каждого `user_message` → POST к Ollama `/api/embeddings`
+- Для каждого `user_message` → POST к llama.cpp `/api/embed` (или `/v1/embeddings`)
 - Сохранение вектора в таблицу `embeddings`
 
 ### 3. Таблица `embeddings`
@@ -31,6 +31,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class HistoricalIngestion {
 public:
     void parseJSON(const std::string& filePath);
@@ -43,4 +44,4 @@ public:
 
 - [ ] Парсер обрабатывает большой JSON без падений
 - [ ] В БД записаны сообщения с векторами
-- [ ] Ollama возвращает корректные эмбеддинги
+- [ ] llama.cpp возвращает корректные эмбеддинги

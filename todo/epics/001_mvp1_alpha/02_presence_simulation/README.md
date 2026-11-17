@@ -22,6 +22,7 @@
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class PresenceSimulator {
 public:
     void simulateReading(UserId userId, int messageLength);

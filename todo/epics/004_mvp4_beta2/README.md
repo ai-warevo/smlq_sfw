@@ -21,6 +21,7 @@
 ## Интерфейсы
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class HistoricalIngestion {
 public:
     void parseJSON(const std::string& filePath);

@@ -1,47 +1,51 @@
-# 01: SQLite Repository
+# 01: Repository — хранение сообщений и фактов
 
 **Epic:** 003 (MVP 3 Alpha 2)
 **Фаза:** 5
 
 ## ТЗ
 
-### 1. SQLite Repository
-- Таблица `messages`:
-  - `id` (INTEGER PRIMARY KEY)
-  - `chat_id` (BIGINT)
-  - `user_id` (BIGINT)
-  - `role` (TEXT: 'user' / 'assistant')
-  - `content` (TEXT)
-  - `timestamp` (DATETIME)
-  - `sentiment` (REAL)
-  - `embedding_id` (INTEGER)
+### 1. БД
+- **Движок:** TBD — SQLite по умолчанию, возможен PostgreSQL / другой
+- Выбор делается на старте MVP 3, до реализации
 
-- Таблица `facts`:
-  - `id` (INTEGER PRIMARY KEY)
-  - `category` (TEXT)
-  - `key` (TEXT)
-  - `value` (TEXT)
-  - `confidence` (REAL)
-  - `created_at` (DATETIME)
-  - `updated_at` (DATETIME)
+### 2. Таблица `messages`
+- `id` (PRIMARY KEY)
+- `chat_id` (BIGINT)
+- `user_id` (BIGINT)
+- `role` (TEXT: 'user' / 'assistant')
+- `content` (TEXT)
+- `timestamp` (DATETIME)
+- `sentiment` (REAL)
+- `embedding_id` (INTEGER)
 
-### 2. Запись
+### 3. Таблица `facts`
+- `id` (PRIMARY KEY)
+- `category` (TEXT)
+- `key` (TEXT)
+- `value` (TEXT)
+- `confidence` (REAL)
+- `created_at` (DATETIME)
+- `updated_at` (DATETIME)
+
+### 4. Запись
 - После flush буфера → записать входящее сообщение в БД
 - После ответа LLM → записать ответ в БД
 - Извлечённые факты → таблица `facts`
 
-### 3. Контекст для LLM
+### 5. Контекст для LLM
 - Перед запросом к LLM: последние 10 сообщений из БД → история диалога
 
-### 4. Docker
-- Volume `./db_data:/app/db_data` для сохранения БД
+### 6. Docker
+- Volume для данных БД (`./db_data`)
 
-### 5. Асинхронность
-- SQLite-запросы в фоновом потоке, не блокируя event loop
+### 7. Асинхронность
+- Запросы к БД в фоновом потоке, не блокируя event loop
 
 ## Интерфейс
 
 ```cpp
+// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
 class MemorySystem {
 public:
     void saveMessage(const Message& msg);
