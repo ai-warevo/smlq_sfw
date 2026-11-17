@@ -1,2 +1,5 @@
-﻿# Epic: Memory & RAG System
-Goal: Transform the bot into a 'Digital Twin' by implementing long-term memory (SQLite) and semantic retrieval (Vector Search), allowing it to mimic user style using historical data.
+# Epic: Memory & RAG System
+
+**Goal:** Превратить бота в "Digital Twin" — долгосрочная память (SQLite), семантический поиск (Vector Search), загрузка исторических чатов, динамическая сборка контекста.
+
+**Соответствие фазам:** Фаза 5 (SQLite история) → Фаза 6 (импорт чатов + эмбеддинги) → Фаза 7 (семантический роутер) → Фаза 8 (dynamic prompt constructor)

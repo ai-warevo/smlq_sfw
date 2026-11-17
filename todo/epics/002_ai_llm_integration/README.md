@@ -1,2 +1,5 @@
-﻿# Epic: AI & LLM Integration
-Goal: Replace the placeholder 'Echo' logic with a real intelligence layer by integrating with local Ollama instances via asynchronous HTTP requests.
+# Epic: AI & LLM Integration
+
+**Goal:** Замена placeholder-логики на реальный интеллектуальный слой через локальный LLM (Ollama / Qwen) с асинхронными HTTP-запросами.
+
+**Соответствие фазам:** Фаза 4 (LLM интеграция)
