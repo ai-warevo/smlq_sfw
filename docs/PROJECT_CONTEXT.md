@@ -34,7 +34,9 @@
 
 ## 3. Архитектура системы
 
-Проект строится вокруг **Мозга** (Brain) — единого модуля, который является сердцем проекта. Telegram-бот — лишь один из каналов ввода/вывода.
+### 3.1. Границы между процессами
+
+Проект состоит из **одного приложения** (Brain + Channels — один процесс) и **трёх внешних сервисов** (отдельные процессы):
 
 ```mermaid
 graph TB
@@ -44,44 +46,298 @@ graph TB
         TTS["TTS Server<br/>синтез голоса<br/>планируется"]
     end
 
-    subgraph Brain["Мозг (Brain) — одно приложение, один процесс"]
-        subgraph Core["Ядро"]
-            Mood["Настроение и Эмоции<br/>• Mood<br/>• Emotion<br/>• State"]
-            Memory["Память (БД TBD)<br/>• Краткосрочная<br/>• Долгосрочная<br/>• Embeddings"]
-            Personality["Поведение и Личность<br/>• System Prompt<br/>• Proactive"]
+    subgraph SingleProcess["smlq_sfw — одно приложение, один процесс"]
+        Dispatcher["Event Dispatcher<br/>• Event Bus<br/>• Pub/Sub<br/>• Routing"]
+        Channels["Channels<br/>• Telegram<br/>• Другие (будущие)"]
+        Brain["Brain Core<br/>• Personality<br/>• Memory<br/>• Mood<br/>• Proactive"]
+        ExternalClients["External Clients<br/>• LLM Client<br/>• ComfyUI Client<br/>• TTS Client"]
+
+        Channels -->|Events| Dispatcher
+        Dispatcher -->|Events| Brain
+        Brain -->|Commands| Dispatcher
+        Dispatcher -->|Commands| Channels
+        Brain -->|HTTP| ExternalClients
+        ExternalClients -->|HTTP| LLM
+        ExternalClients -->|HTTP| Comfy
+        ExternalClients -->|HTTP| TTS
+    end
+
+    SingleProcess -->|HTTP:6969| LLM
+    SingleProcess -->|HTTP API| Comfy
+    SingleProcess -->|HTTP API| TTS
+```
+
+### 3.2. Границы между модулями
+
+Каждый модуль — **замкнутая ответственность**. Взаимодействие только через чёткие интерфейсы.
+
+```mermaid
+graph LR
+    subgraph Process["smlq_sfw — один процесс"]
+        subgraph Infra["Инфраструктура"]
+            EventBus["Event Bus<br/>pub/sub внутри процесса"]
+            ThreadPool["ThreadPool<br/>aw::tpl"]
+            HTTP["HTTP Client<br/>запросы к внешним сервисам"]
         end
 
         subgraph Channels["Каналы"]
-            TG["Telegram<br/>• Ввод/Вывод<br/>• Фото<br/>• Аудио"]
-            Other["Другие каналы<br/>планируется"]
+            Telegram["Telegram Channel<br/>TDLib"]
         end
 
-        Core --> Channels
+        subgraph Brain["Мозг"]
+            Personality["Personality<br/>System Prompt + Style"]
+            Memory["Memory<br/>Краткосрочная + Долгосрочная"]
+            Mood["Mood Engine<br/>Настроение + Эмоции"]
+            Proactive["Proactive Engine<br/>Инициатива + Триггеры"]
+            PromptBuilder["Prompt Builder<br/>Сборка контекста"]
+            SemanticRouter["Semantic Router<br/>Поиск по прошлому"]
+        end
+
+        subgraph External["Внешние клиенты"]
+            LLMClient["LLM Client<br/>llama.cpp API"]
+            ComfyClient["ComfyUI Client<br/>генерация фото"]
+            TTSClient["TTS Client<br/>синтез голоса"]
+        end
+
+        Telegram -->|MessageEvent| EventBus
+        EventBus -->|MessageEvent| Brain
+
+        Personality -->|System Prompt| PromptBuilder
+        Memory -->|Context| PromptBuilder
+        SemanticRouter -->|Similar Past| PromptBuilder
+        PromptBuilder -->|Full Prompt| LLMClient
+
+        LLMClient -->|Response Text| Brain
+
+        Mood -->|State| Personality
+        Proactive -->|Trigger| EventBus
+
+        Brain -->|ImageCommand| ComfyClient
+        Brain -->|SpeechCommand| TTSClient
+
+        EventBus -->|ResponseCommand| Telegram
     end
-
-    Brain -->|HTTP:6969| LLM
-    Brain -->|HTTP API| Comfy
-    Brain -->|HTTP API| TTS
 ```
-
-### Службы (Docker)
-
-| Сервис | Профиль | Назначение | Порт |
-|---|---|---|---|
-| `smlq_llamacpp` | `cpu` | LLM сервер (Qwen3-VL-8B Q4) | 6969 |
-| `smlq_fast` | `gpu` | LLM сервер (Qwen3-VL-8B Q8, CUDA) | 6969 |
-
-> Telegram-бот и остальные компоненты Мозга пока собираются вместе с LLM-сервером в одном docker-compose. В будущем — разнесём.
 
 ---
 
-## 4. Tech Stack
+## 4. Модули системы
+
+### 4.1. Event Bus (Инфраструктура)
+
+**Отвечает за:** доставку событий между модулями внутри процесса.
+
+**Интерфейс:**
+- `subscribe<T>(event_type, handler)` — подписаться на typed event
+- `unsubscribe<T>(handler)` — отписаться
+- `publish<T>(event)` — отправить событие всем подписчикам
+- `publish_ordered<T>(event)` — отправить события строго по порядку
+
+**Контракты:**
+- Синхронный вызов handler'ов (без очереди, без брокера)
+- Typed events — `MessageReceived`, `TypingStarted`, `ResponseReady`, `ProactiveTrigger`
+- Обработка исключений — handler не должен падать и ломать другие
+- Thread-safe (TDLib колбэки приходят из отдельных потоков)
+
+**Вход:** события от Channels и Proactive Engine
+**Выход:** события для Channels и Brain
+
+---
+
+### 4.2. Telegram Channel (Канал)
+
+**Отвечает за:** связь с Telegram через TDLib.
+
+**Интерфейс:**
+- `init(api_id, api_hash)` — инициализация TDLib
+- `start()` — запуск event loop'а
+- `stop()` — graceful shutdown
+- `send_message(chat_id, text)` — отправить текст
+- `send_photo(chat_id, photo)` — отправить фото
+- `send_audio(chat_id, audio)` — отправить аудио
+- `set_typing(chat_id, is_typing)` — статус "печатает"
+
+**Зависит от:** Event Bus (публикует `MessageReceived`), ThreadPool (асинхронные операции)
+
+**Входит в Event Bus:** `MessageReceived`, `PhotoSent`, `AudioSent`
+**Входит из Event Bus:** `SendText`, `SendPhoto`, `SendAudio`, `SetTyping`
+
+---
+
+### 4.3. Personality (Мозг — Личность)
+
+**Отвечает за:** стиль общения, system prompt, digital twin.
+
+**Интерфейс:**
+- `get_system_prompt()` — базовый системный промпт
+- `get_style_guide()` — манера общения
+- `update_from_history(messages)` — обучение из истории
+- `get_current_personality()` — текущее состояние личности
+
+**Зависит от:** Memory (для digital twin), Mood Engine (для контекста)
+
+**Вход:** системный промпт + стиль + контекст диалога
+**Выход:** assembled system prompt для LLM
+
+---
+
+### 4.4. Memory (Мозг — Память)
+
+**Отвечает за:** хранение и retrieval всех данных.
+
+**Интерфейс:**
+- `save_message(user_id, text, timestamp)` — сохранить сообщение
+- `get_conversation(user_id, limit)` — история диалога
+- `save_fact(user_id, fact)` — сохранить факт о пользователе
+- `get_facts(user_id)` — получить факты
+- `embed(text)` — получить эмбеддинг (через LLM Client)
+- `search_similar(query, limit)` — поиск по cosine similarity
+
+**Зависит от:** LLM Client (для эмбеддингов), БД TBD (SQLite / PostgreSQL)
+
+**Вход:** сообщения, факты, запросы
+**Выход:** история диалога, факты, семантические результаты
+
+---
+
+### 4.5. Mood Engine (Мозг — Настроение)
+
+**Отвечает за:** эмоциональное состояние бота.
+
+**Интерфейс:**
+- `get_mood()` — текущее настроение
+- `update_mood(context)` — обновить на основе контекста
+- `get_emotion()` — текущая эмоция
+- `get_state()` — общее состояние (бодрый, уставший, etc.)
+
+**Зависит от:** Memory (история взаимодействий), Proactive Engine (триггеры)
+
+**Вход:** контекст диалога, история взаимодействий
+**Выход:** настроение, эмоция, состояние → влияют на Personality
+
+---
+
+### 4.6. Proactive Engine (Мозг — Инициатива)
+
+**Отвечает за:** инициативу бота — когда он сам пишет первым.
+
+**Интерфейс:**
+- `start()` — запуск таймеров инициативы
+- `stop()` — остановка
+- `register_trigger(event_type, handler)` — триггер на событие
+- `register_schedule(interval, action)` — расписание
+- `should_initiate()` — проверка, пора ли писать
+
+**Зависит от:** Mood Engine (состояние бота), Memory (когда последний раз писал)
+
+**Вход:** таймеры, события, триггеры
+**Выход:** `ProactiveTrigger` событие в Event Bus
+
+---
+
+### 4.7. Prompt Builder (Мозг — Сборка промпта)
+
+**Отвечает за:** сборку полного промпта для LLM.
+
+**Интерфейс:**
+- `build(user_message, conversation_history, facts, similar_past, mood)` — собрать промпт
+
+**Зависит от:** Memory (история, факты), Semantic Router (похожие ситуации), Personality (системный промпт), Mood Engine (настроение)
+
+**Вход:** системный промпт + контекст диалога + факты + семантика + настроение
+**Выход:** полный prompt для LLM
+
+---
+
+### 4.8. Semantic Router (Мозг — Поиск по прошлому)
+
+**Отвечает за:** поиск похожих исторических диалогов.
+
+**Интерфейс:**
+- `ingest(messages)` — загрузить исторические сообщения
+- `search(query, limit)` — найти похожие по cosine similarity
+- `get_similar_pairs(query, top_n)` — получить пары "вопрос-ответ"
+
+**Зависит от:** Memory (эмбеддинги), LLM Client (генерация эмбеддингов)
+
+**Вход:** текстовый запрос
+**Выход:** топ-N похожих исторических пар
+
+---
+
+### 4.9. LLM Client (Внешний клиент)
+
+**Отвечает за:** HTTP-запросы к llama.cpp.
+
+**Интерфейс:**
+- `generate(prompt, max_tokens, temperature)` — генерация текста
+- `embed(text)` — получить эмбеддинг
+- `health_check()` — проверка доступности
+
+**Зависит от:** HTTP Client, ThreadPool (асинхронные запросы)
+
+**Вход:** промпт, параметры генерации
+**Выход:** текст ответа, эмбеддинги
+
+---
+
+### 4.10. ComfyUI Client (Внешний клиент)
+
+**Отвечает за:** HTTP-запросы к ComfyUI для генерации фото.
+
+**Интерфейс:**
+- `generate_portrait(user_id)` — сгенерировать портрет
+- `generate_dataset_image(user_id)` — сгенерировать изображение для датасета
+- `generate_utility_image(prompt)` — утилитарное изображение
+- `get_status(task_id)` — статус задачи
+
+**Зависит от:** HTTP Client, ThreadPool (асинхронные запросы)
+
+**Вход:** параметры генерации
+**Выход:** сгенерированное фото, статус задачи
+
+---
+
+### 4.11. TTS Client (Внешний клиент)
+
+**Отвечает за:** HTTP-запросы к TTS-сервису для синтеза речи.
+
+**Интерфейс:**
+- `synthesize(text, voice_id)` — синтезировать голосовое
+- `get_status(task_id)` — статус задачи
+
+**Зависит от:** HTTP Client, ThreadPool (асинхронные запросы)
+
+**Вход:** текст, параметры синтеза
+**Выход:** аудиофайл, статус задачи
+
+---
+
+### 4.12. HTTP Client (Инфраструктура)
+
+**Отвечает за:** все HTTP-запросы к внешним сервисам.
+
+**Интерфейс:**
+- `get(url, params)` — GET-запрос
+- `post(url, body)` — POST-запрос
+- `get_async(url, params)` — асинхронный GET
+- `post_async(url, body)` — асинхронный POST
+- `cancel(id)` — отмена запроса
+
+**Зависит от:** ThreadPool (aw::tpl), CancellationToken (aw::tpl)
+
+**Вход:** URL, параметры, таймауты
+**Выход:** HTTP response, ошибки
+
+---
+
+## 5. Tech Stack
 
 | Компонент | Технология |
 |---|---|
 | Язык | C++20 |
 | Telegram API | TDLib (официальный клиент, юзербот) |
-| Асинхронность | C++ coroutines |
+| Асинхронность | C++ coroutines (aw::tpl) |
 | Сборка | CMake, clang-18, libc++ |
 | LLM | Qwen3-VL-8B (llama.cpp, gguf) |
 | Генерация фото | ComfyUI, Flux 2 Klein, SDXL |
@@ -94,7 +350,7 @@ graph TB
 
 ---
 
-## 5. Текущий статус
+## 6. Текущий статус
 
 ### ✅ Реализовано
 
@@ -104,45 +360,45 @@ graph TB
 | **ComfyUI воркфлоу** | Все 3 фазы генерации фото (портрет, датасет, утилиты) |
 | **Docker** | Сборка и оркестрация сервисов |
 
-### ❌ Не реализовано (Мозг + каналы)
+### ❌ Не реализовано
 
-| Компонент | Фаза | Описание |
+| Модуль | Фаза | Описание |
 |---|---|---|
-| **Telegram-бот (юзербот)** | Фаза 1 | TDLib, авторизация (QR/телефон/2FA), event loop, dispatch обновлений, graceful shutdown |
-| **Фильтрация сообщений** | Фаза 1 | Свои/чужие, свежие/старые, тип чата, извлечение контента |
-| **Typing simulator** | Фаза 2 | Статус "печатает" с динамическим временем |
-| **Reading delays** | Фаза 2 | Пауза 1.5-3с перед ответом, имитация человеческого поведения |
-| **Message buffer** | Фаза 3 | Silence window 10с, склейка "капель" сообщений |
-| **LLM-клиент** | Фаза 4 | HTTP-запросы к Qwen3-VL-8B, системный промпт |
-| **Memory (БД)** | Фаза 5 | Таблица `messages`, контекст диалога |
-| **Импорт чатов** | Фаза 6 | JSON-парсер Telegram-экспорта, эмбеддинги |
-| **Semantic router** | Фаза 7 | Cosine similarity, поиск похожих исторических пар |
-| **Prompt builder** | Фаза 8 | Dynamic сборка контекста (система + семантика + история) |
-| **Proactive engine** | Фаза 9 | Таймеры для инициации диалога, расписание |
-| **ComfyUI integration** | Фаза 10 | HTTP-клиент к ComfyUI API, генерация фото по запросу |
-| **Web scraper** | Фаза 11 | Парсинг пабликов, RSS-лент, новостей |
-| **Personality engine** | Фаза 12 | Настроение, эмоции, состояние бота |
-| **Channel abstraction** | Фаза 13 | Абстракция канала — интерфейс для подключения новых мессенджеров |
-| **TTS integration** | Фаза 14 | Подключение TTS-сервиса, генерация голосовых сообщений |
+| **Event Bus** | Фаза 1 | Pub/sub внутри процесса, typed events, thread-safe |
+| **Telegram Channel** | Фаза 1 | TDLib, авторизация (QR/телефон/2FA), event loop, dispatch |
+| **Message Filter** | Фаза 1 | Свои/чужие, свежие/старые, тип чата, извлечение контента |
+| **Presence Simulator** | Фаза 2 | Reading delays, typing status, dynamic pauses |
+| **Message Buffer** | Фаза 3 | Silence window 10с, склейка "капель" сообщений |
+| **LLM Client** | Фаза 4 | HTTP-запросы к llama.cpp, generate + embed |
+| **Memory** | Фаза 5 | Таблицы messages, facts, БД TBD |
+| **Historical Ingestion** | Фаза 6 | JSON-парсер Telegram-экспорта, эмбеддинги |
+| **Semantic Router** | Фаза 7 | Cosine similarity, поиск похожих пар |
+| **Prompt Builder** | Фаза 8 | Dynamic сборка контекста |
+| **Proactive Engine** | Фаза 9 | Таймеры инициативы, расписание, триггеры |
+| **ComfyUI Client** | Фаза 10 | HTTP-клиент к ComfyUI API |
+| **Web Scraper** | Фаза 11 | RSS, новости, паблики |
+| **Personality Engine** | Фаза 12 | System prompt, digital twin, mood |
+| **TTS Client** | Фаза 14 | Синтез голосовых сообщений |
 
 ---
 
-## 6. MVP-версии (структура)
+## 7. MVP-версии (структура)
 
 Проект развивается итерациями — каждая MVP работает и тестируется отдельно.
 
-### MVP 1 (Alpha): Telegram-бот + Presence + Buffer
-- 01 Telegram Bot (TDLib, авторизация, event loop, filters)
-- 02 Presence Simulation (reading delays, typing)
-- 03 Message Buffer (silence window, message joining)
+### MVP 1 (Alpha): Telegram Channel + Event Bus + Buffer
+- 01 Telegram Channel (TDLib, авторизация, event loop, filters)
+- 02 Event Bus (pub/sub, typed events, thread-safe)
+- 03 Presence Simulation (reading delays, typing)
+- 04 Message Buffer (silence window, message joining)
 - **Результат:** Бот подключён, ведёт себя как человек, но отвечает заглушкой
 
-### MVP 2 (Beta): LLM-интеграция
+### MVP 2 (Beta): LLM Integration
 - 01 LLM Client (HTTP-запросы к llama.cpp / Qwen3-VL-8B)
 - 02 System Prompt (базовый стиль общения)
 - **Результат:** Бот отвечает осмысленно через локальный LLM
 
-### MVP 3 (Alpha 2): Память
+### MVP 3 (Alpha 2): Memory
 - 01 Repository (таблицы messages, facts, БД TBD)
 - 02 Memory Integration (запись/чтение из Brain)
 - **Результат:** Бот помнит историю диалогов между сессиями
@@ -153,63 +409,17 @@ graph TB
 - 03 Prompt Builder (Prompt Pie assembly)
 - **Результат:** Бот ищет в прошлом, собирает персонализированный контекст
 
-### MVP 5 (RC): Brain Core — Настроение, Личность, Proactive
+### MVP 5 (RC): Brain Core — Mood, Personality, Proactive
 - 01 Mood & Emotion Engine (настроение, эмоции, состояние)
 - 02 Personality Engine (system prompt, digital twin)
 - 03 Proactive Engine (инициатива, расписание, триггеры)
 - **Результат:** Бот проявляет инициативу, эмоционален, имеет личность
 
-### MVP 6 (Release): Мульти-модальный бот
+### MVP 6 (Release): Multimodal Bot
 - 01 ComfyUI Client (генерация фото)
 - 02 TTS Client (синтез голосовых)
 - 03 Web Scraper (RSS, новости, поиск)
 - **Результат:** Полноценный бот с фото, голосом и веб-контентом
-
----
-
-## 7. Фаза за фазой — что делать
-
-### Фаза 1: Telegram-бот (канал ввода/вывода)
-Базовое подключение к Telegram через TDLib. Авторизация, event loop, фильтрация входящих сообщений. Без этого нет связи с пользователем.
-
-### Фаза 2: Имитация присутствия
-Убираем "робота" — паузы чтения, статус "печатает", динамическое время набора. Канал имитирует человеческое поведение.
-
-### Фаза 3: Буферизация сообщений
-Бот ждёт, пока собеседник допишет мысль (silence window 10с), склеивает "капли" сообщений, отвечает одним блоком.
-
-### Фаза 4: LLM-интеграция
-Канал отправляет текст в Qwen3-VL-8B и получает ответ. Мозг получает текст, обрабатывает, возвращает ответ.
-
-### Фаза 5: Память (БД TBD)
-Мозг начинает помнить. История диалогов сохраняется между сессиями. Канал лишь передаёт данные в Мозг и обратно.
-
-### Фаза 6: Импорт исторических чатов
-Загружаем годы переписок из JSON-экспорта Telegram. Мозг учится говорить как владелец.
-
-### Фаза 7: Семантический роутер
-Мозг ищет в своём прошлом похожие ситуации и использует их как примеры для ответа.
-
-### Фаза 8: Dynamic Prompt Constructor
-Мозг собирает полный контекст: системный промпт + семантические примеры + история диалога → отправляет в LLM.
-
-### Фаза 9: Proactive Engine
-Мозг первым пишет, интересуется, делится мыслями. Таймеры + триггеры + расписание.
-
-### Фаза 10: ComfyUI Integration
-Мозг генерирует фото Samantha по запросу или расписанию. Отправляет через канал.
-
-### Фаза 11: Web Scraper
-Мозг читает паблики, RSS-ленты, новости. Может обсудить текущие события.
-
-### Фаза 12: Personality Engine
-Мозг имеет настроение, эмоции, состояние. Не просто отвечает — он "чувствует".
-
-### Фаза 13: Channel Abstraction
-Абстракция канала — единый интерфейс для подключения других мессенджеров и соцсетей. Telegram становится одним из многих.
-
-### Фаза 14: TTS Integration
-Мозг генерирует голосовые сообщения. Подключаем TTS-сервис, отправляем аудио через канал.
 
 ---
 
@@ -242,9 +452,22 @@ MVP 1 (Alpha) ──→ MVP 2 (Beta) ──→ MVP 3 (Alpha 2) ──→ MVP 4 (
 
 ---
 
-## 10. Важные детали
+## 10. Ключевые принципы
 
-- **Мозг — ядро, Telegram — канал:** Telegram-бот — это не цель, а средство связи. В будущем добавим другие мессенджеры и соцсети через единый интерфейс каналов.
+1. **Один процесс:** Мозг + все каналы + память + настроение — одно приложение. Нет микросервисов, нет брокеров.
+2. **Event-driven:** Все модули общаются через Event Bus. Нет прямых вызовов друг к другу — только события.
+3. **Чёткие границы:** Каждый модуль — замкнутая ответственность. Взаимодействие только через интерфейсы.
+4. **Внешние сервисы независимы:** LLM, ComfyUI, TTS — отдельные процессы. Мозг ходит в них напрямую через HTTP.
+5. **Модули заменяемы:** Можно заменить Telegram Channel на Discord Channel без изменения Brain.
+6. **aw::tpl для асинхронности:** Task, ThreadPool, CancellationToken, when_all/when_any — из отдельного репозитория.
+7. **БД TBD:** SQLite по умолчанию, но интерфейс Memory абстрактный — можно переключиться на PostgreSQL/pgvector.
+8. **Олл эмбеддинги через llama.cpp:** Никакого Ollama. Эмбеддинги генерируются через `/api/embed` llama.cpp.
+9. **Trigger word:** `smlq_sfw` — для всех AI-моделей.
+
+---
+
+## 11. Важные детали
+
 - **Юзербот, не API-бот:** используется обычный аккаунт Telegram (не Bot API). Это значит:
   - Можно отправлять фото/голосовые как обычный пользователь
   - Telegram следит за спамом — нужна имитация человеческого поведения
@@ -253,4 +476,3 @@ MVP 1 (Alpha) ──→ MVP 2 (Beta) ──→ MVP 3 (Alpha 2) ──→ MVP 4 (
 - **ComfyUI:** отдельный сервис, мозг общается с ним через HTTP API.
 - **TTS:** отдельный сервис (в планах), мозг будет генерировать голосовые через HTTP API.
 - **Docker profiles:** LLM-сервер запускается либо на CPU, либо на GPU, не одновременно.
-- **Один процесс (пока):** Мозг + Telegram-бот — одно приложение. В будущем разнесём на отдельные процессы.
