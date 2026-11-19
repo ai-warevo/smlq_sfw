@@ -53,3 +53,6 @@ _deps/
 # OS specific
 .DS_Store
 Thumbs.db
+
+version
+!/VERSION
