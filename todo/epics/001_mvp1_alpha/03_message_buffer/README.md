@@ -1,26 +1,26 @@
 # 03: Message Buffer
 
 **Epic:** 001 (MVP 1 Alpha)
-**Фаза:** 3
+**Phase:** 3
 
-## ТЗ
+## Requirements
 
 ### 1. In-Memory Buffer
-- Словарь `user_id → std::vector<std::string>` (сообщения)
-- Словарь `user_id → Timer` (silence window)
+- Dictionary `user_id → std::vector<std::string>` (messages)
+- Dictionary `user_id → Timer` (silence window)
 
-### 2. Silence Window 10 сек
-- Если за 10 секунд нет нового сообщения от user_id — буфер flush-ится
-- Новое сообщение сбрасывает таймер 10с
+### 2. Silence Window 10s
+- If no new message from user_id within 10 seconds — buffer is flushed
+- New message resets the 10s timer
 
-### 3. Склейка
-- Сообщения склеиваются через `\n`
-- Мозг получает один логический блок, отвечает одним блоком
+### 3. Merging
+- Messages are merged via `\n`
+- Brain receives one logical block, responds with one block
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class MessageBuffer {
 public:
     void addMessage(UserId userId, const std::string& text);
@@ -29,8 +29,8 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Одиночное сообщение → flush через 10с → передача Мозгу
-- [ ] "Капли" (3 сообщения с интервалом 3-5с) → один склеенный блок через 10с после последнего
-- [ ] Таймер сбрасывается при новом сообщении
+- [ ] Single message → flush after 10s → sent to Brain
+- [ ] "Drops" (3 messages with 3–5s interval) → one merged block, 10s after the last
+- [ ] Timer resets on new message

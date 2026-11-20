@@ -1,37 +1,37 @@
 # 01: LLM Client
 
 **Epic:** 002 (MVP 2 Beta)
-**Фаза:** 4
+**Phase:** 4
 
-## ТЗ
+## Requirements
 
 ### 1. LLM Client
-- Асинхронный POST-запрос к llama.cpp API (`/api/chat`)
-- Формат запроса:
+- Async POST request to llama.cpp API (`/api/chat`)
+- Request format:
   ```json
   {
     "model": "qwen3-vl-8b",
-    "messages": [{"role": "user", "content": "<ТЕКСТ>"}],
+    "messages": [{"role": "user", "content": "<TEXT>"}],
     "stream": false
   }
   ```
-- Парсинг SSE-ответа / JSON
+- Parse SSE response / JSON
 
-### 2. Системный промпт (базовый)
-- Короткое правило стиля общения (разговорный, без заглавных, скобочки вместо смайлик)
-- Полный промпт будет собираться в Фазе 8
+### 2. System Prompt (basic)
+- Short communication style rule (conversational, no capitals, parentheses instead of emojis)
+- Full prompt will be assembled in Phase 8
 
 ### 3. Error Handling
-- Если LLM недоступен — логировать, не падать
-- Retry с exponential backoff (опционально)
+- If LLM is unavailable — log, don't crash
+- Retry with exponential backoff (optional)
 
-### 4. Интеграция с каналом
-- Мозг формирует промпт → LLM Client → ответ → Channel (Presence Simulator → отправка)
+### 4. Channel Integration
+- Brain builds prompt → LLM Client → response → Channel (Presence Simulator → send)
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class LLMClient {
 public:
     std::string generate(const std::string& prompt, int maxTokens = 512);
@@ -40,8 +40,8 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Мозг отправляет текст → получает осмысленный ответ
-- [ ] Стиль ответа соответствует системному промпту
-- [ ] LLM недоступен → бот не падает
+- [ ] Brain sends text → receives meaningful response
+- [ ] Response style matches the system prompt
+- [ ] LLM unavailable → bot doesn't crash

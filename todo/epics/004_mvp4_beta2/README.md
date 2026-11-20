@@ -1,27 +1,27 @@
 # MVP 4 (Beta 2): Semantic Router + Prompt Builder
 
-**Цель:** Мозг ищет в своём прошлом похожие ситуации и собирает полный контекст для LLM. Ответы становятся более персонализированными.
+**Goal:** The brain searches its past for similar situations and assembles full context for the LLM. Responses become more personalized.
 
-**Статус:** ⬜ Не начато
+**Status:** ⬜ Not started
 
-**Что работает:** Всё из MVP 3 + бот ищет похожие исторические пары, собирает "Prompt Pie" из системы + семантики + истории.
+**What works:** Everything from MVP 3 + bot searches for similar historical pairs, assembles "Prompt Pie" from system + semantics + history.
 
 ---
 
-## Подзадачи
+## Subtasks
 
-| # | Задача | Описание | Статус |
+| # | Task | Description | Status |
 |---|---|---|---|
-| 01 | Historical Ingestion | Импорт JSON-экспорта Telegram | ⬜ |
-| 02 | Semantic Router | Cosine similarity, поиск похожих пар | ⬜ |
-| 03 | Prompt Builder | Сборка полного промпта (Prompt Pie) | ⬜ |
+| 01 | Historical Ingestion | Import Telegram JSON export | ⬜ |
+| 02 | Semantic Router | Cosine similarity, search for similar pairs | ⬜ |
+| 03 | Prompt Builder | Assemble full prompt (Prompt Pie) | ⬜ |
 
 ---
 
-## Интерфейсы
+## Interfaces
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. Interface may change.
 class HistoricalIngestion {
 public:
     void parseJSON(const std::string& filePath);
@@ -42,8 +42,8 @@ public:
 };
 ```
 
-## Верификация MVP 4
+## MVP 4 Verification
 
-- [ ] Ответ бота звучит как собственный (стиль из прошлого + контекст)
-- [ ] Семантические примеры влияют на манеру ответа
-- [ ] Контекст не раздувается (ограничение: системный + ТОП-2 пары + 10 сообщений)
+- [ ] Bot's response sounds personal (style from past + context)
+- [ ] Semantic examples influence response style
+- [ ] Context doesn't bloat (limit: system + TOP-2 pairs + 10 messages)

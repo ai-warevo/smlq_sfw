@@ -1,37 +1,37 @@
 # 01: Telegram Bot (Channel)
 
-**Эpic:** 001 (MVP 1 Alpha)
-**Фаза:** 1
+**Epic:** 001 (MVP 1 Alpha)
+**Phase:** 1
 
-## ТЗ
+## Requirements
 
 ### 1. TelegramBot (Channel Interface)
-- Реализовать класс `TelegramChannel`, реализующий `Channel` интерфейс
-- Обёртка над TDLib `ClientManager`
-- Отправка текста, фото, голосовых через TDLib
+- Implement `TelegramChannel` class implementing the `Channel` interface
+- Wrapper around TDLib `ClientManager`
+- Send text, photos, voice messages via TDLib
 
-### 2. Авторизация (Auth State Machine)
-- Поддержка QR-код / номер телефона / код / 2FA
-- Session persistence — сохранение сессии в `data/tdlib_db/`
-- При перезапуске — пропускать авторизацию, если сессия есть
+### 2. Authentication (Auth State Machine)
+- Support QR code / phone number / verification code / 2FA
+- Session persistence — save session to `data/tdlib_db/`
+- On restart — skip authentication if session exists
 
 ### 3. Event Loop
-- Бесконечный `receive()` с timeout
-- Dispatch обновлений в UpdateDispatcher
+- Infinite `receive()` with timeout
+- Dispatch updates to UpdateDispatcher
 
 ### 4. Graceful Shutdown
-- SIGINT/SIGTERM → stop event loop → close TDLib → flush сессии
+- SIGINT/SIGTERM → stop event loop → close TDLib → flush sessions
 
 ### 5. Message Filters
-- Игнорировать исходящие сообщения (prevent self-response loops)
-- Фильтровать старые (игнорировать старше 10с — backlog при старте)
-- Только private chats (игнорировать группы/каналы)
-- Извлекать контент: текст, голосовые, фото
+- Ignore outgoing messages (prevent self-response loops)
+- Filter old messages (ignore messages older than 10s — backlog at startup)
+- Only private chats (ignore groups/channels)
+- Extract content: text, voice messages, photos
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class TelegramChannel : public Channel {
 public:
     void start() override;
@@ -45,10 +45,10 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Бот авторизуется по QR / номеру телефона
-- [ ] Сессия сохраняется после перезапуска контейнера
-- [ ] Входящие сообщения от владельца обрабатываются
-- [ ] Исходящие сообщения игнорируются
-- [ ] Старые сообщения игнорируются
+- [ ] Bot authenticates via QR / phone number
+- [ ] Session persists after container restart
+- [ ] Incoming messages from owner are processed
+- [ ] Outgoing messages are ignored
+- [ ] Old messages are ignored

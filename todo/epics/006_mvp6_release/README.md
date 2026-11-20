@@ -1,27 +1,27 @@
-# MVP 6 (Release): Мульти-модальный бот
+# MVP 6 (Release): Multi-modal Bot
 
-**Цель:** Полноценный бот с генерацией фото, голосовыми сообщениями и веб-скрапингом. Samantha может кидать фото, говорить голосом, обсуждать новости.
+**Goal:** A full-featured bot with photo generation, voice messages, and web scraping. Samantha can send photos, speak with voice, and discuss news.
 
-**Статус:** ⬜ Не начато
+**Status:** ⬜ Not started
 
-**Что работает:** Всё из MVP 5 + бот генерирует фото, говорит голосом, читает паблики и новости.
+**What works:** Everything from MVP 5 + the bot generates photos, speaks with voice, reads public channels and news.
 
 ---
 
-## Подзадачи
+## Subtasks
 
-| # | Задача | Описание | Статус |
+| # | Task | Description | Status |
 |---|---|---|---|
-| 01 | ComfyUI Client | Генерация фото по запросу | ⬜ |
-| 02 | TTS Client | Синтез голосовых сообщений | ⬜ |
-| 03 | Web Scraper | Парсинг пабликов, RSS, новостей | ⬜ |
+| 01 | ComfyUI Client | Photo generation from prompt | ⬜ |
+| 02 | TTS Client | Voice message synthesis | ⬜ |
+| 03 | Web Scraper | Parsing public channels, RSS, news | ⬜ |
 
 ---
 
-## Интерфейсы
+## Interfaces
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class ComfyUIClient {
 public:
     std::string generatePhoto(const std::string& prompt);
@@ -42,9 +42,9 @@ public:
 };
 ```
 
-## Верификация MVP 6
+## MVP 6 Verification
 
-- [ ] Бот генерирует фото Samantha по запросу
-- [ ] Бот отправляет голосовые сообщения
-- [ ] Бот может обсудить текущие новости
-- [ ] Все компоненты работают стабильно
+- [ ] The bot generates Samantha photos on request
+- [ ] The bot sends voice messages
+- [ ] The bot can discuss current news
+- [ ] All components work stably

@@ -1,29 +1,29 @@
 # 03: Web Scraper
 
 **Epic:** 006 (MVP 6 Release)
-**Фаза:** 11
+**Phase:** 11
 
-## ТЗ
+## Requirements
 
 ### 1. Web Scraper
-- RSS-ленты (новости, паблики)
-- Парсинг страниц
-- Поиск по запросам
+- RSS feeds (news, public channels)
+- Page parsing
+- Search by queries
 
 ### 2. News Processing
-- Извлечение заголовков, текста, ссылок
-- Фильтрация по релевантности (интересы пользователя)
-- Краткий пересказ для отправки в чат
+- Extracting titles, text, links
+- Filtering by relevance (user interests)
+- Brief summary for sending to chat
 
-### 3. Интеграция с Brain
-- Proactive: "Смотри что нашлась!"
-- По запросу: "Погугли ..."
-- Контекст для ответов: "Читала сегодня ..."
+### 3. Brain Integration
+- Proactive: "Look what I found!"
+- On request: "Google ..."
+- Context for responses: "Read today ..."
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 struct NewsItem {
     std::string title;
     std::string content;
@@ -39,7 +39,7 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Бот может обсудить текущие новости
-- [ ] RSS-ленты парсятся корректно
+- [ ] The bot can discuss current news
+- [ ] RSS feeds are parsed correctly

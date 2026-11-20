@@ -1,27 +1,27 @@
-# MVP 1 (Alpha): Telegram-бот + Presence + Buffer
+# MVP 1 (Alpha): Telegram Bot + Presence + Buffer
 
-**Цель:** Бот подключён к Telegram, имитирует человеческое поведение, ждёт пока собеседник допишет мысль. Может общаться, но отвечает заглушкой.
+**Goal:** Bot connected to Telegram, simulates human behavior, waits for the other person to finish their thought. Can chat, but responds with a stub.
 
-**Статус:** ⬜ Не начато
+**Status:** ⬜ Not started
 
-**Что работает:** Бот авторизуется, читает сообщения, ведёт себя как человек (паузы, "печатает"), склеивает "капли" сообщений. Мозг пока не подключён.
+**What works:** Bot authenticates, reads messages, behaves like a human (pauses, "typing"), merges message "drops". Brain not connected yet.
 
 ---
 
-## Подзадачи
+## Subtasks
 
-| # | Задача | Описание | Статус |
+| # | Task | Description | Status |
 |---|---|---|---|
-| 01 | Telegram Bot (Channel) | TDLib, авторизация, event loop, filters | ⬜ |
+| 01 | Telegram Bot (Channel) | TDLib, authentication, event loop, filters | ⬜ |
 | 02 | Presence Simulation | Reading delays, typing simulator | ⬜ |
-| 03 | Message Buffer | Silence window 10с, склейка сообщений | ⬜ |
+| 03 | Message Buffer | Silence window 10s, message merging | ⬜ |
 
 ---
 
-## Интерфейсы
+## Interfaces
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 // Channel interface
 class Channel {
 public:
@@ -43,18 +43,18 @@ class PresenceSimulator { /* ... */ };
 // Message pipeline
 class MessageBuffer { /* ... */ };
 
-// Brain stub — пока заглушка
+// Brain stub — stub for now
 class Brain {
 public:
-    std::string process(const std::string& input); // возвращает заглушку
+    std::string process(const std::string& input); // returns a stub
 };
 ```
 
-## Верификация MVP 1
+## MVP 1 Verification
 
-- [ ] Бот авторизуется по QR / номеру телефона
-- [ ] Сессия сохраняется после перезапуска
-- [ ] Пауза чтения 1.5–3с перед ответом
-- [ ] Статус "печатает" динамический (зависит от длины ответа)
-- [ ] "Капли" сообщений склеиваются
-- [ ] Бот не падает, работает стабильно
+- [ ] Bot authenticates via QR / phone number
+- [ ] Session persists after restart
+- [ ] Reading pause 1.5–3s before response
+- [ ] "Typing" status is dynamic (depends on response length)
+- [ ] Message "drops" are merged
+- [ ] Bot doesn't crash, runs stably

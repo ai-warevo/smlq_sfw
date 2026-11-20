@@ -1,46 +1,46 @@
 # 03: Prompt Builder
 
 **Epic:** 004 (MVP 4 Beta 2)
-**Фаза:** 8
+**Phase:** 8
 
-## ТЗ
+## Requirements
 
-### 1. Prompt Pie (структура промпта)
+### 1. Prompt Pie (prompt structure)
 
 ```
 ═══════════════════════════════════════════
-│ SYSTEM PROMPT (статические константы)     │
-│  - Имя, возраст, внешность                │
-│  - Стиль общения                          │
+│ SYSTEM PROMPT (static constants)          │
+│  - Name, age, appearance                  │
+│  - Communication style                    │
 │  - Trigger word: smlq_sfw                 │
-│  - Запрещённые темы                       │
+│  - Forbidden topics                       │
 ═══════════════════════════════════════════
 │ SEMANTIC EXAMPLES (Semantic Router)       │
-│  - ТОП-K похожих исторических пар         │
-│  - Вопрос → Ответ из прошлого             │
+│  - TOP-K similar historical pairs         │
+│  - Question → Answer from the past        │
 ═══════════════════════════════════════════
 │ RECENT HISTORY (Memory System)            │
-│  - Последние N сообщений текущего диалога │
+│  - Last N messages of current conversation│
 ═══════════════════════════════════════════
-│ CURRENT INPUT (входящее сообщение)        │
-│  - Текст / голос / фото                   │
+│ CURRENT INPUT (incoming message)          │
+│  - Text / voice / photo                   │
 ═══════════════════════════════════════════
 ```
 
 ### 2. Prompt Builder
-- System Prompt Builder — статика
-- Semantic Example Fetcher — запрос к Semantic Router
-- History Fetcher — запрос к Memory System
-- Assembly — склейка всех частей в единый промпт
-- Token estimation — оценка длины (не превысить лимит контекста LLM)
+- System Prompt Builder — static
+- Semantic Example Fetcher — query to Semantic Router
+- History Fetcher — query to Memory System
+- Assembly — stitch all parts into a single prompt
+- Token estimation — length estimation (don't exceed LLM context limit)
 
-### 3. Интеграция
-- Собранный промпт → LLM Client → ответ → Channel → отправка
+### 3. Integration
+- Assembled prompt → LLM Client → response → Channel → send
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. Interface may change.
 class PromptBuilder {
 public:
     std::string buildFullPrompt(const Context& ctx);
@@ -48,8 +48,8 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Ответ бота звучит как собственный (стиль из прошлого + контекст)
-- [ ] Семантические примеры влияют на манеру ответа
-- [ ] Контекст не раздувается (ограничение: системный + ТОП-2 пары + 10 сообщений)
+- [ ] Bot's response sounds personal (style from past + context)
+- [ ] Semantic examples influence response style
+- [ ] Context doesn't bloat (limit: system + TOP-2 pairs + 10 messages)

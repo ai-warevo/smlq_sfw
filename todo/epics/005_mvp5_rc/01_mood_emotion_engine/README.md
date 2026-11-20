@@ -1,37 +1,37 @@
 # 01: Mood & Emotion Engine
 
 **Epic:** 005 (MVP 5 RC)
-**Фаза:** 12
+**Phase:** 12
 
-## ТЗ
+## Requirements
 
 ### 1. Mood Model
-- Настроение: `positive`, `neutral`, `negative`
-- Эмоция: `happy`, `sad`, `angry`, `excited`, `calm`, `worried`
-- Состояние: `energetic`, `tired`, `distracted`
+- Mood: `positive`, `neutral`, `negative`
+- Emotion: `happy`, `sad`, `angry`, `excited`, `calm`, `worried`
+- State: `energetic`, `tired`, `distracted`
 
-### 2. Обновление
-- Анализ тональности входящего сообщения
-- Контекст последних N сообщений
-- Время суток (утро/день/вечер/ночь)
+### 2. Updates
+- Sentiment analysis of incoming messages
+- Context of the last N messages
+- Time of day (morning/day/evening/night)
 
-### 3. Интеграция с Prompt Builder
-- Mood modifiers добавляются в системный промпт
-- Эмоция влияет на стиль ответа
+### 3. Integration with Prompt Builder
+- Mood modifiers are added to the system prompt
+- Emotion affects response style
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class MoodEngine {
 public:
     Mood getCurrentMood() const;
     void updateMood(const std::string& input, float sentiment);
-    std::string getMoodModifiers(); // для Prompt Builder
+    std::string getMoodModifiers(); // for Prompt Builder
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Настроение меняется в зависимости от контекста
-- [ ] Эмоциональная окраска влияет на ответы
+- [ ] Mood changes depending on context
+- [ ] Emotional coloring affects responses

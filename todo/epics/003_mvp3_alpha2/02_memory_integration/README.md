@@ -1,20 +1,20 @@
 # 02: Memory Integration
 
 **Epic:** 003 (MVP 3 Alpha 2)
-**Фаза:** 5
+**Phase:** 5
 
-## ТЗ
+## Requirements
 
-### 1. Интеграция с Brain
-- Brain вызывает `MemorySystem::saveMessage()` после каждого flush
-- Brain вызывает `MemorySystem::getRecent()` перед запросом к LLM
-- Факты извлекаются из сообщений (простое правило: первые упоминания имён)
+### 1. Brain Integration
+- Brain calls `MemorySystem::saveMessage()` after each flush
+- Brain calls `MemorySystem::getRecent()` before LLM request
+- Facts are extracted from messages (simple rule: first mentions of names)
 
-### 2. Контекст для LLM
-- Последние 10 сообщений → добавляются в промпт как история
-- Формат: `user: ... \n assistant: ...`
+### 2. Context for LLM
+- Last 10 messages → added to prompt as history
+- Format: `user: ... \n assistant: ...`
 
-## Верификация
+## Verification
 
-- [ ] История диалога доступна для LLM
-- [ ] Факты сохраняются после каждого диалога
+- [ ] Conversation history available to LLM
+- [ ] Facts are saved after each conversation

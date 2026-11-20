@@ -1,28 +1,28 @@
 # 02: Presence Simulation
 
 **Epic:** 001 (MVP 1 Alpha)
-**Фаза:** 2
+**Phase:** 2
 
-## ТЗ
+## Requirements
 
 ### 1. Reading Delays
-- После получения сообщения — рандомная задержка 1.5–3.0 сек перед обработкой
-- Не блокирует event loop (асинхронно через корутины или thread pool)
-- Рандомизация для естественности
+- After receiving a message — random delay 1.5–3.0s before processing
+- Does not block the event loop (asynchronously via coroutines or thread pool)
+- Randomization for naturalness
 
 ### 2. Typing Simulator
-- Отправка `sendChatAction("typing")` через TDLib
-- Длительность: `max(2с, min(10с, длина_ответа * 0.15))`
-- Автоматическая отправка `sendChatAction("cancelled")` после отправки сообщения
+- Send `sendChatAction("typing")` via TDLib
+- Duration: `max(2s, min(10s, response_length * 0.15))`
+- Automatically send `sendChatAction("cancelled")` after sending a message
 
-### 3. Human-like Variations (опционально)
-- Иногда "начать печатать", остановиться и продолжить
-- Редко — "забыл" ответить сразу (имитация отвлечения)
+### 3. Human-like Variations (optional)
+- Sometimes "start typing", stop, and continue
+- Rarely — "forgot" to reply immediately (simulates distraction)
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class PresenceSimulator {
 public:
     void simulateReading(UserId userId, int messageLength);
@@ -31,9 +31,9 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Короткое сообщение: "печатает" ~2с
-- [ ] Длинный текст: "печатает" дольше, пропорционально длине
-- [ ] Нет перекрывающихся typing-статусов
-- [ ] Пауза чтения 1.5–3с перед обработкой
+- [ ] Short message: "typing" ~2s
+- [ ] Long text: "typing" longer, proportional to length
+- [ ] No overlapping typing statuses
+- [ ] Reading pause 1.5–3s before processing

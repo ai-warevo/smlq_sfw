@@ -1,31 +1,31 @@
 # 03: Proactive Engine
 
 **Epic:** 005 (MVP 5 RC)
-**Фаза:** 9
+**Phase:** 9
 
-## ТЗ
+## Requirements
 
-### 1. Триггеры
-- Время с последнего сообщения
-- Контекст (пропущенный день,特殊ные даты)
-- Настроение (если негативное → проявить заботу)
+### 1. Triggers
+- Time since last message
+- Context (missed day, special dates)
+- Mood (if negative → show care)
 
 ### 2. Message Types
-- "Как дела?"
-- "Скучаю"
-- "Смотри что нашла" (с фото)
-- Новость / интересная тема
+- "How are you?"
+- "Miss you"
+- "Look what I found" (with photo)
+- News / interesting topic
 
-### 3. Расписание
-- Утро: "Доброе утро!", вопрос о планах
-- День: "Как дела?", проверка
-- Вечер: "Как прошёл день?", "Спокойной ночи"
-- Редко: инициатива в любое время
+### 3. Schedule
+- Morning: "Good morning!", question about plans
+- Day: "How are you?", check-in
+- Evening: "How was your day?", "Good night"
+- Rarely: initiative at any time
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class ProactiveEngine {
 public:
     void scheduleCheck();
@@ -33,8 +33,8 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Бот первым пишет после долгого молчания
-- [ ] Инициатива соответствует расписанию
-- [ ] Не спамит (коэффициент инициативы < 3 в день)
+- [ ] The bot initiates contact after a long silence
+- [ ] Initiative matches the schedule
+- [ ] No spamming (initiative coefficient < 3 per day)

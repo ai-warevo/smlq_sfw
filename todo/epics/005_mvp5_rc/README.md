@@ -1,32 +1,32 @@
-# MVP 5 (RC): Brain Core — Настроение, Личность, Proactive
+# MVP 5 (RC): Brain Core — Mood, Personality, Proactive
 
-**Цель:** Мозг обретает "душу" — настроение, эмоции, инициативу. Бот не просто отвечает, а проявляет интерес, помнит контекст эмоционально.
+**Goal:** The brain gains a "soul" — mood, emotions, and initiative. The bot doesn't just respond; it shows interest and remembers context emotionally.
 
-**Статус:** ⬜ Не начато
+**Status:** ⬜ Not started
 
-**Что работает:** Всё из MVP 4 + бот имеет настроение, проявляет инициативу, отвечает с эмоциональной окраской.
+**What works:** Everything from MVP 4 + the bot has a mood, shows initiative, and responds with emotional coloring.
 
 ---
 
-## Подзадачи
+## Subtasks
 
-| # | Задача | Описание | Статус |
+| # | Task | Description | Status |
 |---|---|---|---|
-| 01 | Mood & Emotion Engine | Настроение, эмоции, состояние | ⬜ |
+| 01 | Mood & Emotion Engine | Mood, emotions, state | ⬜ |
 | 02 | Personality Engine | System prompt, digital twin | ⬜ |
-| 03 | Proactive Engine | Инициатива, расписание, триггеры | ⬜ |
+| 03 | Proactive Engine | Initiative, schedule, triggers | ⬜ |
 
 ---
 
-## Интерфейсы
+## Interfaces
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class MoodEngine {
 public:
     Mood getCurrentMood() const;
     void updateMood(const std::string& input, float sentiment);
-    std::string getMoodModifiers(); // для Prompt Builder
+    std::string getMoodModifiers(); // for Prompt Builder
 };
 
 class PersonalityEngine {
@@ -42,9 +42,9 @@ public:
 };
 ```
 
-## Верификация MVP 5
+## MVP 5 Verification
 
-- [ ] Бот меняет настроение в зависимости от контекста
-- [ ] Бот первым пишет (proactive)
-- [ ] Ответы эмоционально окрашены
-- [ ] Личность согласована с digital twin
+- [ ] The bot changes its mood depending on context
+- [ ] The bot initiates contact (proactive)
+- [ ] Responses are emotionally colored
+- [ ] Personality is consistent with the digital twin

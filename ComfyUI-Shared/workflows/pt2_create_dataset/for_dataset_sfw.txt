@@ -12,7 +12,7 @@ https://whop.com/icekiub/
 AIO Influencer Klein update - With base image generation - No mediapipe
 -------------------------------------------------------------------------
 ///
-[РАКУРС И ТИП ПЛАНА], [ОДЕНЖДА И АКСЕССУАРЫ], [ЭМОЦИЯ И ВЗГЛЯД], [ОСВЕЩЕНИЕ], [ЛОКАЦИЯ С ДЕТАЛЯМИ] background.
+[ANGLE AND SHOT TYPE], [CLOTHING AND ACCESSORIES], [EMOTION AND GAZE], [LIGHTING], [LOCATION WITH DETAILS] background.
 ///
 
 Extreme close-up portrait looking directly into the lens, neutral expression, highly detailed skin texture, sharp focus on eyes, soft studio lighting, positioned against a solid white wall.

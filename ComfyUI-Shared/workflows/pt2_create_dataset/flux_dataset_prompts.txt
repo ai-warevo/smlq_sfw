@@ -1,15 +1,15 @@
 ================================================================================
-FLUX DATASET PROMPTS — Файнтюнинг персонажа
+FLUX DATASET PROMPTS — Character Fine-tuning
 ================================================================================
 
-БАЗОВОЕ ОПИСАНИЕ ПЕРСОНАЖА (trigger word: [YOUR_TOKEN])
+BASE CHARACTER DESCRIPTION (trigger word: [YOUR_TOKEN])
 ─────────────────────────────────────────────────────────
 young woman, short ash brown bob haircut, light brown-grey eyes,
 soft facial features, small nose, full red lips, light skin with
 subtle pink cheeks, small mole on right cheek
 
 ================================================================================
-КАТЕГОРИЯ 1: КРУПНЫЕ ПОРТРЕТЫ (разные ракурсы)
+CATEGORY 1: CLOSE-UP PORTRAITS (various angles)
 ================================================================================
 
 close-up portrait, front facing, neutral expression, soft studio lighting, grey sweater, plain beige background, sharp focus, 85mm lens, f/1.8
@@ -22,7 +22,7 @@ close-up portrait, looking down slightly, pensive mood, low key lighting, dark g
 close-up portrait, profile view left side, elegant pose, rim lighting from behind, bare shoulders, gradient grey background, editorial style
 
 ================================================================================
-КАТЕГОРИЯ 2: ПОЯСНЫЕ ПОРТРЕТЫ (разная одежда)
+CATEGORY 2: MEDIUM PORTRAITS (different outfits)
 ================================================================================
 
 half-body portrait, wearing a white button-up shirt, arms crossed, confident pose, natural window lighting, office interior background, professional photography
@@ -35,7 +35,7 @@ half-body portrait, wearing a formal black blazer and white shirt, professional 
 half-body portrait, wearing a striped mariniere shirt, playful expression, bright natural light, coastal background blurred, summer vibes
 
 ================================================================================
-КАТЕГОРИЯ 3: ПОЛНЫЙ РОСТ (разные сцены)
+CATEGORY 3: FULL BODY (different scenes)
 ================================================================================
 
 full-body, wearing jeans and white sneakers, casual t-shirt, standing pose, hands at sides, urban street background, daylight, street style photography
@@ -46,7 +46,7 @@ full-body, wearing a summer floral dress, sitting on a bench, park setting, dapp
 full-body, wearing business casual outfit, walking in modern office corridor, carrying a notebook, clean professional environment, natural lighting
 
 ================================================================================
-КАТЕГОРИЯ 4: РАЗНОЕ ОСВЕЩЕНИЕ
+CATEGORY 4: DIFFERENT LIGHTING
 ================================================================================
 
 portrait, dramatic chiaroscuro lighting, strong shadows on face, dark moody background, renaissance painting style lighting, grey top, artistic photography
@@ -59,7 +59,7 @@ portrait, ring light catch light in eyes, beauty shot, flawless lighting, plain 
 portrait, candlelight only, warm orange glow, intimate dinner setting, soft focus background, elegant black top, romantic atmosphere
 
 ================================================================================
-КАТЕГОРИЯ 5: РАЗНЫЕ ВЫРАЖЕНИЯ ЛИЦА
+CATEGORY 5: DIFFERENT FACIAL EXPRESSIONS
 ================================================================================
 
 close-up portrait, genuine laughing expression, eyes slightly closed, natural joy, bright daylight, casual white tee, candid photography
@@ -69,7 +69,7 @@ close-up portrait, serene peaceful expression, eyes closed, meditation pose, sof
 close-up portrait, confident smirk, one eyebrow slightly raised, power pose energy, dramatic lighting, dark blazer, strong personality portrait
 
 ================================================================================
-КАТЕГОРИЯ 6: РАЗНЫЕ СТИЛИ ВОЛОС
+CATEGORY 6: DIFFERENT HAIRSTYLES
 ================================================================================
 
 portrait, hair tucked behind ears, showing earrings, clean look, studio lighting, white blouse, professional headshot style
@@ -79,35 +79,35 @@ portrait, hair slicked back with gel, edgy sophisticated look, high fashion ligh
 portrait, hair with a headband, sporty casual look, bright outdoor lighting, activewear, park background, healthy lifestyle photography
 
 ================================================================================
-СОВЕТЫ ДЛЯ ГЕНЕРАЦИИ ДАТАСЕТА В FLUX
+TIPS FOR GENERATING A DATASET IN FLUX
 ================================================================================
 
-РАЗМЕР ДАТАСЕТА: Для LoRA файнтюнинга оптимально 20-50 изображений.
-   Для DreamBooth достаточно 10-25 качественных изображений.
+DATASET SIZE: For LoRA fine-tuning, 20-50 images is optimal.
+   For DreamBooth, 10-25 high-quality images are sufficient.
 
-TRIGGER WORD: Замени [YOUR_TOKEN] на уникальное слово-триггер
-   (например: "ohwx woman", "sks woman" или любое редкое слово).
+TRIGGER WORD: Replace [YOUR_TOKEN] with a unique trigger word
+   (e.g. "ohwx woman", "sks woman" or any rare word).
 
-РАЗРЕШЕНИЕ: Генерируй все в одном разрешении (1024x1024 или 768x1024).
+RESOLUTION: Generate all images at a single resolution (1024x1024 or 768x1024).
 
-ОТБОР: Из каждого промпта выбирай лучший результат из 3-4 генераций.
-   Удаляй изображения с артефактами, деформациями рук/лица.
+SELECTION: From each prompt, choose the best result from 3-4 generations.
+   Remove images with artifacts, hand/face deformations.
 
-БАЛАНС ДАТАСЕТА:
-   — ~40% крупные портреты (лицо, выражения)
-   — ~30% поясные портреты (одежда, позы)
-   — ~20% полный рост (фигура, окружение)
-   — ~10% необычное освещение/стили
+DATASET BALANCE:
+   — ~40% close-up portraits (face, expressions)
+   — ~30% medium portraits (clothing, poses)
+   — ~20% full body (figure, environment)
+   — ~10% unusual lighting/styles
 
-НЕГАТИВНЫЕ ПРОМПТЫ (если поддерживается):
+NEGATIVE PROMPTS (if supported):
    blurry, low quality, deformed, extra fingers, bad anatomy,
    watermark, text, logo, duplicate, ugly, disfigured
 
-КАПТИОНИНГ: После генерации подпиши каждое изображение
-   его промптом (без [YOUR_TOKEN] — замени на описание).
-   Используй BLIP-2 или Florence-2 для автокаптионинга.
+CAPTIONING: After generation, label each image
+   with its prompt (without [YOUR_TOKEN] — replace with description).
+   Use BLIP-2 or Florence-2 for auto-captioning.
 
-РЕГУЛЯРИЗАЦИЯ: Добавь 100-200 регуляризационных изображений
-   похожих людей (без trigger word) для предотвращения оверфиттинга.
+REGULARIZATION: Add 100-200 regularization images
+   of similar people (without trigger word) to prevent overfitting.
 
 ================================================================================

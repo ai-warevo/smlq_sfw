@@ -1,37 +1,37 @@
 # 01: Historical Ingestion
 
 **Epic:** 004 (MVP 4 Beta 2)
-**Фаза:** 6
+**Phase:** 6
 
-## ТЗ
+## Requirements
 
 ### 1. JSON Parser
-- Парсер экспорта Telegram Desktop (`result.json`)
-- Sessionization: сообщения одного автора с интервалом < 60с = один блок
-- Разрыв сессии: пауза > 30мин
-- Фильтры: игнорировать медиа-заглушки, системные сообщения, пересланные
+- Telegram Desktop export parser (`result.json`)
+- Sessionization: messages from the same author with interval < 60s = one block
+- Session break: pause > 30min
+- Filters: ignore media placeholders, system messages, forwarded messages
 
 ### 2. Embedding Pipeline
-- Для каждого `user_message` → POST к llama.cpp `/api/embed` (или `/v1/embeddings`)
-- Сохранение вектора в таблицу `embeddings`
+- For each `user_message` → POST to llama.cpp `/api/embed` (or `/v1/embeddings`)
+- Save vector to `embeddings` table
 
-### 3. Таблица `embeddings`
+### 3. `embeddings` table
 - `id` (INTEGER PRIMARY KEY)
 - `message_id` (INTEGER REFERENCES messages(id))
-- `vector` (BLOB — бинарный массив float)
+- `vector` (BLOB — binary float array)
 - `created_at` (DATETIME)
 
-### 4. Факты
-- Извлечение именованных сущностей (имена, даты, места)
-- Сохранение в таблицу `facts`
+### 4. Facts
+- Named entity extraction (names, dates, places)
+- Save to `facts` table
 
-### 5. Прогресс
-- Вывод счётчика в консоль (обработано N сообщений)
+### 5. Progress
+- Print counter to console (N messages processed)
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. Interface may change.
 class HistoricalIngestion {
 public:
     void parseJSON(const std::string& filePath);
@@ -40,8 +40,8 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Парсер обрабатывает большой JSON без падений
-- [ ] В БД записаны сообщения с векторами
-- [ ] llama.cpp возвращает корректные эмбеддинги
+- [ ] Parser handles large JSON without crashes
+- [ ] Messages with vectors written to DB
+- [ ] llama.cpp returns correct embeddings

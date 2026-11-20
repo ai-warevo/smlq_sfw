@@ -1,72 +1,72 @@
-# AI Waifu Pipeline: Identity Genesis & Dataset Generating
+# AI Waifu Pipeline: Identity Genesis & Dataset Generation
 
-Пайплайн для создания уникального персонажа с абсолютным удержанием идентичности лица (Face Identity) и автоматической генерацией датасета для обучения LoRA.
+Pipeline for creating a unique character with absolute face identity retention and automated dataset generation for LoRA training.
 
-## Структура репозитория
+## Repository Structure
 
 * `ComfyUI-Shared/workflows/`
-*   `pt1_create_portrait/` — Создание базовой идентичности (генезис лица).
-    *   `wf1_create_body_frame.json` — Шаг 1: Генерация базовой позы и каркаса тела.
-    *   `wf2_make_face_genesis.json` — Шаг 2: Фиксация черт лица.
-    *   `wf3_retouch.json` — Шаг 3: Финальный апскейл, чистка артефактов.
-*   `pt2_create_dataset/` — Массовая генерация датасета под LoRA.
-    *   `ai_syndicate_dataset_creator_v3.json` — Воркфлоу для автоматического создания датасета (версия 3).
-    *   `Consistent Character dataset 9b (ver 1.0.1).json` — Воркфлоу для удержания консистентности персонажа при генерации датасета.
-    *   `flux_dataset_prompts.txt` — Набор промптов, оптимизированный под T5-энкодер Flux.
-    *   `for_dataset_sfw.txt` — База уникальных SFW-кадров (ракурсы, одежда, локации).
-*   `pt3_utils/` — Дополнительный инструментарий для инпаинта, редактирования и Image-to-Image.
-    *   `Flux 2 Klein Inpaint Workflow.json` — Точечный инпаинтинг на базе моделей Flux 2 Klein.
-    *   `Flux2 Klein 9B Distill Editing 1.0.json` — Редактирование отдельных элементов и атрибутов персонажа через дистиллированные модели.
-    *   `Flux2Klein.json` — Базовый пайплайн генерации и кастомизации под архитектуру Klein.
-    *   `Krea2_Reference_I2I_v1.json` — Image-to-Image перенос по референсному изображению в стиле Krea2.
-    *   `krea2InpaintClickTo_v13.json` — Быстрый инпаинт по клику/маске для исправления мелких косяков и артефактов.
+    * `pt1_create_portrait/` — Creating the base identity (face genesis).
+        * `wf1_create_body_frame.json` — Step 1: Generating the base pose and body frame.
+        * `wf2_make_face_genesis.json` — Step 2: Locking in facial features.
+        * `wf3_retouch.json` — Step 3: Final upscale, artifact cleanup.
+    * `pt2_create_dataset/` — Mass dataset generation for LoRA.
+        * `ai_syndicate_dataset_creator_v3.json` — Workflow for automated dataset creation (version 3).
+        * `Consistent Character dataset 9b (ver 1.0.1).json` — Workflow for maintaining character consistency during dataset generation.
+        * `flux_dataset_prompts.txt` — Prompt set optimized for the Flux T5 encoder.
+        * `for_dataset_sfw.txt` — Base of unique SFW frames (angles, clothing, locations).
+    * `pt3_utils/` — Additional tools for inpainting, editing, and Image-to-Image.
+        * `Flux 2 Klein Inpaint Workflow.json` — Targeted inpainting based on Flux 2 Klein models.
+        * `Flux2 Klein 9B Distill Editing 1.0.json` — Editing individual character elements and attributes via distilled models.
+        * `Flux2Klein.json` — Base generation and customization pipeline for the Klein architecture.
+        * `Krea2_Reference_I2I_v1.json` — Image-to-Image reference transfer in the Krea2 style.
+        * `krea2InpaintClickTo_v13.json` — Fast click/mask inpainting for correcting minor flaws and artifacts.
 
-## 🧠 Методология: Модульный Промпт-Инжиниринг (Krea2)
+## 🧠 Methodology: Modular Prompt Engineering (Krea2)
 
-Для достижения максимального разнообразия датасета и предотвращения переобучения (overfitting) на конкретных сценах, используется **матричный подход**. Вместо использования статичных списков промптов, мы создаем динамическую систему.
+To achieve maximum dataset diversity and prevent overfitting on specific scenes, a **matrix approach** is used. Instead of static prompt lists, we create a dynamic system.
 
-### Концепция:
-1.  **`%MAIN_PROMPT%` (The Biological Constant):** Shot-agnostic "якорь" идентичности. Содержит 100% постоянных физических признаков персонажа (лицо, глаза, волосы, кожа, пирсинг, телосложение). **Не содержит** описаний одежды, освещения или локации.
-2.  **Variable Modifiers (Модульные блоки):** Наборы параметров, которые комбинируются с `%MAIN_PROMPT%` для создания уникальных кадров.
+### Concept:
+1.  **`%MAIN_PROMPT%` (The Biological Constant):** Shot-agnostic identity "anchor." Contains 100% of the character's permanent physical features (face, eyes, hair, skin, piercings, body type). **Does not contain** descriptions of clothing, lighting, or location.
+2.  **Variable Modifiers (Modular Blocks):** Parameter sets that combine with `%MAIN_PROMPT%` to create unique frames.
 
-### Матрица категорий промптов:
-*   **Technical/Angles:** Ракурсы и кадрирование (Front view, Profile, Close-up).
-*   **Lifestyle/Casual:** Повседневные сценарии, мягкое естественное освещение.
-*   **High-end Editorial:** Кинематографичный свет, сложные текстуры, профессиональная съемка.
-*   **Headshots/Close-ups:** Фокус на микро-деталях лица и текстуре кожи.
-*   **Action & Dynamics:** Динамичные позы, спорт, высокая нагрузка на мимику.
-*   **Sensual & Intimate:** Работа с мягкими тканями (шелк, кружево) и интимным освещением.
-*   **Mixed/Moods:** Смешанные архетипы для максимального охвата вариативности.
+### Prompt Category Matrix:
+*   **Technical/Angles:** Angles and framing (Front view, Profile, Close-up).
+*   **Lifestyle/Casual:** Everyday scenarios, soft natural lighting.
+*   **High-end Editorial:** Cinematic lighting, complex textures, professional photography.
+*   **Headshots/Close-ups:** Focus on micro-facial details and skin texture.
+*   **Action & Dynamics:** Dynamic poses, sports, high facial expression load.
+*   **Sensual & Intimate:** Work with soft fabrics (silk, lace) and intimate lighting.
+*   **Mixed/Moods:** Mixed archetypes for maximum variability coverage.
 
 ---
 
-## Инструкция по запуску
+## How to Run
 
-### Этап 1: Создание персонажа (Identity Genesis)
-1. Откройте ComfyUI и последовательно прогоните воркфлоу из папки `pt1_create_portrait` (шаги `wf1` -> `wf2` -> `wf3`).
-2. На выходе вы получите эталонный портрет персонажа высокой четкости, фиксирующий внешность.
+### Phase 1: Character Creation (Identity Genesis)
+1. Open ComfyUI and sequentially run the workflows from the `pt1_create_portrait` folder (steps `wf1` → `wf2` → `wf3`).
+2. The output will be a high-definition reference portrait of the character, capturing the appearance.
 
-### Этап 2: Генерация датасета (Батчинг по строкам)
-Используйте один из воркфлоу в папке `pt2_create_dataset`. Пайплайн работает на основе **Модульной Матрицы**:
+### Phase 2: Dataset Generation (Row-based Batching)
+Use one of the workflows in the `pt2_create_dataset` folder. The pipeline operates on a **Modular Matrix**:
 
-1. Загрузите выбранный JSON-воркфлоу в ComfyUI.
-2. Подключите текстовые списки (сгенерированные по модульной матрице) в ноду парсера промптов.
-3. Настройте KSampler на **батчинг по строкам**. Система будет брать `%MAIN_PROMPT%` и динамически приклеивать к нему переменные модификаторы из текущей пачки, создавая уникальный кадр за кадром.
+1. Load the selected JSON workflow into ComfyUI.
+2. Connect the text lists (generated according to the modular matrix) to the prompt parser node.
+3. Configure the KSampler for **row-based batching**. The system will take `%MAIN_PROMPT%` and dynamically append variable modifiers from the current batch, creating a unique frame per frame.
 
-### Этап 3: Постобработка и редактирование (Optional Tools)
-Если на кадрах нужно поправить детали или изменить стиль:
-1. Используйте воркфлоу из папки `pt3_utils` для точечной работы.
+### Phase 3: Post-processing and Editing (Optional Tools)
+If you need to fix details or change the style on frames:
+1. Use workflows from the `pt3_utils` folder for targeted work.
 
-### Этап 4: Верификация и QA (Validation Protocol)
-Для контроля качества и обеспечения 100% соответствия персонажу, каждый сгенерированный кадр должен проходить проверку по протоколу верификации:
+### Phase 4: Verification and QA (Validation Protocol)
+To control quality and ensure 100% character consistency, every generated frame must pass the verification protocol:
 `@docs/agent/validator_gen_images.md`
 
-Проверка включает в себя сверку всех биологических констант (пирсинг, родинки, анатомические особенности) с Master Prompt. Любые отклонения (identity drift) являются браком и подлежат удалению из датасета.
+Verification includes checking all biological constants (piercings, moles, anatomical features) against the Master Prompt. Any deviations (identity drift) are considered defects and must be removed from the dataset.
 
 ---
 
-## 🚀 TODO / Следующие этапы пайплайна
+## 🚀 TODO / Next Pipeline Phases
 
-*   **Интеграция с Flux-Gym / Kohya_ss** — пошаговые пресеты и конфиги для быстрого старта тренировки LoRA под архитектуру Flux и SDXL.
-*   **Автоматическое тегирование (Captioning)** — внедрение нод WD14 Tagger / Florence-2 для генерации текстовых описаний к каждому отфильтрованному кадру перед запуском обучения.
-*   **Пакетное тестирование моделей** — воркфлоу для автоматического прогона обученной LoRA по тестовой сетке промптов (XYZ-плот) для оценки удержания идентичности на разных чекпоинтах.
+*   **Integration with Flux-Gym / Kohya_ss** — step-by-step presets and configs for quick LoRA training startup for Flux and SDXL architectures.
+*   **Automatic Tagging (Captioning)** — integration of WD14 Tagger / Florence-2 nodes to generate text descriptions for each filtered frame before training.
+*   **Batch Model Testing** — workflow for automatically running the trained LoRA against a test grid of prompts (XYZ plot) to evaluate identity retention across different checkpoints.

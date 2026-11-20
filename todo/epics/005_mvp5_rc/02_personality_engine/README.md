@@ -1,24 +1,24 @@
 # 02: Personality Engine
 
 **Epic:** 005 (MVP 5 RC)
-**Фаза:** 12
+**Phase:** 12
 
-## ТЗ
+## Requirements
 
 ### 1. System Prompt Builder
-- Расширенный промпт с полной спецификацией Samantha
-- Имя, возраст, внешность, стиль, триггер word
-- Запрещённые темы
+- Extended prompt with full Samantha specification
+- Name, age, appearance, style, word triggers
+- Forbidden topics
 
 ### 2. Digital Twin
-- Анализ реальных переписок владельца
-- Копирование стиля, манеры, выражений
-- Интеграция с Historical Ingestion (MVP 4)
+- Analysis of the owner's real conversations
+- Copying style, mannerisms, expressions
+- Integration with Historical Ingestion (MVP 4)
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class PersonalityEngine {
 public:
     std::string getPersonalityProfile();
@@ -26,7 +26,7 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Бот отвечает в стиле Samantha
-- [ ] Стиль согласован с digital twin владельца
+- [ ] The bot responds in Samantha's style
+- [ ] Style is consistent with the owner's digital twin

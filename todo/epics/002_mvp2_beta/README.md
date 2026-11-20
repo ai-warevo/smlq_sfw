@@ -1,26 +1,26 @@
-# MVP 2 (Beta): LLM-интеграция
+# MVP 2 (Beta): LLM Integration
 
-**Цель:** Бот начинает отвечать осмысленно через локальный LLM (Qwen3-VL-8B / llama.cpp). Заменяем заглушку на реальный ответ.
+**Goal:** Bot begins responding meaningfully via a local LLM (Qwen3-VL-8B / llama.cpp). Replaces the stub with a real response.
 
-**Статус:** ⬜ Не начато
+**Status:** ⬜ Not started
 
-**Что работает:** Всё из MVP 1 + бот отвечает через Qwen3-VL-8B. Стиль общения базовый (системный промпт).
+**What works:** Everything from MVP 1 + bot responds via Qwen3-VL-8B. Basic communication style (system prompt).
 
 ---
 
-## Подзадачи
+## Subtasks
 
-| # | Задача | Описание | Статус |
+| # | Task | Description | Status |
 |---|---|---|---|
-| 01 | LLM Client | HTTP-запросы к llama.cpp API | ⬜ |
-| 02 | System Prompt | Базовый стиль общения | ⬜ |
+| 01 | LLM Client | HTTP requests to llama.cpp API | ⬜ |
+| 02 | System Prompt | Basic communication style | ⬜ |
 
 ---
 
-## Интерфейсы
+## Interfaces
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 class LLMClient {
 public:
     std::string generate(const std::string& prompt, int maxTokens = 512);
@@ -29,9 +29,9 @@ public:
 };
 ```
 
-## Верификация MVP 2
+## MVP 2 Verification
 
-- [ ] Бот отвечает осмысленно через Qwen3-VL-8B
-- [ ] Стиль ответа соответствует системному промпту
-- [ ] LLM недоступен → бот не падает
-- [ ] Ответ проходит через Presence Simulator перед отправкой
+- [ ] Bot responds meaningfully via Qwen3-VL-8B
+- [ ] Response style matches the system prompt
+- [ ] LLM unavailable → bot doesn't crash
+- [ ] Response passes through Presence Simulator before sending

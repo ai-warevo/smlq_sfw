@@ -1,33 +1,33 @@
-# ТЗ: Создать и закодить проект `aw::tobus`
+# Spec: Create and code the `aw::tobus` project
 
 ---
 
-## КТО ТЫ
+## WHO YOU ARE
 
-Ты — C++20-разработчик. Пишешь чистый, современный, компилируемый код.
-Стек: C++20, CMake, clang-18, libc++.
-
----
-
-## ЧТО ДЕЛАТЬ
-
-Создать проект `aw::tobus` в директории `/workspace/tobus/`.
-
-`aw::tobus` — это **event bus библиотека для C++20** с transport-agnostic архитектурой.
-Модули общаются через единый интерфейс `IEventBus` — не важно, подписчики в том же процессе, в соседнем процессе или на другом сервере.
-
-Проект является частью экосистемы `ai-warevo` (наряду с `aw::tpl` — coroutine library).
+You are a C++20 developer. You write clean, modern, compilable code.
+Tech stack: C++20, CMake, clang-18, libc++.
 
 ---
 
-## ИСПОЛЬЗУЙ ШАБЛОН `template-cpp`
+## WHAT TO DO
 
-В репозитории есть `dotnet new`-стиль генератор C++20-проектов: `/workspace/template-cpp/`.
-**Начинай работу с `aw::tobus` ТОЛЬКО после анализа этого шаблона.**
+Create the `aw::tobus` project in the `/workspace/tobus/` directory.
 
-### ШАГ 1: Проанализируй шаблоны
+`aw::tobus` is a **C++20 event bus library** with a transport-agnostic architecture.
+Modules communicate through a single `IEventBus` interface — it doesn't matter whether subscribers are in the same process, a neighboring process, or on a different server.
 
-Открой `/workspace/template-cpp/templates/` и изучи все доступные шаблоны:
+The project is part of the `ai-warevo` ecosystem (alongside `aw::tpl` — a coroutine library).
+
+---
+
+## USE THE `template-cpp` TEMPLATE
+
+The repository includes a `dotnet new`-style C++20 project generator: `/workspace/template-cpp/`.
+**Start working on `aw::tobus` ONLY after analyzing this template.**
+
+### STEP 1: Analyze the Templates
+
+Open `/workspace/template-cpp/templates/` and study all available templates:
 
 | TYPE     | Aliases            | Produces                                         |
 |----------|--------------------|--------------------------------------------------|
@@ -35,98 +35,98 @@
 | `static` | `lib`, `library`   | Static library with a public header              |
 | `dynamic`| `dll`, `so`, `shared` | Shared library with export macros           |
 
-Изучи также:
-- `templates/scaffold.sh` — генератор (list | init | eject)
-- `templates/<type>/template.conf` — DESCRIPTION и ALIASES каждого шаблона
-- `templates/<type>/files/` — что генерирует каждый шаблон (CMakeLists.txt, include/, src/, tests/)
-- `cmake/ProjectConfig.cmake`, `cmake/CoreLibrary.cmake`, `cmake/Tests.cmake` — CMake-модули
+Also study:
+- `templates/scaffold.sh` — the generator (list | init | eject)
+- `templates/<type>/template.conf` — DESCRIPTION and ALIASES for each template
+- `templates/<type>/files/` — what each template generates (CMakeLists.txt, include/, src/, tests/)
+- `cmake/ProjectConfig.cmake`, `cmake/CoreLibrary.cmake`, `cmake/Tests.cmake` — CMake modules
 - `CMakePresets.json`, `.clang-format`, `.clang-tidy`, `.editorconfig`, `.gitignore` — shared files
-- `Makefile` — все таргеты: `init`, `list`, `selftest`, `eject`, `build`, `test`, `lint`, `format`, `clean`, `release`, `changelog`
+- `Makefile` — all targets: `init`, `list`, `selftest`, `eject`, `build`, `test`, `lint`, `format`, `clean`, `release`, `changelog`
 
-### ШАГ 2: Выбери подходящий шаблон
+### STEP 2: Choose the Right Template
 
-Для `aw::tobus` (статическая библиотека, event bus, с тестами и examples) выбери наиболее подходящий шаблон из существующих:
-- Скорее всего `static` — это статическая библиотека с заголовками и тестами
-- Или `cli` — если нужны examples как исполняемые файлы, линкованные на библиотеку
+For `aw::tobus` (static library, event bus, with tests and examples), choose the most suitable template from the existing ones:
+- Most likely `static` — this is a static library with headers and tests
+- Or `cli` — if examples are needed as executables linked to the library
 
-Используй `make init TYPE=<выбранный> --dry-run` чтобы посмотреть что сгенерируется.
+Use `make init TYPE=<chosen> --dry-run` to see what will be generated.
 
-### ШАГ 3: Если нет подходящего — создай новый шаблон
+### STEP 3: If No Suitable Template Exists — Create a New One
 
-Если ни один из существующих шаблонов не подходит:
+If none of the existing templates fit:
 
-1. Создай новый шаблон: `cp -r templates/static templates/<new-type>`
-2. Напиши `template.conf` (DESCRIPTION, ALIASES)
-3. Адаптируй файлы в `files/` под нужды `aw::tobus`
-4. **Запроси моё одобрение** перед использованием нового шаблона
-5. После одобрения запусти `make init TYPE=<new-type> NAME=tobus NS=aw::` из `/workspace/template-cpp/` в `/workspace/tobus/`
+1. Create a new template: `cp -r templates/static templates/<new-type>`
+2. Write `template.conf` (DESCRIPTION, ALIASES)
+3. Adapt files in `files/` for `aw::tobus` needs
+4. **Request my approval** before using the new template
+5. After approval, run `make init TYPE=<new-type> NAME=tobus NS=aw::` from `/workspace/template-cpp/` into `/workspace/tobus/`
 
-### ШАГ 4: Сгенерируй проект
+### STEP 4: Generate the Project
 
-После выбора/создания шаблона:
+After selecting/creating the template:
 
 ```bash
 cd /workspace/template-cpp
-make init TYPE=<выбранный> NAME=tobus NS=aw::tobus
+make init TYPE=<chosen> NAME=tobus NS=aw::tobus
 ```
 
-Это создаст `/workspace/tobus/` с правильной структурой.
+This will create `/workspace/tobus/` with the correct structure.
 
-### ШАГ 5: Адаптируй под `aw::tobus`
+### STEP 5: Adapt for `aw::tobus`
 
-После генерации:
-- Адаптируй `CMakeLists.txt` — добавь опции для транспортов (`OPTION(ENABLE_UNIX_SOCKET ...)`, `OPTION(ENABLE_REDIS ...)` и т.д.)
-- Добавь `examples/` директорию (не входит ни в один шаблон, добавь вручную)
-- Добавь `README.md`, `LICENSE`, `VERSION` (shared files уже копируются из root template-cpp)
-- Наполни код (ядро, InProcessBus, TODO-заголовки будущих транспортов)
+After generation:
+- Adapt `CMakeLists.txt` — add transport options (`OPTION(ENABLE_UNIX_SOCKET ...)`, `OPTION(ENABLE_REDIS ...)`, etc.)
+- Add an `examples/` directory (not included in any template, add manually)
+- Add `README.md`, `LICENSE`, `VERSION` (shared files are already copied from root template-cpp)
+- Populate the code (core, InProcessBus, TODO headers for future transports)
 
-### Разрешение на модификацию шаблона
+### Template Modification Authorization
 
-Тебе **разрешено** редактировать `/workspace/template-cpp/`:
-- Добавлять новые шаблоны в `templates/<type>/`
-- Добавлять новые CMake-модули в `cmake/`
-- Модифицировать существующие CMake-модули (`ProjectConfig`, `CoreLibrary`, `Tests`)
-- Создавать новые shared files
+You are **allowed** to edit `/workspace/template-cpp/`:
+- Add new templates to `templates/<type>/`
+- Add new CMake modules to `cmake/`
+- Modify existing CMake modules (`ProjectConfig`, `CoreLibrary`, `Tests`)
+- Create new shared files
 
-Шаблон предназначен для переиспользования. Если модификация нужна — делай.
+The template is designed for reuse. If modification is needed — go ahead.
 
 ---
 
-## ЗАЧЕМ ЭТО НУЖНО
+## WHY THIS IS NEEDED
 
-В проекте `smlq_sfw` (AI-персонаж в Telegram) есть 12 модулей, которым нужно общаться:
+The `smlq_sfw` project (AI persona in Telegram) has 12 modules that need to communicate:
 Telegram Channel ↔ Brain ↔ Personality ↔ Memory ↔ Mood ↔ Proactive ↔ LLM Client ↔ ComfyUI Client ↔ TTS Client.
 
-Сейчас они будут общаться через **event bus внутри одного процесса**.
-Но мы хотим, чтобы при росте нагрузки можно было **разнести модули на отдельные процессы** (или даже серверы) **без переписывания кода модулей** — только поменять транспорт в конфиге.
+Right now they will communicate through an **event bus within a single process**.
+But we want to be able to **spread modules across separate processes** (or even servers) as load grows **without rewriting module code** — just change the transport in the config.
 
-`aw::tobus` — это библиотека, которая это обеспечивает.
+`aw::tobus` is the library that makes this possible.
 
 ---
 
-## ГЛАВНЫЙ ПРИНЦИП
+## KEY PRINCIPLE
 
-**Модули зависят только от `IEventBus`. Они не знают, какой транспорт используется.**
+**Modules depend only on `IEventBus`. They don't know which transport is being used.**
 
 ```
 Telegram Channel ──publish──→ IEventBus ──subscribe──→ Brain
                                       ▲
-                              "какой транспорт?"
+                              "which transport?"
                               in_process / unix_socket / redis / kafka / ...
 ```
 
-Код модулей НЕ МЕНЯЕТСЯ при переключении транспорта. Меняется только одна строчка в `main()`:
+Module code DOES NOT CHANGE when switching transport. Only one line in `main()` changes:
 
 ```cpp
-// Было:
+// Was:
 auto bus = EventBusFactory::create({.transport = "in_process"});
-// Стало (при масштабировании):
+// Now (at scale):
 auto bus = EventBusFactory::create({.transport = "redis", .address = "redis://localhost:6379"});
 ```
 
 ---
 
-## СТРУКТУРА ПРОЕКТА
+## PROJECT STRUCTURE
 
 ```
 tobus/
@@ -138,14 +138,14 @@ tobus/
 │   └── aw/
 │       └── tobus/
 │           ├── tobus.hpp              # umbrella header (include everything)
-│           ├── i_event_bus.hpp        # PURE VIRTUAL INTERFACE — ядро проекта
+│           ├── i_event_bus.hpp        # PURE VIRTUAL INTERFACE — project core
 │           ├── event_type.hpp         # EventTypeId
 │           ├── serializable_event.hpp # SerializableEvent
 │           ├── event_handler.hpp      # EventHandler type
 │           ├── event_bus_factory.hpp  # EventBusFactory
 │           ├── config.hpp             # EventBusConfig
-│           ├── in_process_bus.hpp     # InProcessBus (РЕАЛИЗОВАТЬ)
-│           └── transport/             # Опциональные транспорты (ЗАГОЛОВКИ + TODO)
+│           ├── in_process_bus.hpp     # InProcessBus (IMPLEMENT)
+│           └── transport/             # Optional transports (HEADERS + TODO)
 │               ├── unix_socket_bus.hpp
 │               ├── tcp_server_bus.hpp
 │               ├── http_bus.hpp
@@ -175,29 +175,29 @@ tobus/
 
 ---
 
-## ЧТО РЕАЛИЗОВАТЬ ПРЯМО СЕЙЧАС (MVP)
+## WHAT TO IMPLEMENT NOW (MVP)
 
-1. **Ядро библиотеки** (все заголовки + impl) — `IEventBus`, `EventTypeId`, `SerializableEvent`, `EventHandler`, `EventBusFactory`, `EventBusConfig`
-2. **InProcessBus** — первая реализация транспорта (vector<callback>, thread-safe)
-3. **Пример 01_in_process.cpp** — рабочий пример
-4. **Тесты** — базовые тесты на IEventBus и InProcessBus
-5. **CMakeLists.txt** — с опциями для всех транспортов
-6. **README.md** — описание проекта
+1. **Library Core** (all headers + impl) — `IEventBus`, `EventTypeId`, `SerializableEvent`, `EventHandler`, `EventBusFactory`, `EventBusConfig`
+2. **InProcessBus** — first transport implementation (vector<callback>, thread-safe)
+3. **Example 01_in_process.cpp** — working example
+4. **Tests** — basic tests for IEventBus and InProcessBus
+5. **CMakeLists.txt** — with options for all transports
+6. **README.md** — project description
 
-## ЧТО ЗАФИКСИРОВАТЬ (ЗАГОЛОВКИ + TODO)
+## WHAT TO LOCK IN (HEADERS + TODO)
 
-Создать заголовки и cpp-файлы для всех будущих транспортов, но с комментариями `// TODO: implement` и `// Not implemented yet`. Это нужно, чтобы:
-- Код компилировался (заголовки существуют)
-- Был виден полный список транспортов
-- Можно было дописать реализацию позже
+Create header and cpp files for all future transports, but with `// TODO: implement` and `// Not implemented yet` comments. This is needed so:
+- The code compiles (headers exist)
+- The full list of transports is visible
+- Implementations can be added later
 
-Транспорты для фиксации:
+Transports to lock in:
 - UnixSocketBus (Unix domain socket)
 - TCPServerBus (TCP socket)
 - HTTPBus (HTTP POST + SSE)
 - WebSocketBus (WebSocket)
 
-Опциональные транспорты (только заголовки, без impl):
+Optional transports (headers only, no impl):
 - RedisBus
 - ZeroMQBus
 - RabbitMQBus
@@ -205,69 +205,69 @@ tobus/
 
 ---
 
-## ДЕТАЛИ РЕАЛИЗАЦИИ
+## IMPLEMENTATION DETAILS
 
-### 1. `IEventBus` — чистый интерфейс
+### 1. `IEventBus` — Pure Interface
 
 ```cpp
 class IEventBus {
 public:
     virtual ~IEventBus() = default;
 
-    // Подписаться на typed event
+    // Subscribe to typed event
     template <typename T>
     void subscribe(EventHandler<T> handler);
 
-    // Опубликовать event
+    // Publish event
     template <typename T>
     void publish(const T& event);
 
-    // Отписаться
+    // Unsubscribe
     template <typename T>
     void unsubscribe(EventHandler<T> handler);
 
-    // Лайфтайл
+    // Lifecycle
     virtual void start() = 0;
     virtual void stop() = 0;
 };
 ```
 
-**Важно:** `subscribe`, `publish`, `unsubscribe` — template-методы (реализация в заголовке). `start`/`stop` — виртуальные (реализация в cpp).
+**Important:** `subscribe`, `publish`, `unsubscribe` — template methods (implementation in header). `start`/`stop` — virtual (implementation in cpp).
 
-### 2. `EventTypeId` — уникальный идентификатор события
+### 2. `EventTypeId` — Unique Event Identifier
 
-Каждый тип события (MessageReceived, ResponseReady, и т.д.) получает уникальный ID.
-Реализация: `std::type_index` или хеш от имени типа.
+Each event type (MessageReceived, ResponseReady, etc.) gets a unique ID.
+Implementation: `std::type_index` or hash of the type name.
 
-### 3. `SerializableEvent` — универсальный payload
+### 3. `SerializableEvent` — Universal Payload
 
-Базовый класс для сериализации. Поддерживает:
-- `to_json()` → строка (JSON)
-- `from_json(string)` → объект
+Base class for serialization. Supports:
+- `to_json()` → string (JSON)
+- `from_json(string)` → object
 - `to_bytes()` → vector<uint8_t>
-- `from_bytes(vector<uint8_t>)` → объект
+- `from_bytes(vector<uint8_t>)` → object
 
-Это нужно транспортам, которым нужна сериализация (network, Redis, Kafka).
-Для `InProcessBus` сериализация не нужна — события передаются по значению.
+This is needed for transports that require serialization (network, Redis, Kafka).
+For `InProcessBus` serialization is not needed — events are passed by value.
 
-### 4. `EventHandler<T>` — типизированный callback
+### 4. `EventHandler<T>` — Typed Callback
 
 ```cpp
 using EventHandler<T> = std::function<void(const T&)>;
 ```
 
-### 5. `EventBusConfig` — конфигурация транспорта
+### 5. `EventBusConfig` — Transport Configuration
 
 ```cpp
 struct EventBusConfig {
     std::string transport = "in_process";  // "in_process", "unix_socket", "tcp_server", "http", "websocket", "redis", "zeromq", "rabbitmq", "kafka"
     std::string address = "";              // "/tmp/smlq_events.sock", "0.0.0.0:5555", "redis://localhost:6379"
-    int timeout_ms = 5000;                 // таймаут подключения
-    int max_retries = 3;                   // макс. попыток переподключения
+    int timeout_ms = 5000;                 // connection timeout
+    int max_retries = 3;                   // max reconnection attempts
 };
 ```
 
-### 6. `EventBusFactory` — фабрика транспортов
+### 6. `EventBusFactory` — Transport Factory
 
 ```cpp
 class EventBusFactory {
@@ -276,55 +276,55 @@ public:
 };
 ```
 
-Внутри: switch по `config.transport` → создаёт нужный транспорт.
-Если транспорт не поддерживается — бросает `std::runtime_error`.
+Internally: switch on `config.transport` → creates the appropriate transport.
+If transport is not supported — throws `std::runtime_error`.
 
-### 7. `InProcessBus` — in-process транспорт
+### 7. `InProcessBus` — In-Process Transport
 
-Реализация:
-- Хранит `std::unordered_map<EventTypeId, std::vector<EventHandlerBase>>`
-- `subscribe` добавляет handler в мапу
-- `publish` итерирует handlers и вызывает каждый
-- Thread-safe: `std::mutex` на мапу, `std::shared_mutex` для read/write
-- `start()`/`stop()` — пока ничего не делают (но нужны по интерфейсу)
+Implementation:
+- Stores `std::unordered_map<EventTypeId, std::vector<EventHandlerBase>>`
+- `subscribe` adds handler to the map
+- `publish` iterates handlers and calls each one
+- Thread-safe: `std::mutex` on the map, `std::shared_mutex` for read/write
+- `start()`/`stop()` — currently do nothing (but required by interface)
 
-### 8. Будущие транспорты (заголовки + TODO)
+### 8. Future Transports (Headers + TODO)
 
-Для каждого транспорта:
-- Заголовок `transport/<name>_bus.hpp` с объявлением класса
-- Файл `src/transport/<name>_bus.cpp` с `// TODO: implement`
-- Добавить в `EventBusFactory::create()` case для этого транспорта
-- В README — строка в таблице транспортов со статусом `🔲 Planned`
-
----
-
-## ЧТО НЕ ДЕЛАТЬ
-
-1. **Не писать реализации будущих транспортов** — только заголовки и TODO
-2. **Не добавлять внешние зависимости** — ядро только std
-3. **Не делать message broker** — это не RabbitMQ, не Kafka, не Redis. Это просто bus.
-4. **Не делать service discovery** — это не задача библиотеки
-5. **Не делать protocol definitions** — protobuf, flatbuffers — не здесь
-6. **Не делать queues, retries, dead letter queues** — это не messaging framework
+For each transport:
+- Header `transport/<name>_bus.hpp` with class declaration
+- File `src/transport/<name>_bus.cpp` with `// TODO: implement`
+- Add a case for this transport in `EventBusFactory::create()`
+- In README — a row in the transports table with status `🔲 Planned`
 
 ---
 
-## ТРЕБОВАНИЯ К КОДУ
+## WHAT NOT TO DO
 
-1. **C++20** — использовать корутины, концепты, ranges где уместно
-2. **CMake** — `cmake_minimum_required(VERSION 3.23)`, `add_library` с `FILE_SET HEADERS`
+1. **Don't implement future transports** — only headers and TODO
+2. **Don't add external dependencies** — core is std only
+3. **Don't build a message broker** — this is not RabbitMQ, Kafka, or Redis. It's just a bus.
+4. **Don't do service discovery** — not the library's job
+5. **Don't do protocol definitions** — protobuf, flatbuffers — not here
+6. **Don't do queues, retries, dead letter queues** — not a messaging framework
+
+---
+
+## CODE REQUIREMENTS
+
+1. **C++20** — use coroutines, concepts, ranges where appropriate
+2. **CMake** — `cmake_minimum_required(VERSION 3.23)`, `add_library` with `FILE_SET HEADERS`
 3. **Namespace** — `aw::tobus`
 4. **Include guard** — `#pragma once`
-5. **Комментарии** — doxygen-style для публичных API
-6. **Компилируется** — код должен компилироваться и линковаться
-7. **Тесты** — базовые юнит-тесты через CTest (если GoogleTest недоступен — писать свои минимальные assert-макросы)
-8. **Линейка совместима с `aw::tpl`** — тот же CMake-стиль, тот же namespace-паттерн `aw::`
+5. **Comments** — doxygen-style for public APIs
+6. **Compiles** — code must compile and link
+7. **Tests** — basic unit tests via CTest (if GoogleTest is unavailable — write your own minimal assert macros)
+8. **Compatible with `aw::tpl` lineup** — same CMake style, same `aw::` namespace pattern
 
 ---
 
-## КАК ИСПОЛЬЗУЕТСЯ В smlq_sfw
+## HOW IT'S USED IN smlq_sfw
 
-В `smlq_sfw` `aw::tobus` будет подключён через CMake FetchContent:
+In `smlq_sfw`, `aw::tobus` will be included via CMake FetchContent:
 
 ```cmake
 include(FetchContent)
@@ -337,7 +337,7 @@ FetchContent_MakeAvailable(tobus)
 target_link_libraries(smlq_sfw PRIVATE aw::tobus)
 ```
 
-Пример использования в модуле Telegram Channel:
+Usage example in the Telegram Channel module:
 
 ```cpp
 // telegram_channel.hpp
@@ -352,7 +352,7 @@ private:
 };
 
 void TelegramChannel::on_td_update(td::TdApi::Object* update) {
-    // ... разбираем обновление ...
+    // ... parse the update ...
     if (auto* message = dynamic_cast<td::TdApi::Message*>(update.get())) {
         MessageReceived event{
             .chat_id = message->chat_id_,
@@ -360,12 +360,12 @@ void TelegramChannel::on_td_update(td::TdApi::Object* update) {
             .text = std::move(message->text_),
             .sender_name = "Alice"
         };
-        bus_->publish(event);  // Все подписчики получат событие
+        bus_->publish(event);  // All subscribers receive the event
     }
 }
 ```
 
-Пример использования в модуле Brain:
+Usage example in the Brain module:
 
 ```cpp
 // brain.hpp
@@ -388,26 +388,26 @@ void Brain::start() {
 
 ---
 
-## ПОРЯДОК ВЫПОЛНЕНИЯ
+## EXECUTION ORDER
 
-1. Создать структуру директорий
-2. Написать CMakeLists.txt
-3. Написать ядро (i_event_bus.hpp/cpp, event_type.hpp/cpp, serializable_event.hpp/cpp, event_handler.hpp/cpp, event_bus_factory.hpp/cpp, config.hpp/cpp)
-4. Написать InProcessBus (in_process_bus.hpp/cpp)
-5. Написать заголовки+TODO для будущих транспортов
-6. Написать примеры
-7. Написать тесты
-8. Написать README.md
-9. Проверить что компилируется
+1. Create directory structure
+2. Write CMakeLists.txt
+3. Write core (i_event_bus.hpp/cpp, event_type.hpp/cpp, serializable_event.hpp/cpp, event_handler.hpp/cpp, event_bus_factory.hpp/cpp, config.hpp/cpp)
+4. Write InProcessBus (in_process_bus.hpp/cpp)
+5. Write headers+TODO for future transports
+6. Write examples
+7. Write tests
+8. Write README.md
+9. Verify it compiles
 
 ---
 
-## ФИНАЛЬНАЯ ПРОВЕРКА
+## FINAL CHECK
 
-Перед тем как закончить — проверь:
-1. `cmake --build build` проходит без ошибок
-2. `ctest --test-dir build` проходит
-3. Примеры компилируются
-4. Все заголовки будущих транспортов существуют
-5. EventBusFactory знает про все транспорты (даже если они TODO)
-6. README.md описывает проект, транспорты, quick start
+Before finishing — verify:
+1. `cmake --build build` passes without errors
+2. `ctest --test-dir build` passes
+3. Examples compile
+4. All future transport headers exist
+5. EventBusFactory knows about all transports (even if they're TODO)
+6. README.md describes the project, transports, quick start

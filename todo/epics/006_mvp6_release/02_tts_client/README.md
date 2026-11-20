@@ -1,28 +1,28 @@
 # 02: TTS Client
 
 **Epic:** 006 (MVP 6 Release)
-**Фаза:** 14
+**Phase:** 14
 
-## ТЗ
+## Requirements
 
 ### 1. TTS Client
-- HTTP-запросы к TTS-сервису
-- Синтез голосовых сообщений из текста
-- Настройки: голос, скорость, тон
+- HTTP requests to TTS service
+- Voice message synthesis from text
+- Settings: voice, speed, tone
 
 ### 2. TTSSettings
-- Выбор голоса
-- Скорость речи
-- Эмоциональная окраска (на основе Mood Engine)
+- Voice selection
+- Speech speed
+- Emotional coloring (based on Mood Engine)
 
-### 3. Интеграция с Brain
-- По запросу пользователя или proactive (утреннее/вечернее сообщение голосом)
-- Отправка через Channel как голосовое сообщение
+### 3. Brain Integration
+- On user request or proactive (morning/evening voice message)
+- Sent via Channel as a voice message
 
-## Интерфейс
+## Interface
 
 ```cpp
-// ⚠️ ПРИМЕР — НЕ СПЕЦИФИКАЦИЯ. Интерфейс может измениться.
+// ⚠️ EXAMPLE — NOT A SPECIFICATION. The interface may change.
 struct TTSSettings {
     std::string voice;
     float speed;
@@ -36,7 +36,7 @@ public:
 };
 ```
 
-## Верификация
+## Verification
 
-- [ ] Бот генерирует голосовые сообщения
-- [ ] Голос соответствует настройкам
+- [ ] The bot generates voice messages
+- [ ] Voice matches the settings
